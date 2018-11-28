@@ -33,7 +33,6 @@ const styles = {
     color: '#222',
     display: 'inline-block',
     fontSize: '48px',
-    fontFamily: 'Helvetica',
     margin: '0',
     textAlign: 'center',
     whiteSpace: 'pre-line',
@@ -41,9 +40,9 @@ const styles = {
   }
 }
 
-const man = require('./images/man.png');
-const woman = require('./images/woman.png');
-const blueCircle = require('./images/bluecircle.png');
+const man = require('../images/man.png');
+const woman = require('../images/woman.png');
+const blueCircle = require('../images/bluecircle.png');
 
 export default class Home extends React.Component {
 // If height is less than 750 only then do we not fit everything on the screen? Or should we scale it down?

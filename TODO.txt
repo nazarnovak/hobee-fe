@@ -1,3 +1,25 @@
+General:
+1) Ask around what legally do I need before I register users. GDPR, Privacy Policy, Cookies, COPA?
+2) Add an animation/logo as a placeholder when the page loads
+3) What sizes should I consider when making the page responsive? What are popular sizes? It has to be mobile first of
+course!
+
+Home page:
 1) Buy Shutterstock 5x2 images so I don't have to deal with legal bs?
 2) Change button to gradient + add transition on hover
-3) Ask around what legally do I need before I register users. GDPR, Privacy Policy, Cookies, COPA?
+3) Draw 3 awesome SVGs showing the underlying headers visually
+4) Come up with 3 creative headers :)
+5) Come up with 3 short texts that will be shown on big screens and hidden on small mobile screens
+6) Fix About button and make it bigger
+
+Login:
+1) Should I hide the Login button? Or replace it with something else?
+2) Is there a way to make the button to fade away smoothly? :) https://medium.com/@khwsc1/step-by-step-guide-of-simple-routing-transition-effect-for-react-with-react-router-v4-and-9152db1566a0
+
+Not found:
+1) Do a creative, funny picture that will be a good marketing tool that potential users might share; Something that is
+related to conversations. Like "We're sorry that you've ended up here, how about <a>talking to someone</a> to make your
+feel better? :)"
+
+Coding:
+1) Move all the colors to a single colors.js to reuse easily throughout the system?

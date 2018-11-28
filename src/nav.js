@@ -45,18 +45,13 @@ const logo = require('./images/h.svg');
 export default class Nav extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {hover: false};
-
-    this.onMouseEnter = this.onMouseEnter.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.state = {
+      location: '',
+    };
   }
 
-  onMouseEnter() {
-    this.setState({ hover: true });
-  }
-
-  onMouseLeave() {
-    this.setState({ hover: false });
+  componentWillReceiveProps(nextProps) {
+    this.setState({ location: nextProps.location });
   }
 
   render() {
@@ -74,6 +69,12 @@ export default class Nav extends React.Component {
         break;
     }
 
+    let loginButton = undefined;
+    // Don't show login button in login page
+    if (this.state.location !== "/login") {
+      loginButton = <LoginButton margin={sideMargin} width={buttonWidth}/>
+    }
+
     return (
       <div style={{ ...styles.nav, position: 'relative', paddingLeft: sideMargin, paddingRight: sideMargin}}>
         <div style={{margin: '0px auto'}}>
@@ -81,16 +82,42 @@ export default class Nav extends React.Component {
             <img src={logo} style={{...styles.logo}} alt={'Logo'} />
           </Link>
         </div>
-        <div style={{position: 'absolute', top: '10px', right: sideMargin}}>
+        {loginButton}
+      </div>
+    );
+  }
+}
+
+class LoginButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hover: false,
+    };
+
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+  }
+
+  onMouseEnter() {
+    this.setState({ hover: true });
+  }
+
+  onMouseLeave() {
+    this.setState({ hover: false });
+  }
+
+  render() {
+    return (
+        <div style={{position: 'absolute', top: '10px', right: this.props.margin}}>
           <Link to="/login">
-            <button style={{...styles.logIn, width: buttonWidth, ...(this.state.hover ? styles.logInHover : undefined)}}
-              onMouseEnter={this.onMouseEnter}
-              onMouseLeave={this.onMouseLeave}>
+            <button style={{...styles.logIn, width: this.props.width,
+              ...(this.state.hover ? styles.logInHover : undefined)}} onMouseEnter={this.onMouseEnter}
+                    onMouseLeave={this.onMouseLeave}>
               Log In
             </button>
           </Link>
         </div>
-      </div>
     );
   }
 }
