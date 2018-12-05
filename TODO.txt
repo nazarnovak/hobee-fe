@@ -1,13 +1,18 @@
+Bugs:
+1) Transition fucks up the login page and duplicates it in the bottom :(
+
 General:
 1) Ask around what legally do I need before I register users. GDPR, Privacy Policy, Cookies, COPA?
 2) Add an animation/logo as a placeholder when the page loads
 3) What sizes should I consider when making the page responsive? What are popular sizes? It has to be mobile first of
 course!
+4) Can you do transitions between pages different? So let's say there are page A,B and C. If you transition A -> C, the animation is one style. If you go B -> C - animation is a different style. Is it easy to do that in React transitions and is it even going to be worth doing something like that? I won't have a lot of pages in total which might be a fun little experiment trying to make a composition between all the pages and a little Easter egg? But will it be worth the work? Good to try as an experiment with the 3 pages mentioned above, and the creative work that needs to be done might be quite expensive as well 
 
 Home page:
 1) Buy Shutterstock 5x2 images so I don't have to deal with legal bs?
 2) Change button to gradient + add transition on hover
-3) Draw 3 awesome SVGs showing the underlying headers visually
+3) Draw 3 awesome SVGs showing the underlying headers visually: Quality, Proactive, Community (maybe change Proactive to
+something with -ty in the end that means active measures to removing negative affects in the system)
 4) Come up with 3 creative headers :)
 5) Come up with 3 short texts that will be shown on big screens and hidden on small mobile screens
 6) Fix About button and make it bigger
@@ -23,3 +28,6 @@ feel better? :)"
 
 Coding:
 1) Move all the colors to a single colors.js to reuse easily throughout the system?
+
+Ideas:
+1) When someone reports a bad behavior, thank them for their contribution and inform them that the measures were taken

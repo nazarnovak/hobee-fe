@@ -3,8 +3,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 // const colorBlack = '#000000';
-const colorWhite = '#FFFFFF';
-const colorMediumBlue = '#0000CD';
+// const colorWhite = '#FFFFFF';
+// const colorMediumBlue = '#0000CD';
 const colorBlueSoft = '#0074d9';
 const colorBlueDarker = '#005299';
 
@@ -20,19 +20,19 @@ const styles = {
     marginTop: '10px',
     outline: 'none',
   },
-  logIn: {
+  signUp: {
     backgroundColor: colorBlueSoft,
     border: '1px solid ' + colorBlueSoft,
     borderRadius: '30px',
     color: '#f3f3f3',
     cursor: 'pointer',
     fontSize: '20px',
-    height: '50px',
+    height: '40px',
     outline: 'none',
-    width: '150px',
+    width: '120px',
     transition: 'all 0.2s ease-in-out',
   },
-  logInHover: {
+  signUpHover: {
     backgroundColor: colorBlueDarker,
     border: '1px solid ' + colorBlueDarker,
     color: '#ffffff',
@@ -55,40 +55,41 @@ export default class Nav extends React.Component {
   }
 
   render() {
-    let buttonWidth = '150px';
+    let buttonWidth = '130px';
     let sideMargin = '50px';
 
     switch(true) {
     case this.props.width < 500:
-        buttonWidth = '110px';
+        buttonWidth = '100px';
         sideMargin = '10px';
         break;
     case this.props.width < 800:
-        buttonWidth = '130px';
+        buttonWidth = '110px';
         sideMargin = '30px';
         break;
+    default:
+        buttonWidth = '130px';
+        sideMargin = '50px';
     }
 
-    let loginButton = undefined;
-    // Don't show login button in login page
-    if (this.state.location !== "/login") {
-      loginButton = <LoginButton margin={sideMargin} width={buttonWidth}/>
+    let signupButton = undefined;
+    // Don't show signup button in signup page
+    if (this.state.location !== "/signup") {
+      signupButton = <SignupButton margin={sideMargin} width={buttonWidth}/>
     }
 
     return (
       <div style={{ ...styles.nav, position: 'relative', paddingLeft: sideMargin, paddingRight: sideMargin}}>
-        <div style={{margin: '0px auto'}}>
-          <Link to="/">
-            <img src={logo} style={{...styles.logo}} alt={'Logo'} />
-          </Link>
-        </div>
-        {loginButton}
+        <Link to="/">
+          <img src={logo} style={{...styles.logo}} alt="Logo" />
+        </Link>
+        {signupButton}
       </div>
     );
   }
 }
 
-class LoginButton extends React.Component {
+class SignupButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -109,12 +110,12 @@ class LoginButton extends React.Component {
 
   render() {
     return (
-        <div style={{position: 'absolute', top: '10px', right: this.props.margin}}>
-          <Link to="/login">
-            <button style={{...styles.logIn, width: this.props.width,
-              ...(this.state.hover ? styles.logInHover : undefined)}} onMouseEnter={this.onMouseEnter}
+        <div style={{position: 'absolute', top: '15px', right: this.props.margin}}>
+          <Link to="/signup">
+            <button style={{...styles.signUp, width: this.props.width,
+              ...(this.state.hover ? styles.signUpHover : undefined)}} onMouseEnter={this.onMouseEnter}
                     onMouseLeave={this.onMouseLeave}>
-              Log In
+              Sign up
             </button>
           </Link>
         </div>

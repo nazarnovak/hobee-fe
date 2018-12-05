@@ -12,11 +12,11 @@ const styles = {
   }
 }
 
-export default class Login extends React.Component {
+export default class Signup extends React.Component {
   render() {
     return (
       <div style={{ ...styles.container }}>
-        <h1 style={{ ...styles.header }}>Logina</h1>
+        <h1 style={{ ...styles.header }}>Signup</h1>
       </div>
     );
   }

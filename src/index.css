@@ -13,6 +13,21 @@ code {
     monospace;
 }
 
-a {
+a:link, a:visited, a:active {
+  color: #0074d9;
   text-decoration: none;
+}
+
+a:hover {
+  color: #005299;
+  text-decoration: underline;
+}
+
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
 }

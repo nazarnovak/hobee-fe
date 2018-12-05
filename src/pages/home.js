@@ -25,9 +25,10 @@ const styles = {
   },
   footer: {
     boxShadow: 'rgba(0, 0, 0, 0.1) 0px -4px 2px -2px',
+    fontSize: '18px',
     height: '70px',
     textAlign: 'center',
-    padding: '0 50px',
+    padding: '20px 50px 20px 50px',
   },
   motto: {
     color: '#222',
@@ -56,16 +57,16 @@ export default class Home extends React.Component {
     return (
       <div>
         <MediaQuery  query="(min-width: 801px)">
-          <div style={{ backgroundColor: '#f8f8ff'}}>
+          <div style={{ backgroundColor: '#fafafc'}}>
             <div style={{ ...styles.section1, height: sectionHeightHalf}}>
               <div style={{ height: '100%', width: sectionWidthThird }}>
-                <img src={man} style={{ height: '100%'}} />
+                <img src={man} style={{ height: '100%'}} alt="Man" />
               </div>
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: sectionWidthThird}}>
                 <div style={{...styles.motto}}>Dialogue{"\n"}definite</div>
               </div>
               <div style={{height: '100%', width: sectionWidthThird}}>
-                <img src={woman} style={{ height: '100%'}} />
+                <img src={woman} style={{ height: '100%'}} alt="Woman" />
               </div>
             </div>
           </div>
@@ -78,10 +79,10 @@ export default class Home extends React.Component {
               </div>
               <div style={{display: 'flex', alignItems: 'center', flexDirection: 'row', width: '100%'}}>
                 <div style={{ height: '100%', width: sectionWidthHalf, display: 'flex', flexDirection: 'row'}}>
-                  <img src={man} style={{ height: '100%', width: '100%'}} />
+                  <img src={man} style={{ height: '100%', width: '100%'}} alt="Man" />
                 </div>
                 <div style={{height: '100%', width: sectionWidthHalf, display: 'flex', flexDirection: 'row'}}>
-                  <img src={woman} style={{ height: '100%', width: '100%'}} />
+                  <img src={woman} style={{ height: '100%', width: '100%'}} alt="Woman" />
                 </div>
               </div>
             </div>
@@ -89,19 +90,19 @@ export default class Home extends React.Component {
         </MediaQuery>
         <div style={{ ...styles.section2, height: sectionHeightHalf}}>
           <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%', width: sectionWidthThird}}>
-            <img src={blueCircle} style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto'}} />
+            <img src={blueCircle} style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto'}} alt="Quality" />
             <p style={{margin: '10px auto 0 auto', fontSize: '24px'}}>Quality</p>
-            <p style={{margin: '10px 50px', textAlign: 'center'}}>We value quality over quality</p>
+            <p style={{margin: '10px 50px', textAlign: 'center'}}>Your meaningful conversation is highest priority</p>
           </div>
           <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%', width: sectionWidthThird}}>
-            <img src={blueCircle} style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto'}} />
-            <p style={{margin: '10px auto 0 auto', fontSize: '24px'}}>Report</p>
-            <p style={{margin: '10px 50px', textAlign: 'center'}}>Talk only to the people you want</p>
+            <img src={blueCircle} style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto'}} alt="Safety" />
+            <p style={{margin: '10px auto 0 auto', fontSize: '24px'}}>Safety</p>
+            <p style={{margin: '10px 50px', textAlign: 'center'}}>Spam, harassment, bots and other innapropriate behavior will not be tolerated</p>
           </div>
           <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%', width: sectionWidthThird}}>
-            <img src={blueCircle} style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto'}} />
-            <p style={{margin: '10px auto 0 auto', fontSize: '24px'}}>Support</p>
-            <p style={{margin: '10px 50px', textAlign: 'center'}}>Write to us and we will respond to each of you</p>
+            <img src={blueCircle} style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto'}} alt="Commnity" />
+            <p style={{margin: '10px auto 0 auto', fontSize: '24px'}}>Community</p>
+            <p style={{margin: '10px 50px', textAlign: 'center'}}>Smallest feedback you have is very critical in making us better</p>
           </div>
         </div>
         <div style={{ ...styles.footer }}><Link to="/about">About</Link></div>
