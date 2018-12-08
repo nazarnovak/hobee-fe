@@ -9,6 +9,7 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'center',
     padding: '0 50px',
+    borderBottom: '1px solid #e6e6e6',
   },
   section1Small: {
     alignItems: 'center',
@@ -29,9 +30,10 @@ const styles = {
     height: '70px',
     textAlign: 'center',
     padding: '20px 50px 20px 50px',
+    boxSizing: 'border-box',
   },
   motto: {
-    color: '#222',
+    color: '#fff',
     display: 'inline-block',
     fontSize: '48px',
     margin: '0',
@@ -46,6 +48,19 @@ const woman = require('../images/woman.png');
 const blueCircle = require('../images/bluecircle.png');
 
 export default class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      didMount: false,
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+        this.setState({didMount: true})
+    }, 0)
+  }
+
 // If height is less than 750 only then do we not fit everything on the screen? Or should we scale it down?
   render() {
     const sectionHeightHalf = (this.props.height - 140) / 2
@@ -54,25 +69,27 @@ export default class Home extends React.Component {
     const sectionWidthThird = (this.props.width - 100) / 3;
     const sectionWidthHalf = (this.props.width - 100) / 2;
 
+    const { didMount } = this.state;
+
     return (
-      <div>
+      <div style={{ position: 'absolute', top: '70px', zIndex: '1'}}>
         <MediaQuery  query="(min-width: 801px)">
-          <div style={{ backgroundColor: '#fafafc'}}>
+          <div style={{ backgroundColor: '#0074d9'}}>
             <div style={{ ...styles.section1, height: sectionHeightHalf}}>
-              <div style={{ height: '100%', width: sectionWidthThird }}>
-                <img src={man} style={{ height: '100%'}} alt="Man" />
-              </div>
+              {/*<div style={{ height: '100%', width: sectionWidthThird }}>*/}
+                {/*<img src={man} style={{ height: '100%'}} alt="Man" />*/}
+              {/*</div>*/}
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: sectionWidthThird}}>
                 <div style={{...styles.motto}}>Dialogue{"\n"}definite</div>
               </div>
-              <div style={{height: '100%', width: sectionWidthThird}}>
-                <img src={woman} style={{ height: '100%'}} alt="Woman" />
-              </div>
+              {/*<div style={{height: '100%', width: sectionWidthThird}}>*/}
+                {/*<img src={woman} style={{ height: '100%'}} alt="Woman" />*/}
+              {/*</div>*/}
             </div>
           </div>
         </MediaQuery>
         <MediaQuery  query="(max-width: 800px)">
-          <div style={{ backgroundColor: '#f6f6f6'}}>
+          <div>
             <div style={{ ...styles.section1Small}}>
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%'}}>
                 <div style={{...styles.motto, backgroundColor: '#f6f6f6'}}>Dialogue{"\n"}definite</div>
@@ -89,23 +106,31 @@ export default class Home extends React.Component {
           </div>
         </MediaQuery>
         <div style={{ ...styles.section2, height: sectionHeightHalf}}>
-          <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%', width: sectionWidthThird}}>
-            <img src={blueCircle} style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto'}} alt="Quality" />
+          <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%', width: sectionWidthThird}}
+            className={`fade-in-circle-1 ${didMount && 'visible'}`}>
+            <div style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto',
+              backgroundColor: '#0074d9', borderRadius: '160px'}}></div>
             <p style={{margin: '10px auto 0 auto', fontSize: '24px'}}>Quality</p>
             <p style={{margin: '10px 50px', textAlign: 'center'}}>Your meaningful conversation is highest priority</p>
           </div>
-          <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%', width: sectionWidthThird}}>
-            <img src={blueCircle} style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto'}} alt="Safety" />
+          <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%', width: sectionWidthThird}}
+          className={`fade-in-circle-2 ${didMount && 'visible'}`}>
+            <div style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto',
+              backgroundColor: '#0074d9', borderRadius: '160px'}}></div>
             <p style={{margin: '10px auto 0 auto', fontSize: '24px'}}>Safety</p>
-            <p style={{margin: '10px 50px', textAlign: 'center'}}>Spam, harassment, bots and other innapropriate behavior will not be tolerated</p>
+            <p style={{margin: '10px 50px', textAlign: 'center'}}>Spam, harassment, bots and other innapropriate behavior are not be tolerated</p>
           </div>
-          <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%', width: sectionWidthThird}}>
-            <img src={blueCircle} style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto'}} alt="Commnity" />
+          <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%', width: sectionWidthThird}}
+          className={`fade-in-circle-3 ${didMount && 'visible'}`}>
+            <div style={{ height: '160px', width: '160px', display: 'block', margin: '20px auto 0 auto',
+              backgroundColor: '#0074d9', borderRadius: '160px'}}></div>
             <p style={{margin: '10px auto 0 auto', fontSize: '24px'}}>Community</p>
             <p style={{margin: '10px 50px', textAlign: 'center'}}>Smallest feedback you have is very critical in making us better</p>
           </div>
         </div>
-        <div style={{ ...styles.footer }}><Link to="/about">About</Link></div>
+        <div style={{ ...styles.footer }}>
+          <Link to="/about">About</Link> <Link to="/about">Contact</Link>
+        </div>
       </div>
     );
   }

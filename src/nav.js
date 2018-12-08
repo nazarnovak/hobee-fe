@@ -14,6 +14,7 @@ const styles = {
     height: '70px',
     padding: '0 50px',
     textAlign: 'center',
+    zIndex: '2',
   },
   logo: {
     height: '50px',
@@ -26,7 +27,7 @@ const styles = {
     borderRadius: '30px',
     color: '#f3f3f3',
     cursor: 'pointer',
-    fontSize: '20px',
+    fontSize: '18px',
     height: '40px',
     outline: 'none',
     width: '120px',
@@ -46,7 +47,7 @@ export default class Nav extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: '',
+      location: null,
     };
   }
 
@@ -73,8 +74,10 @@ export default class Nav extends React.Component {
     }
 
     let signupButton = undefined;
+    let pathname = !!this.state.location ? this.state.location.pathname : '';
+
     // Don't show signup button in signup page
-    if (this.state.location !== "/signup") {
+    if (pathname !== "/signup") {
       signupButton = <SignupButton margin={sideMargin} width={buttonWidth}/>
     }
 
@@ -110,7 +113,7 @@ class SignupButton extends React.Component {
 
   render() {
     return (
-        <div style={{position: 'absolute', top: '15px', right: this.props.margin}}>
+        <div style={{ position: 'absolute', top: '15px', right: this.props.margin }}>
           <Link to="/signup">
             <button style={{...styles.signUp, width: this.props.width,
               ...(this.state.hover ? styles.signUpHover : undefined)}} onMouseEnter={this.onMouseEnter}

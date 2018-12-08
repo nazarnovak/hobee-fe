@@ -1,5 +1,7 @@
 Bugs:
-1) Transition fucks up the login page and duplicates it in the bottom :(
+1) I can't pass location from the WithRouterContainer properly to initialize it in App properly. Otherwise I initialize
+with `null` and it doesn't work
+2) If you load /signup directly the button doesn't hide. Doesn't get the location initially? Related to 2) ?
 
 General:
 1) Ask around what legally do I need before I register users. GDPR, Privacy Policy, Cookies, COPA?

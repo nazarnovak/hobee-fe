@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
 
 class WithRouter extends React.Component {
   componentWillMount() {
@@ -7,6 +7,7 @@ class WithRouter extends React.Component {
       this.props.onRouteChange(location);
     });
   }
+
   componentWillUnmount() {
       this.unlisten();
   }

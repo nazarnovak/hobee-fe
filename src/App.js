@@ -1,25 +1,20 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 // This helps know when the page is changed, since the whole thing is a single page application sort of with react
 // router
 import WithRouterContainer from './WithRouterContainer';
 
+// Routing table
+import Routing from './routing';
 import Nav from './nav';
 
-// Separate pages
-import NotFound from './pages/notfound';
-import Home from './pages/home';
-import Signup from './pages/signup';
-import About from './pages/about';
-
-export class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: '',
-      locationKey: '',
+      location: null,
       height: window.innerHeight,
       width: window.innerWidth
     };
@@ -40,28 +35,21 @@ export class App extends React.Component {
   }
 
   handleRouteChange(newLocation) {
-    this.setState({ location: newLocation.pathname, locationKey: newLocation.key});
+    this.setState({ location: newLocation });
   }
 
   render() {
     return (
       <BrowserRouter>
         <WithRouterContainer onRouteChange={newLocation => this.handleRouteChange(newLocation)}>
+          <Nav height={this.state.height} width={this.state.width} location={this.state.location} />
           <TransitionGroup>
             <CSSTransition
-                  key={this.state.locationKey}
+                  key={!!this.state.location ? this.state.location.key : ''}
                   classNames="fade"
-                  timeout={500}
+                  timeout={{ enter: 800, exit: 800}}
             >
-              <div>
-                <Nav height={this.state.height} width={this.state.width} location={this.state.location}/>
-                <Switch>
-                    <Route path="/" exact render={()=><Home height={this.state.height} width={this.state.width} />}/>
-                    <Route path="/signup" exact component={Signup} />
-                    <Route path="/about" exact component={About} />
-                    <Route component={NotFound} />
-                </Switch>
-              </div>
+              <Routing height={this.state.height} width={this.state.width} location={this.state.location} />
             </CSSTransition>
           </TransitionGroup>
         </WithRouterContainer>
@@ -69,5 +57,3 @@ export class App extends React.Component {
     );
   }
 }
-
-export default App;
