@@ -47,7 +47,9 @@ export default class App extends React.Component {
             <CSSTransition
                   key={!!this.state.location ? this.state.location.key : ''}
                   classNames="fade"
-                  timeout={{ enter: 800, exit: 800}}
+                  in={true}
+                  appear={true}
+                  timeout={{ appear: 800, enter: 800, exit: 800}}
             >
               <Routing height={this.state.height} width={this.state.width} location={this.state.location} />
             </CSSTransition>

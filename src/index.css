@@ -65,6 +65,14 @@ input:focus {
   transition: opacity 400ms cubic-bezier(.6,0,.4,1);
 }
 
+.fade-appear {
+  opacity: 0.01;
+}
+
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity 800ms cubic-bezier(.6,0,.4,1);
+}
 
 .fade-enter {
   opacity: 0.01;
@@ -119,4 +127,8 @@ input:focus {
   opacity: 1;
   transition: opacity 900ms cubic-bezier(.6,0,.4,1) 1100ms, bottom 800ms cubic-bezier(.6,0,.4,1) 1100ms;
   bottom: 0px;
+}
+
+.footer-item {
+  margin: 15px;
 }

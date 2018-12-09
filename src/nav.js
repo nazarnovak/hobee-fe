@@ -28,6 +28,7 @@ const styles = {
     color: '#f3f3f3',
     cursor: 'pointer',
     fontSize: '18px',
+    fontWeight: '500',
     height: '40px',
     outline: 'none',
     width: '120px',
