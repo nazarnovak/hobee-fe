@@ -76,14 +76,14 @@ export default class Home extends React.Component {
     return (
       <div style={{ position: 'absolute', top: '70px', zIndex: '1'}}>
         <MediaQuery  query="(min-width: 801px)">
-          <div style={{ backgroundColor: '#0074d9' }}>
+          <div style={{ backgroundColor: '#0074d9' }} className={`fade-in-motto-bg ${didMount && 'visible'}`}>
           {/*<div style={{ backgroundImage: 'linear-gradient(180deg, #4fadff 10%, #0074d9)'}}>*/}
             <div style={{ ...styles.section1, height: sectionHeightHalf}}>
               {/*<div style={{ height: '100%', width: sectionWidthThird }}>*/}
                 {/*<img src={man} style={{ height: '100%'}} alt="Man" />*/}
               {/*</div>*/}
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: sectionWidthThird}}>
-                <div style={{...styles.motto}}>Why should I use this site?</div>
+                <div style={{...styles.motto}} className={`fade-in-motto ${didMount && 'visible'}`}>Why should I use this site?</div>
               </div>
               {/*<div style={{height: '100%', width: sectionWidthThird}}>*/}
                 {/*<img src={woman} style={{ height: '100%'}} alt="Woman" />*/}
@@ -114,24 +114,24 @@ export default class Home extends React.Component {
                className={`fade-in-circle-1 ${didMount && 'visible'}`}>
             <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
               backgroundColor: '#0074d9', borderRadius: '150px' }}></div>
-            <p style={{margin: '25px auto 0 auto', fontSize: '24px'}}>Quality</p>
-            <p style={{margin: '15px 50px', textAlign: 'center'}}>Your meaningful conversation is highest priority</p>
+            <p style={{margin: '25px auto 0 auto', fontSize: '24px', color: '#333', fontWeight: '600'}}>Quality</p>
+            <p style={{margin: '15px 50px', textAlign: 'center', color: '#666', fontWeight: '500'}}>Your meaningful conversation is highest priority</p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%',
             width: sectionWidthThird, padding: '30px', boxSizing: 'border-box' }}
-          className={`fade-in-circle-2 ${didMount && 'visible'}`}>
+          className={`fade-in-circle-1 ${didMount && 'visible'}`}>
             <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
               backgroundColor: '#0074d9', borderRadius: '150px' }}></div>
-            <p style={{margin: '25px auto 0 auto', fontSize: '24px'}}>Safety</p>
-            <p style={{margin: '15px 50px', textAlign: 'center'}}>Spam, harassment, bots and other innapropriate behavior are not tolerated</p>
+            <p style={{margin: '25px auto 0 auto', fontSize: '24px', color: '#333', fontWeight: '600'}}>Safety</p>
+            <p style={{margin: '15px 50px', textAlign: 'center', color: '#666', fontWeight: '500'}}>Spam, harassment, bots and other inappropriate behavior are not tolerated</p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%',
             width: sectionWidthThird, padding: '30px', boxSizing: 'border-box' }}
-          className={`fade-in-circle-3 ${didMount && 'visible'}`}>
+          className={`fade-in-circle-1 ${didMount && 'visible'}`}>
             <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
               backgroundColor: '#0074d9', borderRadius: '150px'}}></div>
-            <p style={{margin: '25px auto 0 auto', fontSize: '24px'}}>Community</p>
-            <p style={{margin: '15px 50px', textAlign: 'center'}}>Smallest feedback you have is very critical in making us better</p>
+            <p style={{margin: '25px auto 0 auto', fontSize: '24px', color: '#333', fontWeight: '600'}}>Community</p>
+            <p style={{margin: '15px 50px', textAlign: 'center', color: '#666', fontWeight: '500'}}>Smallest feedback you have is very critical in making us better</p>
           </div>
         </div>
         <div style={{ ...styles.footer }}>
