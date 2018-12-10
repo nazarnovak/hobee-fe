@@ -48,7 +48,7 @@ export default class Nav extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: null,
+      location: window.location,
     };
   }
 
@@ -75,7 +75,7 @@ export default class Nav extends React.Component {
     }
 
     let signupButton = undefined;
-    let pathname = !!this.state.location ? this.state.location.pathname : '';
+    let pathname = this.state.location.pathname;
 
     // Don't show signup button in signup page
     if (pathname !== "/signup") {

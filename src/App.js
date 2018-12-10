@@ -14,7 +14,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: null,
+      location: window.location,
       height: window.innerHeight,
       width: window.innerWidth
     };
@@ -45,7 +45,7 @@ export default class App extends React.Component {
           <Nav height={this.state.height} width={this.state.width} location={this.state.location} />
           <TransitionGroup>
             <CSSTransition
-                  key={!!this.state.location ? this.state.location.key : ''}
+                  key={this.state.location.pathname}
                   classNames="fade"
                   in={true}
                   appear={true}
