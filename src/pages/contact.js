@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Signup extends React.Component {
+export default class Contact extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,13 +24,14 @@ export default class Signup extends React.Component {
     const { err } = this.state;
 
     return (
-      <div className={`main-content`} style={{ height: '200px', width: '500px' }}>
-        <h1 className={`header`}>Sign up</h1>
+      <div className={`main-content`}>
+        <h1 className={`header`}>Contact</h1>
         <form style={{ textAlign: 'center' }}>
+          <p><input type="text" placeholder="name" className={`input`} /></p>
           <p><input type="text" placeholder="email" className={`input`} /></p>
-          <p><input type="password" placeholder="password" className={`input`} /></p>
+          <p><input type="text" placeholder="message" className={`input`} /></p>
           <p><input type="text" className={`input error ${err && 'visible'}`} value={ err } readOnly /></p>
-          <button id={`submit-button`} onClick={this.handleFormSubmit}>Sign up</button>
+          <button id={`submit-button`} onClick={this.handleFormSubmit}>Contact</button>
         </form>
       </div>
     );

@@ -135,7 +135,7 @@ export default class Home extends React.Component {
           </div>
         </div>
         <div style={{ ...styles.footer }}>
-          <span className={`footer-item`}><Link to="/about">About</Link></span><span className={`footer-item`}><Link to="/about">Contact</Link></span>
+          <span className={`footer-item`}><Link to="/about">About</Link></span><span className={`footer-item`}><Link to="/contact">Contact</Link></span>
         </div>
       </div>
     );

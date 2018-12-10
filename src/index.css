@@ -52,6 +52,26 @@ input:focus {
   /*color: #fff;*/
 }
 
+/* Probably should rename to avoid confusion with a tagname input :( */
+.input {
+  height: 30px;
+  width: 250px;
+  border-radius: 30px;
+  /*backgroundColor: #e6f3ff;*/
+  padding: 0 15px;
+  outline: none;
+}
+
+#submit-button {
+  border-radius: 30px;
+  color: #ffffff;
+  font-size: 14px;
+  height: 30px;
+  width: 150px;
+  background-color: #0074d9;
+  outline: none;
+}
+
 .error {
   border: none;
   background-color: unset;
@@ -65,32 +85,36 @@ input:focus {
   transition: opacity 400ms cubic-bezier(.6,0,.4,1);
 }
 
+.footer-item {
+  margin: 15px;
+}
+
+/* Transitions */
 .fade-appear {
-  opacity: 0.01;
+  opacity: 0;
 }
 
 .fade-appear.fade-appear-active {
   opacity: 1;
-  transition: opacity 800ms cubic-bezier(.6,0,.4,1);
+  transition: opacity 1000ms cubic-bezier(.6,0,.4,1);
 }
 
 .fade-enter {
-  opacity: 0.01;
+  opacity: 0;
 }
 
 .fade-enter.fade-enter-active {
   opacity: 1;
-  transition: opacity 800ms cubic-bezier(.6,0,.4,1);
+  transition: opacity 1000ms cubic-bezier(.6,0,.4,1);
 }
 
 .fade-exit {
-  display: none;
   opacity: 1;
 }
 
 .fade-exit.fade-exit-active {
-  opacity: 0.01;
-  transition: opacity 800ms cubic-bezier(.6,0,.4,1);
+  opacity: 0;
+  transition: opacity 1000ms cubic-bezier(.6,0,.4,1);
 }
 
 .fade-in-motto-bg {
@@ -99,7 +123,7 @@ input:focus {
 
 .fade-in-motto-bg.visible {
   opacity: 1;
-  transition: opacity 200ms cubic-bezier(.6,0,.4,1) 0ms;
+  transition: opacity 300ms cubic-bezier(.6,0,.4,1);
 }
 
 .fade-in-motto {
@@ -155,6 +179,34 @@ color 900ms cubic-bezier(.6,0,.4,1) 200ms, text-shadow 500ms cubic-bezier(.6,0,.
   bottom: 0px;
 }
 
-.footer-item {
-  margin: 15px;
+/* /Transitions */
+
+/* Pages */
+.main-content {
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 20px;
+  position: absolute;
+  top: 100px;
+  zIndex: 1;
 }
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.active-tab {
+  color: red;
+}
+
+.active-content {
+  display: block;
+}
+
+.inactive-content {
+  display: none;
+}
+
+/* /Pages */
