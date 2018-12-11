@@ -62,7 +62,7 @@ input:focus {
   outline: none;
 }
 
-#submit-button {
+.submit-button {
   border-radius: 30px;
   color: #ffffff;
   font-size: 14px;
@@ -207,6 +207,16 @@ color 900ms cubic-bezier(.6,0,.4,1) 200ms, text-shadow 500ms cubic-bezier(.6,0,.
 
 .inactive-content {
   display: none;
+}
+
+@keyframes loader-animate {
+  0% { opacity: 1; }
+  50% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+.loader-animate {
+  animation: loader-animate 2s cubic-bezier(.1,0,.9,1) 0s infinite normal;
 }
 
 /* /Pages */

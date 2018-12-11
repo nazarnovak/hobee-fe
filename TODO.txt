@@ -7,6 +7,7 @@ General:
 3) What sizes should I consider when making the page responsive? What are popular sizes? It has to be mobile first of
 course!
 4) Can you do transitions between pages different? So let's say there are page A,B and C. If you transition A -> C, the animation is one style. If you go B -> C - animation is a different style. Is it easy to do that in React transitions and is it even going to be worth doing something like that? I won't have a lot of pages in total which might be a fun little experiment trying to make a composition between all the pages and a little Easter egg? But will it be worth the work? Good to try as an experiment with the 3 pages mentioned above, and the creative work that needs to be done might be quite expensive as well 
+5) Motto - can't really go rebel on this one, since safety is quite important, eh?
 
 Home page:
 1) Buy Shutterstock 5x2 images so I don't have to deal with legal bs? Or better not use any actual faces?
@@ -15,11 +16,12 @@ Home page:
 
 Login/Signup:
 1) Should I hide the Login button? Or replace it with something else?
-2) Is there a way to make the button to fade away smoothly? :) https://medium.com/@khwsc1/step-by-step-guide-of-simple-routing-transition-effect-for-react-with-react-router-v4-and-9152db1566a0
+2) Is there a way to make the button to fade away smoothly together with the rest of the content? I tried putting the
+button outside of Nav and moving it between CSSTransition tags, but it would still be clunky. Can you specify a specific
+component names to which the CSSTransition will apply and ignore the rest, even tho they're between the tags?
 
 About:
-1) If I'll decide to use Why | Who pills in the About page, how do I stop the page from reloading and yet add #why
-anchor to the address?
+
 
 Contact:
 1) Should I figure out how to make select with a rounded corners to tie into the design of things or should I just

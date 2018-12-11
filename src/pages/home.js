@@ -40,7 +40,7 @@ const styles = {
     fontSize: '54px',
     margin: '0',
     textAlign: 'center',
-    whiteSpace: 'pre-line',
+    // whiteSpace: 'pre-line',
     width: '100%',
   }
 }
@@ -83,7 +83,7 @@ export default class Home extends React.Component {
                 {/*<img src={man} style={{ height: '100%'}} alt="Man" />*/}
               {/*</div>*/}
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: sectionWidthThird}}>
-                <div style={{...styles.motto}} className={`fade-in-motto ${didMount && 'visible'}`}>Why should I use this site?</div>
+                <div style={{...styles.motto}} className={`fade-in-motto ${didMount && 'visible'}`}>Chat responsibly</div>
               </div>
               {/*<div style={{height: '100%', width: sectionWidthThird}}>*/}
                 {/*<img src={woman} style={{ height: '100%'}} alt="Woman" />*/}

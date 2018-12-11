@@ -31,7 +31,7 @@ export default class Contact extends React.Component {
           <p><input type="text" placeholder="email" className={`input`} /></p>
           <p><input type="text" placeholder="message" className={`input`} /></p>
           <p><input type="text" className={`input error ${err && 'visible'}`} value={ err } readOnly /></p>
-          <button id={`submit-button`} onClick={this.handleFormSubmit}>Contact</button>
+          <button className={`submit-button`} onClick={this.handleFormSubmit}>Contact</button>
         </form>
       </div>
     );

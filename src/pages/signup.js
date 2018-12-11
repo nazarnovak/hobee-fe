@@ -30,7 +30,7 @@ export default class Signup extends React.Component {
           <p><input type="text" placeholder="email" className={`input`} /></p>
           <p><input type="password" placeholder="password" className={`input`} /></p>
           <p><input type="text" className={`input error ${err && 'visible'}`} value={ err } readOnly /></p>
-          <button id={`submit-button`} onClick={this.handleFormSubmit}>Sign up</button>
+          <button className={`submit-button`} onClick={this.handleFormSubmit}>Sign up</button>
         </form>
       </div>
     );
