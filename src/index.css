@@ -30,33 +30,35 @@ a:link, a:visited, a:active {
 
 a:hover {
   color: #005299;
-  text-decoration: underline;
+  /*text-decoration: underline;*/
+  transition: 200ms color ease-in-out;
 }
 
 input::placeholder {
-  color: #ccc;
+  color: #bbb;
 }
 
 input {
-  color: #222;
-  font-weight: 600;
+  color: #333;
+  /*font-weight: 600;*/
   font-size: 16px;
-  /*background-color: #f9fcff;*/
-  border: 1px solid #b3daff;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  /*border-bottom: 1px solid #c8e5ff;*/
   margin-bottom: 20px;
 }
 
 input:focus {
-  /*background-color: #0074d9;*/
-  border: 1px solid #0074d9;
+  background-color: #f6f6ff;
+  border: 1px solid #aaa;
   /*color: #fff;*/
 }
 
 /* Probably should rename to avoid confusion with a tagname input :( */
 .input {
-  height: 30px;
-  width: 250px;
-  border-radius: 30px;
+  height: 40px;
+  width: 225px;
+  border-radius: 50px;
   /*backgroundColor: #e6f3ff;*/
   padding: 0 15px;
   outline: none;
@@ -65,15 +67,16 @@ input:focus {
 .submit-button {
   border-radius: 30px;
   color: #ffffff;
-  font-size: 14px;
-  height: 30px;
+  font-size: 18px;
+  font-weight: 300;
+  height: 40px;
   width: 150px;
   background-color: #0074d9;
   outline: none;
 }
 
 .error {
-  border: none;
+  border: 1px solid transparent;
   background-color: unset;
   color: #ff0033;
   opacity: 0;
@@ -91,7 +94,7 @@ input:focus {
 
 /* Transitions */
 .fade-appear {
-  opacity: 0;
+  opacity: 0.01;
 }
 
 .fade-appear.fade-appear-active {
@@ -100,7 +103,7 @@ input:focus {
 }
 
 .fade-enter {
-  opacity: 0;
+  opacity: 0.01;
 }
 
 .fade-enter.fade-enter-active {
@@ -113,7 +116,7 @@ input:focus {
 }
 
 .fade-exit.fade-exit-active {
-  opacity: 0;
+  opacity: 0.01;
   transition: opacity 1000ms cubic-bezier(.6,0,.4,1);
 }
 
@@ -185,16 +188,50 @@ color 900ms cubic-bezier(.6,0,.4,1) 200ms, text-shadow 500ms cubic-bezier(.6,0,.
 .main-content {
   left: 0;
   right: 0;
-  margin: 0 auto;
-  padding: 20px;
+  margin: 0;
+  /*padding: 20px;*/
   position: absolute;
-  top: 100px;
-  zIndex: 1;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: calc(100% - 70px);
+  top: 70px;
+  z-index: 1;
+}
+
+.background-shade {
+  background-color: #c8e5ff;
+}
+
+.auth-page {
+  background-color: #ffffff;
+  width: 400px;
+  padding: 0 20px 20px 20px;
+  border-radius: 20px;
+  margin: 20px auto 0 auto;
+  /*border: 1px solid #eee;*/
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 2px -2px;
 }
 
 .header {
   text-align: center;
   margin-bottom: 40px;
+  padding: 20px;
+  font-size: 28px;
+  font-weight: 200;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+}
+
+.or {
+  background-color: #ffffff;
+  width: 400px;
+  padding: 20px;
+  border-radius: 20px;
+  margin: 20px auto 0 auto;
+  /*border: 1px solid #eee;*/
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 2px -2px;
+  text-align: center;
 }
 
 .active-tab {

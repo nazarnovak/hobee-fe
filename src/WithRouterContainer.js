@@ -12,6 +12,10 @@ class WithRouter extends React.Component {
       this.unlisten();
   }
 
+  componentDidMount() {
+    this.props.onRouteChange(this.props.location);
+  }
+
   render() {
      return (
          this.props.children
