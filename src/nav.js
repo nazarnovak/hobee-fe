@@ -24,7 +24,7 @@ const styles = {
   signUp: {
     backgroundColor: colorBlueSoft,
     border: '1px solid ' + colorBlueSoft,
-    borderRadius: '30px',
+    borderRadius: '20px',
     color: '#f3f3f3',
     cursor: 'pointer',
     fontSize: '18px',
@@ -80,6 +80,11 @@ export default class Nav extends React.Component {
     // Don't show signup button in signup page
     if (pathname !== "/signup") {
       signupButton = <SignupButton margin={sideMargin} width={buttonWidth}/>
+    }
+
+    // Hack: temporarily don't show it on /chat as well
+    if (pathname === "/chat") {
+      signupButton = undefined
     }
 
     return (

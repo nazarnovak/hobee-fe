@@ -16,69 +16,76 @@ export default class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      animate: true,
-      loaderTop: 0,
+      foundBee: false,
+      searchStartTimestamp: 0,
     };
+
+    this.handleStop = this.handleStop.bind(this);
   }
 
   componentDidMount() {
-    let loadTime = 3000;
+    this.setState( { searchStartTimestamp: Date.now() } );
 
-    const logoEl = this.refs.logo;
-
-    this.setState( { loaderTop: this.getOffset(logoEl).top });
-
+    // TODO: To make work faster. Remove later
     let that = this;
 
     setTimeout(function() {
-      that.waitRemainder(loadTime);
-    }, loadTime);
+      that.handleStop();
+    }, 4000);
   }
 
-  moveLogoUp() {
-    const logoEl = this.refs.logo;
-    // 10 is the top for the logo
+  handleStop() {
+    let loadTime = Date.now() - this.state.searchStartTimestamp;
 
-    const distance = this.getOffset(logoEl).top - 10;
-
-    var i;
-    for (i = distance; i > 0; i = i - 0.1) {
-      this.doSetTimeout(i);
-    }
-  }
-
-  doSetTimeout(i) {
-    const that = this;
-
-    setTimeout(function() {
-        that.setState({ loaderTop: i });
-      }, 1000);
-  }
-
-  getOffset(el) {
-    const rect = el.getBoundingClientRect();
-    return {
-      left: rect.left + window.scrollX,
-      top: rect.top + window.scrollY
-    };
+    this.waitRemainder(loadTime);
   }
 
   waitRemainder(loadTime) {
     let that = this;
 
-    // Full animation time is 2s, so we need to make it finish the animation before proceeding
+    // Full animation time is 3s, so we need to make it finish the animation before proceeding
     setTimeout(function() {
-      that.setState({ animate: false });
-
-      that.moveLogoUp();
-    }, loadTime % 2000);
+      that.setState({ foundBee: true });
+    }, 3000 - (loadTime % 3000));
   }
 
   render() {
-    const { animate, loaderTop } = this.state;
-console.log(loaderTop);
+    const { foundBee } = this.state;
+
     return (
-        <img src={logo} style={{ ...styles.logo, top: loaderTop ? loaderTop : '50%' }} alt="Logo" className={animate ? `loader-animate` : ``} ref={`logo`} />
+        <div className={`main-content ${foundBee ? 'background-shade' : ''}`}>
+          <ChatWindow foundBee={foundBee} height={this.props.height} />
+          <ChatControls foundBee={foundBee} />
+          <img src={logo} style={{ ...styles.logo }} alt="Logo" className={foundBee ? 'loader-animate-done' : 'loader-animate'} />
+        </div>
+    );
+  }
+}
+
+class ChatWindow extends React.Component {
+  render() {
+    if (!this.props.foundBee) {
+      return null;
+    }
+
+    // Extra 40 are top+bottom margin (20 x 2)
+    const chatWindowHeight = (this.props.height - 110 - 40);
+console.log(this.props.height, chatWindowHeight);
+
+    return (
+        <div className='chat-window fade-in' style={{ height: chatWindowHeight }}></div>
+    );
+  }
+}
+
+class ChatControls extends React.Component {
+  render() {
+    if (!this.props.foundBee) {
+      return null;
+    }
+
+    return (
+        <div className='chat-controls fade-in'></div>
     );
   }
 }

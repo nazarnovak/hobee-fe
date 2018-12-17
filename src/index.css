@@ -203,6 +203,10 @@ color 900ms cubic-bezier(.6,0,.4,1) 200ms, text-shadow 500ms cubic-bezier(.6,0,.
   background-color: #c8e5ff;
 }
 
+.background-shade-lighter {
+  background-color: #eaf5ff;
+}
+
 .auth-page {
   background-color: #ffffff;
   width: 400px;
@@ -210,7 +214,8 @@ color 900ms cubic-bezier(.6,0,.4,1) 200ms, text-shadow 500ms cubic-bezier(.6,0,.
   border-radius: 20px;
   margin: 20px auto 0 auto;
   /*border: 1px solid #eee;*/
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 2px -2px;
+  /*box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 2px -2px;*/
+  box-shadow: rgba(0, 0, 0, 0.2) inset 0px 2px 4px 1px;
 }
 
 .header {
@@ -230,7 +235,8 @@ color 900ms cubic-bezier(.6,0,.4,1) 200ms, text-shadow 500ms cubic-bezier(.6,0,.
   border-radius: 20px;
   margin: 20px auto 0 auto;
   /*border: 1px solid #eee;*/
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 2px -2px;
+  /*box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 2px -2px;*/
+  box-shadow: rgba(0, 0, 0, 0.2) inset 0px 2px 4px 1px;
   text-align: center;
 }
 
@@ -247,13 +253,55 @@ color 900ms cubic-bezier(.6,0,.4,1) 200ms, text-shadow 500ms cubic-bezier(.6,0,.
 }
 
 @keyframes loader-animate {
+  0% { opacity: 1; transform:scale(1,1); }
+  38% { opacity: 0.7; }
+  50% { opacity: 0.6; transform:scale(1.4,1.4); }
+  100% { opacity: 1; transform:scale(1,1); }
+}
+
+
+.loader-animate {
+  animation: loader-animate 3000ms cubic-bezier(.4,0,.6,1) 0s infinite alternate;
+}
+
+@keyframes loader-fade-out {
   0% { opacity: 1; }
-  50% { opacity: 0.2; }
+  100% { opacity: 0; }
+}
+
+.loader-animate-done {
+  animation: loader-fade-out 800ms cubic-bezier(.4,0,.6,1) 0s 1 normal;
+  opacity: 0;
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
   100% { opacity: 1; }
 }
 
-.loader-animate {
-  animation: loader-animate 2s cubic-bezier(.1,0,.9,1) 0s infinite normal;
+.fade-in {
+  animation: fade-in 1600ms cubic-bezier(.4,0,.6,1) 0s 1 normal;
 }
 
 /* /Pages */
+
+/* Chat */
+.chat-window {
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: rgba(0, 0, 0, 0.2) inset 0px 2px 4px 1px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.chat-controls {
+  border-radius: 20px;
+  height: 30px;
+  padding: 0 20px;
+  margin: 0px 20px 10px 20px;
+  box-shadow: rgba(0, 0, 0, 0.2) inset 0px 2px 4px 1px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+/* /Chat */

@@ -16,7 +16,7 @@ export default class Routing extends React.Component {
         <Route path="/" exact render={() => <Home height={ this.props.height } width={ this.props.width } />} />
         <Route path="/signup" exact component={ Signup } />
         <Route path="/login" exact component={ Login} />
-        <Route path="/chat" exact component={ Chat } />
+        <Route path="/chat" exact render={() => <Chat height={ this.props.height } width={ this.props.width } />} />
         <Route path="/about" exact component={ About } location={ this.props.location } />
         <Route path="/contact" exact component={ Contact } />
         <Route component={ NotFound } />
