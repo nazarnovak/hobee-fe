@@ -27,11 +27,13 @@ export default class Chat extends React.Component {
     this.setState( { searchStartTimestamp: Date.now() } );
 
     // TODO: To make work faster. Remove later
+this.setState({ foundBee: true });
+return;
     let that = this;
 
     setTimeout(function() {
       that.handleStop();
-    }, 4000);
+    }, 2000);
   }
 
   handleStop() {
@@ -52,9 +54,40 @@ export default class Chat extends React.Component {
   render() {
     const { foundBee } = this.state;
 
+    const messages = [
+      {
+        "sender": 0,
+        "message": 'Hi 😋'
+      },
+      {
+        "sender": 1,
+        "message": 'Heya'
+      },
+      {
+        "sender": 1,
+        "message": `How's it going?`
+      },
+      {
+        "sender": 0,
+        "message": `Pretty good, what about yourself?`
+      },
+      {
+        "sender": 1,
+        "message": `Yeah, I'm doing fantastic! Thanks for asking!`
+      },
+      {
+        "sender": 0,
+        "message": `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.`,
+      },
+      {
+        "sender": 1,
+        "message": `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`,
+      }
+    ];
+
     return (
-        <div className={`main-content ${foundBee ? 'background-shade' : ''}`}>
-          <ChatWindow foundBee={foundBee} height={this.props.height} />
+        <div className={`main-content ${foundBee ? 'background-shade-darker' : ''}`}>
+          <ChatWindow foundBee={foundBee} height={this.props.height} messages={messages}/>
           <ChatControls foundBee={foundBee} />
           <img src={logo} style={{ ...styles.logo }} alt="Logo" className={foundBee ? 'loader-animate-done' : 'loader-animate'} />
         </div>
@@ -68,12 +101,19 @@ class ChatWindow extends React.Component {
       return null;
     }
 
-    // Extra 40 are top+bottom margin (20 x 2)
+    // Extra 20 are top+bottom margin (20 + 20)
     const chatWindowHeight = (this.props.height - 110 - 40);
-console.log(this.props.height, chatWindowHeight);
+
+    const messageItems = this.props.messages.map((message) =>
+      <div className={`${ message.sender === 0 ? 'your-message-container' : 'my-message-container'}`}>
+        <div className={`chat-message ${ message.sender === 0 ? 'your-message' : 'my-message' }`}>{message.message}</div>
+      </div>
+    );
 
     return (
-        <div className='chat-window fade-in' style={{ height: chatWindowHeight }}></div>
+        <div className='chat-window fade-in' style={{ height: chatWindowHeight }}>
+          {messageItems}
+        </div>
     );
   }
 }
@@ -85,7 +125,9 @@ class ChatControls extends React.Component {
     }
 
     return (
-        <div className='chat-controls fade-in'></div>
+        <div className='chat-controls fade-in'>
+          <input type="text" placeholder="Message..." className={`chat-input`} />
+        </div>
     );
   }
 }

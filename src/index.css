@@ -35,7 +35,7 @@ a:hover {
 }
 
 input::placeholder {
-  color: #bbb;
+  color: #999;
 }
 
 input {
@@ -43,22 +43,22 @@ input {
   /*font-weight: 600;*/
   font-size: 16px;
   background-color: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid #aaa;
   /*border-bottom: 1px solid #c8e5ff;*/
   margin-bottom: 20px;
 }
 
 input:focus {
-  background-color: #f6f6ff;
-  border: 1px solid #aaa;
+  background-color: #f3f3f3;
+  border: 1px solid #666;
   /*color: #fff;*/
 }
 
 /* Probably should rename to avoid confusion with a tagname input :( */
 .input {
-  height: 40px;
-  width: 225px;
-  border-radius: 50px;
+  height: 30px;
+  width: 250px;
+  border-radius: 15px;
   /*backgroundColor: #e6f3ff;*/
   padding: 0 15px;
   outline: none;
@@ -67,10 +67,10 @@ input:focus {
 .submit-button {
   border-radius: 30px;
   color: #ffffff;
-  font-size: 18px;
-  font-weight: 300;
-  height: 40px;
-  width: 150px;
+  font-size: 16px;
+  font-weight: 500;
+  height: 30px;
+  width: 200px;
   background-color: #0074d9;
   outline: none;
 }
@@ -199,9 +199,14 @@ color 900ms cubic-bezier(.6,0,.4,1) 200ms, text-shadow 500ms cubic-bezier(.6,0,.
   z-index: 1;
 }
 
+.background-shade-darker {
+  background-color: #002240;
+}
+
 .background-shade {
   background-color: #c8e5ff;
 }
+
 
 .background-shade-lighter {
   background-color: #eaf5ff;
@@ -209,18 +214,17 @@ color 900ms cubic-bezier(.6,0,.4,1) 200ms, text-shadow 500ms cubic-bezier(.6,0,.
 
 .auth-page {
   background-color: #ffffff;
-  width: 400px;
-  padding: 0 20px 20px 20px;
+  width: 340px;
+  padding: 0 50px 20px 50px;
   border-radius: 20px;
   margin: 20px auto 0 auto;
   /*border: 1px solid #eee;*/
-  /*box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 2px -2px;*/
-  box-shadow: rgba(0, 0, 0, 0.2) inset 0px 2px 4px 1px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 2px -2px;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   padding: 20px;
   font-size: 28px;
   font-weight: 200;
@@ -235,8 +239,7 @@ color 900ms cubic-bezier(.6,0,.4,1) 200ms, text-shadow 500ms cubic-bezier(.6,0,.
   border-radius: 20px;
   margin: 20px auto 0 auto;
   /*border: 1px solid #eee;*/
-  /*box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 2px -2px;*/
-  box-shadow: rgba(0, 0, 0, 0.2) inset 0px 2px 4px 1px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 2px -2px;
   text-align: center;
 }
 
@@ -290,18 +293,55 @@ color 900ms cubic-bezier(.6,0,.4,1) 200ms, text-shadow 500ms cubic-bezier(.6,0,.
   border-radius: 20px;
   padding: 20px;
   margin: 20px;
-  box-shadow: rgba(0, 0, 0, 0.2) inset 0px 2px 4px 1px;
   box-sizing: border-box;
   background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 2px -2px;
+  overflow-y: scroll;
+}
+
+.my-message-container {
+  text-align: right;
+}
+
+.chat-message {
+  border-radius: 20px;
+  padding: 6px 12px 6px 12px;
+  max-width: 75%;
+  margin-bottom: 10px;
+  display: inline-block;
+  text-align: left;
+  word-wrap: break-word;
+  font-size: 18px;
+}
+
+.your-message {
+  background-color: #0074d9;
+  color: white;
+}
+
+.my-message {
+  background-color: #f0f0f0;
+  color: #000;
+  margin-left: auto;
 }
 
 .chat-controls {
   border-radius: 20px;
   height: 30px;
-  padding: 0 20px;
   margin: 0px 20px 10px 20px;
-  box-shadow: rgba(0, 0, 0, 0.2) inset 0px 2px 4px 1px;
   box-sizing: border-box;
   background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 2px -2px;
 }
+
+.chat-input {
+  border: none;
+  height: 30px;
+  margin: 0px 20px 10px 20px;
+  border-radius: 20px;
+  padding: 0 15px;
+  font-weight: 500;
+  outline: none;
+}
+
 /* /Chat */
