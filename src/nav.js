@@ -10,7 +10,7 @@ const colorBlueDarker = '#005299';
 
 const styles = {
   nav: {
-    boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 2px -2px',
+    boxShadow: 'rgba(0, 0, 0, 0.3) 0px 1px 8px 0px',
     height: '70px',
     padding: '0 50px',
     textAlign: 'center',
@@ -33,6 +33,7 @@ const styles = {
     outline: 'none',
     width: '120px',
     transition: 'all 0.2s ease-in-out',
+    boxShadow: 'rgba(0, 0, 0, 0.2) 0px 4px 8px 0px',
   },
   signUpHover: {
     backgroundColor: colorBlueDarker,

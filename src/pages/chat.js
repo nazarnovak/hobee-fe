@@ -82,6 +82,22 @@ return;
       {
         "sender": 1,
         "message": `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`,
+      },
+      {
+        "sender": 0,
+        "message": `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.`,
+      },
+      {
+        "sender": 1,
+        "message": `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`,
+      },
+        {
+        "sender": 0,
+        "message": `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.`,
+      },
+      {
+        "sender": 1,
+        "message": `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`,
       }
     ];
 
@@ -104,6 +120,9 @@ class ChatWindow extends React.Component {
     // Extra 20 are top+bottom margin (20 + 20)
     const chatWindowHeight = (this.props.height - 110 - 40);
 
+    // - paddings top+bottom 20 + 20
+    const chatWindowInnerHeight = chatWindowHeight - 40;
+
     const messageItems = this.props.messages.map((message) =>
       <div className={`${ message.sender === 0 ? 'your-message-container' : 'my-message-container'}`}>
         <div className={`chat-message ${ message.sender === 0 ? 'your-message' : 'my-message' }`}>{message.message}</div>
@@ -111,8 +130,10 @@ class ChatWindow extends React.Component {
     );
 
     return (
-        <div className='chat-window fade-in' style={{ height: chatWindowHeight }}>
-          {messageItems}
+        <div className='chat-window-outer fade-in' style={{ height: chatWindowHeight }}>
+          <div className='chat-window fade-in' style={{ height: chatWindowInnerHeight }}>
+            {messageItems}
+          </div>
         </div>
     );
   }

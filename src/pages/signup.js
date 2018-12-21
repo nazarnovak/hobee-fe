@@ -25,7 +25,7 @@ export default class Signup extends React.Component {
     const { err } = this.state;
 
     return (
-      <div className="main-content background-shade">
+      <div className="main-content background-shade-darker">
         <div className="auth-page">
           <h1 className={`header`}>Sign up</h1>
           <form style={{ textAlign: 'center' }}>
