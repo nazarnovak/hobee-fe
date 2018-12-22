@@ -10,6 +10,7 @@ const styles = {
     justifyContent: 'center',
     padding: '0 50px',
     borderBottom: '1px solid #e6e6e6',
+    height: '100%',
   },
   section1Small: {
     alignItems: 'center',
@@ -76,14 +77,14 @@ export default class Home extends React.Component {
     return (
       <div style={{ position: 'absolute', top: '70px', zIndex: '1'}}>
         <MediaQuery  query="(min-width: 801px)">
-          <div style={{ backgroundColor: '#0074d9' }} className={`fade-in-motto-bg ${didMount && 'visible'}`}>
+          <div style={{ backgroundColor: '#0074d9', height: sectionHeightHalf }} className={`fade-in-motto-bg ${didMount && 'visible'}`}>
           {/*<div style={{ backgroundImage: 'linear-gradient(180deg, #4fadff 10%, #0074d9)'}}>*/}
-            <div style={{ ...styles.section1, height: sectionHeightHalf}}>
+            <div style={{ ...styles.section1 }}>
               {/*<div style={{ height: '100%', width: sectionWidthThird }}>*/}
                 {/*<img src={man} style={{ height: '100%'}} alt="Man" />*/}
               {/*</div>*/}
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: sectionWidthThird}}>
-                <div style={{...styles.motto}} className={`fade-in-motto ${didMount && 'visible'}`}>Dialogue definite </div>
+                <div style={{...styles.motto}} className={`fade-in-motto ${didMount && 'visible'}`}>Dialogue definite</div>
               </div>
               {/*<div style={{height: '100%', width: sectionWidthThird}}>*/}
                 {/*<img src={woman} style={{ height: '100%'}} alt="Woman" />*/}

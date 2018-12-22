@@ -5,7 +5,8 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      err: '',
+      hasError: false,
+      err: 'Error occured!',
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -13,27 +14,26 @@ export default class Login extends React.Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
-    if (this.state.err === '') {
-      this.setState({ err: 'Error occured!' });
-      return
-    }
 
-    this.setState({ err: '' });
+    this.setState({ hasError: !this.state.hasError });
   }
 
   render() {
-    const { err } = this.state;
+    const { hasError, err } = this.state;
 
     return (
       <div className="main-content background-shade-darker">
         <div className="auth-page">
           <h1 className={`header`}>Log in</h1>
           <form style={{ textAlign: 'center' }}>
-            <p><input type="text" placeholder="email" className={`input`} /></p>
-            <p><input type="password" placeholder="password" className={`input`} /></p>
-            <p><input type="text" className={`input error ${err && 'visible'}`} value={ err } readOnly /></p>
+            <p><input type="text" placeholder="email" className={`auth-input`} /></p>
+            <p><input type="password" placeholder="password" className={`auth-input`} /></p>
+            <p><input type="text" className={`error-auth ${hasError ? 'visible' : ''}`} value={ err } readOnly /></p>
             <button className={`submit-button`} onClick={this.handleFormSubmit}>Log in</button>
           </form>
+        </div>
+        <div className="or">
+          <Link to="/signup"> I don't have an account</Link>
         </div>
         <div className="or">
           <Link to="/login"> I have forgotten my password</Link>

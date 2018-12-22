@@ -62,7 +62,7 @@ export default class About extends React.Component {
     let that = this;
     setTimeout(function() {
       that.setState( { animatePicture: false } );
-    }, 1500);
+    }, 1000);
   }
 
   render() {
