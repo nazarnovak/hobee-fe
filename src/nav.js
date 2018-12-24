@@ -21,26 +21,6 @@ const styles = {
     marginTop: '10px',
     outline: 'none',
   },
-  signUp: {
-    backgroundColor: colorBlueSoft,
-    border: '1px solid ' + colorBlueSoft,
-    borderRadius: '20px',
-    color: '#f3f3f3',
-    cursor: 'pointer',
-    fontSize: '18px',
-    fontWeight: '500',
-    height: '40px',
-    outline: 'none',
-    width: '120px',
-    transition: 'all 0.2s ease-in-out',
-    boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 4px 0px',
-  },
-  signUpHover: {
-    backgroundColor: colorBlueDarker,
-    border: '1px solid ' + colorBlueDarker,
-    color: '#ffffff',
-    transition: 'all 0.2s ease-in-out',
-  }
 }
 
 const logo = require('./images/h.svg');
@@ -75,17 +55,13 @@ export default class Nav extends React.Component {
         sideMargin = '50px';
     }
 
-    let signupButton = undefined;
+    let signupVisible = true;
     let pathname = this.state.location.pathname;
 
     // Don't show signup button in signup page
-    if (pathname !== "/signup") {
-      signupButton = <SignupButton margin={sideMargin} width={buttonWidth}/>
-    }
-
     // Hack: temporarily don't show it on /chat as well
-    if (pathname === "/chat") {
-      signupButton = undefined
+    if (pathname === "/signup" || pathname === "/chat") {
+      signupVisible = false;
     }
 
     return (
@@ -93,7 +69,7 @@ export default class Nav extends React.Component {
         <Link to="/">
           <img src={logo} style={{...styles.logo}} alt="Logo" />
         </Link>
-        {signupButton}
+        <SignupButton margin={sideMargin} width={buttonWidth} visible={signupVisible} />
       </div>
     );
   }
@@ -122,9 +98,7 @@ class SignupButton extends React.Component {
     return (
         <div style={{ position: 'absolute', top: '15px', right: this.props.margin }}>
           <Link to="/signup">
-            <button style={{...styles.signUp, width: this.props.width,
-              ...(this.state.hover ? styles.signUpHover : undefined)}} onMouseEnter={this.onMouseEnter}
-                    onMouseLeave={this.onMouseLeave}>
+            <button className={`sign-up-button ${this.props.visible ? '' : 'fade'}`} style={{ width: this.props.width }}>
               Sign up
             </button>
           </Link>

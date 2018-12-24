@@ -20,9 +20,6 @@ Home page:
 
 Login/Signup:
 1) Should I hide the Login button? Or replace it with something else?
-2) Is there a way to make the button to fade away smoothly together with the rest of the content? I tried putting the
-button outside of Nav and moving it between CSSTransition tags, but it would still be clunky. Can you specify a specific
-component names to which the CSSTransition will apply and ignore the rest, even tho they're between the tags?
 
 About:
 

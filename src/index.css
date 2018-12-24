@@ -34,42 +34,56 @@ a:hover {
   transition: 200ms color ease-in-out;
 }
 
-.auth-input::placeholder {
+.auth-input::placeholder, .auth-textarea::placeholder {
   color: #999;
 }
 
-.auth-input {
+.auth-input, .auth-textarea {
   color: #333;
   font-size: 16px;
   background-color: #fff;
   border: 1px solid #aaa;
   margin-bottom: 15px;
-  height: 30px;
   width: 250px;
   border-radius: 15px;
-  /*backgroundColor: #e6f3ff;*/
-  padding: 0 15px;
+  padding: 6px 15px;
   outline: none;
   box-shadow: rgba(0, 0, 0, 0.1) inset 0px 4px 6px -1px;
 }
 
-.auth-input:focus {
-  background-color: #f6f6f6;
-  border: 1px solid #666;
+.auth-input:focus, .auth-textarea:focus {
+  background-color: #fafafa;
+  border: 1px solid #555;
   /*color: #fff;*/
 }
 
-.auth-textarea {
-  color: #333;
-  font-size: 16px;
-  background-color: #fff;
-  border: 1px solid #aaa;
-  margin-bottom: 15px;
-  width: 250px;
-  border-radius: 15px;
-  padding: 0 15px;
+.sign-up-button {
+  background-color: #0074d9;
+  border: 1px solid #0074d9;
+  border-radius: 20px;
+  color: #f3f3f3;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  height: 40px;
   outline: none;
-  box-shadow: rgba(0, 0, 0, 0.1) inset 0px 4px 6px -1px;
+  width: 120px;
+  transition: color 0.4s ease-in-out;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px 0px;
+  opacity: 1;
+  transition: opacity 800ms cubic-bezier(.6,0,.4,1);
+}
+
+.sign-up-button:hover {
+  background-color: #005299;
+  border: 1px solid #005299;
+  color: #ffffff;
+  transition: color 0.2s ease-in-out, border 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.sign-up-button.fade {
+  opacity: 0;
+  transition: opacity 800ms cubic-bezier(.6,0,.4,1);
 }
 
 .error-auth {
@@ -244,7 +258,7 @@ a:hover {
   font-size: 36px;
   font-weight: 200;
   color: #333;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #333;
 }
 
 .or {
@@ -256,6 +270,7 @@ a:hover {
   /*border: 1px solid #eee;*/
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 2px -2px;
   text-align: center;
+  font-size: 18px;
 }
 
 .active-tab {
