@@ -59,6 +59,19 @@ a:hover {
   /*color: #fff;*/
 }
 
+.auth-textarea {
+  color: #333;
+  font-size: 16px;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  margin-bottom: 15px;
+  width: 250px;
+  border-radius: 15px;
+  padding: 0 15px;
+  outline: none;
+  box-shadow: rgba(0, 0, 0, 0.1) inset 0px 4px 6px -1px;
+}
+
 .error-auth {
   border: 1px solid transparent;
   background-color: #fff;
@@ -291,27 +304,27 @@ a:hover {
 /* /Pages */
 
 /* Chat */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 50px;
-}
+/*::-webkit-scrollbar {*/
+  /*width: 10px;*/
+  /*height: 50px;*/
+/*}*/
 
-::-webkit-scrollbar-thumb {
-  background: #aaa;
-  border-radius: 10px;
-  height: 50px;
-}
+/*::-webkit-scrollbar-thumb {*/
+  /*background: #aaa;*/
+  /*border-radius: 10px;*/
+  /*height: 50px;*/
+/*}*/
 
-::-webkit-scrollbar-thumb:hover {
-  background: #777;
-  height: 50px;
-}
+/*::-webkit-scrollbar-thumb:hover {*/
+  /*background: #777;*/
+  /*height: 50px;*/
+/*}*/
 
-::-webkit-scrollbar-track {
-  background: #e0e0e0;
-  border-radius: 10px;
-  height: 50px;
-}
+/*::-webkit-scrollbar-track {*/
+  /*background: #e0e0e0;*/
+  /*border-radius: 10px;*/
+  /*height: 50px;*/
+/*}*/
 
 .chat-window-outer {
   border-radius: 20px;
@@ -409,7 +422,7 @@ a:hover {
   25% { transform: translate(-125px, 10px); }
   50% { transform: translate(-250px, 25px) rotate(-60deg); z-index: 3; }
   55% {  z-index: 1; }
-  25% { transform: translate(-125px, 10px); }
+  75% { transform: translate(-125px, 10px); }
   100% { transform: translate(0,0); z-index: 1; }
 }
 

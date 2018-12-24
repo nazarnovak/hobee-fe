@@ -10,6 +10,7 @@ const styles = {
     justifyContent: 'center',
     padding: '0 50px',
     borderBottom: '1px solid #e6e6e6',
+    minHeight: '300px',
     height: '100%',
   },
   section1Small: {
@@ -24,6 +25,8 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'center',
     padding: '0 50px',
+    minHeight: '300px',
+    height: '100%',
   },
   footer: {
     // boxShadow: 'rgba(0, 0, 0, 0.1) 0px -4px 2px -2px',
@@ -46,9 +49,16 @@ const styles = {
   }
 }
 
-const man = require('../images/man.png');
-const woman = require('../images/woman.png');
 const blueCircle = require('../images/bluecircle.png');
+const checkmark = require('../images/checkmark.svg');
+const shield = require('../images/shield.svg');
+const people = require('../images/people.svg');
+const people2 = require('../images/people2.svg');
+const crown = require('../images/crown.svg');
+
+const crown2 = require('../images/crown2.svg');
+const shield2 = require('../images/shield2.svg');
+const people4 = require('../images/people4.svg');
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -111,28 +121,28 @@ export default class Home extends React.Component {
         </MediaQuery>
         <div style={{ ...styles.section2, height: sectionHeightHalf }}>
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%',
-            width: sectionWidthThird, padding: '30px', boxSizing: 'border-box' }}
+            width: sectionWidthThird, padding: '25px', boxSizing: 'border-box' }}
                className={`fade-in-circle-1 ${didMount && 'visible'}`}>
             <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
-              backgroundColor: '#0074d9', borderRadius: '150px' }}></div>
-            <p style={{margin: '25px auto 0 auto', fontSize: '24px', color: '#333', fontWeight: '600'}}>Quality</p>
-            <p style={{margin: '15px 50px', textAlign: 'center', color: '#666', fontWeight: '500'}}>Your meaningful conversation is highest priority</p>
+              backgroundColor: '#ffffff', borderRadius: '150px', border: '1px solid #333', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 6px 0px' }}><img src={crown2} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto' }}/></div>
+            <p style={{margin: '20px auto 0 auto', fontSize: '24px', color: '#222', fontWeight: '600'}}>Quality</p>
+            <p style={{margin: '15px 40px', textAlign: 'center', fontSize: '18px', color: '#666', fontWeight: '400'}}>Your meaningful conversation is highest priority</p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%',
-            width: sectionWidthThird, padding: '30px', boxSizing: 'border-box' }}
+            width: sectionWidthThird, padding: '25px', boxSizing: 'border-box' }}
           className={`fade-in-circle-1 ${didMount && 'visible'}`}>
             <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
-              backgroundColor: '#0074d9', borderRadius: '150px' }}></div>
-            <p style={{margin: '25px auto 0 auto', fontSize: '24px', color: '#333', fontWeight: '600'}}>Safety</p>
-            <p style={{margin: '15px 50px', textAlign: 'center', color: '#666', fontWeight: '500'}}>Spam, harassment, bots and other inappropriate behavior are not tolerated</p>
+              backgroundColor: "#ffffff", borderRadius: '150px', border: '1px solid #333', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 6px 0px' }}><img src={shield2} height="80px" widht="80px" style={{ display: 'block', margin: '35px auto 25px auto' }}/></div>
+            <p style={{margin: '20px auto 0 auto', fontSize: '24px', color: '#222', fontWeight: '600'}}>Safety</p>
+            <p style={{margin: '15px 40px', textAlign: 'center', fontSize: '18px', color: '#666', fontWeight: '400'}}>Spam, harassment, bots and other inappropriate behavior are not tolerated</p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%',
-            width: sectionWidthThird, padding: '30px', boxSizing: 'border-box' }}
+            width: sectionWidthThird, padding: '25px', boxSizing: 'border-box' }}
           className={`fade-in-circle-1 ${didMount && 'visible'}`}>
             <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
-              backgroundColor: '#0074d9', borderRadius: '150px'}}></div>
-            <p style={{margin: '25px auto 0 auto', fontSize: '24px', color: '#333', fontWeight: '600'}}>Community</p>
-            <p style={{margin: '15px 50px', textAlign: 'center', color: '#666', fontWeight: '500'}}>Smallest feedback you have is very critical in making us better</p>
+              backgroundColor: "#ffffff", borderRadius: '150px', border: '1px solid #333', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 6px 0px' }}><img src={people4} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto 5px auto' }}/></div>
+            <p style={{margin: '20px auto 0 auto', fontSize: '24px', color: '#222', fontWeight: '600'}}>Community</p>
+            <p style={{margin: '15px 40px', textAlign: 'center', fontSize: '18px', color: '#666', fontWeight: '400'}}>Smallest feedback you have is very critical in making us better</p>
           </div>
         </div>
         <div style={{ ...styles.footer }}>

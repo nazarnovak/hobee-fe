@@ -1,6 +1,7 @@
 Bugs:
 1) Either the scrollbar will but cut or chat messages :(
-2)
+2) Scrollbar is now fat on every page. Use it only for chat page only!
+3)
 
 General:
 1) What legally do I need before I register users. GDPR, Privacy Policy, Cookies, COPA?
@@ -9,6 +10,8 @@ General:
 course!
 4) Can you do transitions between pages different? So let's say there are page A,B and C. If you transition A -> C, the animation is one style. If you go B -> C - animation is a different style. Is it easy to do that in React transitions and is it even going to be worth doing something like that? I won't have a lot of pages in total which might be a fun little experiment trying to make a composition between all the pages and a little Easter egg? But will it be worth the work? Good to try as an experiment with the 3 pages mentioned above, and the creative work that needs to be done might be quite expensive as well 
 5) Motto - can't really go rebel on this one, since safety is quite important, eh?
+6) Should I re-use the svg from the logo to the placeholder animation? Then it will get cached and take less time to load
+(it's 1Kb tho!)
 
 Home page:
 1) Buy Shutterstock 5x2 images so I don't have to deal with legal bs? Or better not use any actual faces?
