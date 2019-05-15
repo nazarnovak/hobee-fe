@@ -1,5 +1,5 @@
 Bugs:
-1) Either the scrollbar will but cut or chat messages :(
+1) Either the scrollbar will but cut or chat messages :( - Maybe just remove the rounded corners and make the chat fullscreen
 2) Scrollbar is now fat on every page. Use it only for chat page only!
 3)
 

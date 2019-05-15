@@ -21,12 +21,12 @@ export default class About extends React.Component {
 
   onTabClick(e) {
     let id = e.target.id;
-    let anchor = '#' + id;
+    // let anchor = '#' + id;
 
     switch(id) {
       case 'why':
         this.setState({ activeTabWho: false});
-        anchor = '';
+        // anchor = '';
         break;
       case 'who':
         this.setState({ activeTabWho: true});

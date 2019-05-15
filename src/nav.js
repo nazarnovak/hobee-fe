@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 // const colorBlack = '#000000';
 // const colorWhite = '#FFFFFF';
 // const colorMediumBlue = '#0000CD';
-const colorBlueSoft = '#0074d9';
-const colorBlueDarker = '#005299';
+// const colorBlueSoft = '#0074d9';
+// const colorBlueDarker = '#005299';
 
 const styles = {
   nav: {
@@ -96,7 +96,7 @@ class SignupButton extends React.Component {
 
   render() {
     return (
-        <div style={{ position: 'absolute', top: '15px', right: this.props.margin }}>
+        <div style={{ position: 'absolute', top: '18px', right: this.props.margin }}>
           <Link to="/signup">
             <button className={`sign-up-button ${this.props.visible ? '' : 'fade'}`} style={{ width: this.props.width }}>
               Sign up

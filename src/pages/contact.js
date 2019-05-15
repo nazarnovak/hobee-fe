@@ -28,6 +28,7 @@ export default class Contact extends React.Component {
         <div className="auth-page">
           <h1 className={`header`}>Contact</h1>
           <form style={{ textAlign: 'center' }}>
+            {/*Reason dropdown with nice rounded corners: https://www.w3schools.com/code/tryit.asp?filename=FYMRDTDV2KDM*/}
             <p><input type="text" placeholder="name" className={`auth-input`} /></p>
             <p><input type="text" placeholder="email" className={`auth-input`} /></p>
             <p><textarea className={`auth-textarea`} placeholder="message" rows="7"></textarea></p>

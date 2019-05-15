@@ -27,6 +27,7 @@ const styles = {
     padding: '0 50px',
     minHeight: '300px',
     height: '100%',
+    backgroundColor: '#fcfcff',
   },
   footer: {
     // boxShadow: 'rgba(0, 0, 0, 0.1) 0px -4px 2px -2px',
@@ -49,12 +50,12 @@ const styles = {
   }
 }
 
-const blueCircle = require('../images/bluecircle.png');
-const checkmark = require('../images/checkmark.svg');
-const shield = require('../images/shield.svg');
-const people = require('../images/people.svg');
-const people2 = require('../images/people2.svg');
-const crown = require('../images/crown.svg');
+// const blueCircle = require('../images/bluecircle.png');
+// const checkmark = require('../images/checkmark.svg');
+// const shield = require('../images/shield.svg');
+// const people = require('../images/people.svg');
+// const people2 = require('../images/people2.svg');
+// const crown = require('../images/crown.svg');
 
 const crown2 = require('../images/crown2.svg');
 const shield2 = require('../images/shield2.svg');
@@ -77,10 +78,10 @@ export default class Home extends React.Component {
 // If height is less than 750 only then do we not fit everything on the screen? Or should we scale it down?
   render() {
     const sectionHeightHalf = (this.props.height - 140) / 2
-    const sectionHeightTwoThirds = (this.props.height - 140) * 0.6
-    const sectionHeightOneThirds = (this.props.height - 140) * 0.4
+    // const sectionHeightTwoThirds = (this.props.height - 140) * 0.6
+    // const sectionHeightOneThirds = (this.props.height - 140) * 0.4
     const sectionWidthThird = (this.props.width - 100) / 3;
-    const sectionWidthHalf = (this.props.width - 100) / 2;
+    // const sectionWidthHalf = (this.props.width - 100) / 2;
 
     const { didMount } = this.state;
 
@@ -95,6 +96,7 @@ export default class Home extends React.Component {
               {/*</div>*/}
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: sectionWidthThird}}>
                 <div style={{...styles.motto}} className={`fade-in-motto ${didMount && 'visible'}`}>Dialogue definite</div>
+                <div>Discuss your ideas, discover interesting people (What is the problem this site is solving?)</div>
               </div>
               {/*<div style={{height: '100%', width: sectionWidthThird}}>*/}
                 {/*<img src={woman} style={{ height: '100%'}} alt="Woman" />*/}
@@ -124,7 +126,10 @@ export default class Home extends React.Component {
             width: sectionWidthThird, padding: '25px', boxSizing: 'border-box' }}
                className={`fade-in-circle-1 ${didMount && 'visible'}`}>
             <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
-              backgroundColor: '#ffffff', borderRadius: '150px', border: '1px solid #333', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 6px 0px' }}><img src={crown2} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto' }}/></div>
+              backgroundColor: '#ffffff', borderRadius: '150px', border: '1px solid #e6e6e6',
+              boxShadow: 'rgba(150, 150, 150, 0.4) 0px 2px 6px 0px' }}>
+              <img src={crown2} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto' }} alt={'Crown'} />
+            </div>
             <p style={{margin: '20px auto 0 auto', fontSize: '24px', color: '#222', fontWeight: '600'}}>Quality</p>
             <p style={{margin: '15px 40px', textAlign: 'center', fontSize: '18px', color: '#666', fontWeight: '400'}}>Your meaningful conversation is highest priority</p>
           </div>
@@ -132,7 +137,7 @@ export default class Home extends React.Component {
             width: sectionWidthThird, padding: '25px', boxSizing: 'border-box' }}
           className={`fade-in-circle-1 ${didMount && 'visible'}`}>
             <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
-              backgroundColor: "#ffffff", borderRadius: '150px', border: '1px solid #333', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 6px 0px' }}><img src={shield2} height="80px" widht="80px" style={{ display: 'block', margin: '35px auto 25px auto' }}/></div>
+              backgroundColor: "#ffffff", borderRadius: '150px', border: '1px solid #e6e6e6', boxShadow: 'rgba(150, 150, 150, 0.4) 0px 2px 6px 0px' }}><img src={shield2} height="80px" widht="80px" style={{ display: 'block', margin: '35px auto 25px auto' }} alt={'Shield'} /></div>
             <p style={{margin: '20px auto 0 auto', fontSize: '24px', color: '#222', fontWeight: '600'}}>Safety</p>
             <p style={{margin: '15px 40px', textAlign: 'center', fontSize: '18px', color: '#666', fontWeight: '400'}}>Spam, harassment, bots and other inappropriate behavior are not tolerated</p>
           </div>
@@ -140,7 +145,7 @@ export default class Home extends React.Component {
             width: sectionWidthThird, padding: '25px', boxSizing: 'border-box' }}
           className={`fade-in-circle-1 ${didMount && 'visible'}`}>
             <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
-              backgroundColor: "#ffffff", borderRadius: '150px', border: '1px solid #333', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 6px 0px' }}><img src={people4} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto 5px auto' }}/></div>
+              backgroundColor: "#ffffff", borderRadius: '150px', border: '1px solid #e6e6e6', boxShadow: 'rgba(150, 150, 150, 0.4) 0px 2px 6px 0px' }}><img src={people4} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto 5px auto' }} alt={'People'} /></div>
             <p style={{margin: '20px auto 0 auto', fontSize: '24px', color: '#222', fontWeight: '600'}}>Community</p>
             <p style={{margin: '15px 40px', textAlign: 'center', fontSize: '18px', color: '#666', fontWeight: '400'}}>Smallest feedback you have is very critical in making us better</p>
           </div>

@@ -9,6 +9,8 @@ import About from "./pages/about";
 import Contact from "./pages/contact";
 import NotFound from "./pages/notfound";
 
+import GOT from "./pages/got";
+
 export default class Routing extends React.Component {
   render() {
     return (
@@ -19,6 +21,7 @@ export default class Routing extends React.Component {
         <Route path="/chat" exact render={() => <Chat height={ this.props.height } width={ this.props.width } />} />
         <Route path="/about" exact component={ About } location={ this.props.location } />
         <Route path="/contact" exact component={ Contact } />
+        <Route path="/got" exact render={() => <GOT height={ this.props.height } width={ this.props.width } />} />
         <Route component={ NotFound } />
       </Switch>
     );
