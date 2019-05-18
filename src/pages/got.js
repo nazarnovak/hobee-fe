@@ -2,6 +2,7 @@ import React from "react";
 
 import Chat from "./chat";
 
+// TEST
 // TODO:
 // - Clean everything up as much as possible into old code vs new code and then git commit!
 // - If error - show reconnect link
