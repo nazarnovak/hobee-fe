@@ -219,12 +219,10 @@ a:hover {
   right: 0;
   margin: 0;
   /*padding: 20px;*/
-  position: absolute;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  height: calc(100% - 70px);
-  top: 70px;
+  height: 100%;
   z-index: 1;
 }
 
@@ -343,20 +341,17 @@ a:hover {
   /*height: 50px;*/
 /*}*/
 
-.chat-window-outer {
+.chat-messages {
   padding: 7px 5px 7px 5px;
   box-sizing: border-box;
   background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 2px -2px;
-  border-bottom: 1px solid #ccc;
-}
-
-.chat-window {
-  padding: 13px 15px 13px 15px;
+  /*border-bottom: 1px solid #999;*/
+  height: 90%;
   overflow-y: scroll;
+  padding: 15px;
 }
 
-.your-message-container {
+.my-message-container {
   text-align: right;
 }
 
@@ -371,34 +366,82 @@ a:hover {
   font-size: 18px;
 }
 
-.your-message {
-  background-color: #0074d9;
-  color: white;
+.buddy-message {
+  border: 1px solid #666;
+  color: #000;
 }
 
 .my-message {
-  background-color: #f0f0f0;
-  color: #000;
+  background-color: #F5F9FD;
+  border: 1px solid #0074d9;
+  color: black;
   margin-left: auto;
 }
 
 .chat-controls {
-  height: 30px;
+  height: 10%;
   /*padding: 0 10px;*/
   width: 100%;
+  padding: 0;
+  margin: 0;
+  border-radius: 999px;
   box-sizing: border-box;
-  background-color: #ccc;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 2px -2px;
+  /*box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 2px -2px;*/
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.chat-search-disconnect-button {
+  border: none;
+  border-top-left-radius: 999px;
+  border-bottom-left-radius: 999px;
+  height: 100%;
+  width: 100%;
+  flex: 0.2;
+  outline: none;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-size: 20px;
+  background-color: blue;
+  color: white;
+}
+
+.chat-input.disabled {
+  background-color: lightgray;
+  color: darkgray;
 }
 
 .chat-input {
-  border: none;
-  height: 30px;
+  border: 1px solid #999;
+  height: 100%;
   width: 100%;
   box-sizing: border-box;
   padding: 0 10px;
   font-weight: 500;
+  font-size: 18px;
   outline: none;
+  flex: 0.6;
+}
+
+.chat-send-button {
+  height: 100%;
+  width: 100%;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+  outline: none;
+  padding: 0;
+  font-weight: 500;
+  font-size: 20px;
+  flex: 0.2;
+}
+
+.chat-send-button.disabled {
+  background-color: grey;
+  color: darkgray;
 }
 
 /* /Chat */
