@@ -74,8 +74,22 @@ export default class Chat extends React.Component {
     // Connect to WS
     let ws = null;
 
+    let port = 8080;
+    if (!!process && !!process.env && !!process.env.PORT) {
+      port = process.env.PORT;
+    }
+
     try {
-      ws = await new WebSocket("ws://" + window.location.hostname + ":8080/got");
+      var loc = window.location, wsUrl;
+      if (loc.protocol === "https:") {
+          wsUrl = "wss:";
+      } else {
+          wsUrl = "ws:";
+      }
+      wsUrl += "//" + loc.host;
+      wsUrl += "/api/got";
+
+      ws = await new WebSocket(wsUrl);
       if (ws === undefined) {
         throw new Error("Could not connect to ws");
       }
@@ -139,7 +153,7 @@ export default class Chat extends React.Component {
   }
 
   async identify() {
-    let url = "http://" + window.location.hostname + ":8080/api/identify" + window.location.search;
+    let url = "/api/identify" + window.location.search;
     let json;
 
     try {
