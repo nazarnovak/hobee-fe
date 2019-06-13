@@ -42,8 +42,8 @@ export default class App extends React.Component {
     return (
       <BrowserRouter>
         <WithRouterContainer onRouteChange={newLocation => this.handleRouteChange(newLocation)}>
-          <Nav height={this.state.height} width={this.state.width} location={this.state.location} />
-          <TransitionGroup>
+          <Nav style={{ height: '10%' }} height={this.state.height} width={this.state.width} location={this.state.location} />
+          <TransitionGroup style={{ height: '90%' }}>
             <CSSTransition
                   key={this.state.location.pathname}
                   classNames="fade"

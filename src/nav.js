@@ -10,15 +10,12 @@ import { Link } from "react-router-dom";
 
 const styles = {
   nav: {
-    boxShadow: 'rgba(0, 0, 0, 0.3) 0px 1px 8px 0px',
-    height: '70px',
-    padding: '0 50px',
-    textAlign: 'center',
+    boxShadow: 'rgba(0, 0, 0, 0.3) 0px 1px 2px 0px',
     zIndex: '2',
+    width: '100%',
+    position: 'absolute',
   },
   logo: {
-    height: '50px',
-    marginTop: '10px',
     outline: 'none',
   },
 }
@@ -38,21 +35,14 @@ export default class Nav extends React.Component {
   }
 
   render() {
-    let buttonWidth = '130px';
-    let sideMargin = '50px';
+    let navHeight = '7vh';
+    let logoHeight = '4vh';
+    let logoMarginTop = '1.5vh';
 
-    switch(true) {
-    case this.props.width < 500:
-        buttonWidth = '100px';
-        sideMargin = '10px';
-        break;
-    case this.props.width < 800:
-        buttonWidth = '110px';
-        sideMargin = '30px';
-        break;
-    default:
-        buttonWidth = '130px';
-        sideMargin = '50px';
+    // Make nav smaller when we're in chat mode
+    if (window.location.pathname === "/got") {
+      navHeight = '10%';
+      logoHeight = '70%';
     }
 
     let signupVisible = true;
@@ -65,11 +55,14 @@ export default class Nav extends React.Component {
     }
 
     return (
-      <div style={{ ...styles.nav, position: 'relative', paddingLeft: sideMargin, paddingRight: sideMargin}}>
-        <Link to="/">
-          <img src={logo} style={{...styles.logo}} alt="Logo" />
-        </Link>
-        <SignupButton margin={sideMargin} width={buttonWidth} visible={signupVisible} />
+      <div style={{ height: navHeight}}>
+        <div style={{ ...styles.nav, height: navHeight}}>
+          <Link to="/" style={{ height: '100%'}}>
+            <div style={{ height: '15%' }}></div>
+            <img src={logo} style={{ ...styles.logo, height: logoHeight, width: '100%'}} alt="Logo" />
+          </Link>
+          {/*<SignupButton margin={sideMargin} width={buttonWidth} visible={signupVisible} />*/}
+        </div>
       </div>
     );
   }
