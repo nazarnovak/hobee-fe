@@ -118,34 +118,31 @@ export default class Chat extends React.Component {
     this.connectToChat();
   }
 
-  handleSystemMessage(text) {
-    switch (text) {
+  handleSystemMessage(msg) {
+    switch (msg.text) {
       case systemConnect:
         console.log("Matched");
-        this.setState({status: statusMatched});
         break;
       case systemDisconnect:
         console.log("Disconnected");
-        this.setState({status: statusDisconnected});
+        this.setState({status: statusDisconnected, messages: messages});
         break;
     }
+
+    var messages = this.state.messages.slice();
+    messages.push(msg);
+    this.setState({status: statusMatched, messages: messages});
   }
 
-  handleBuddyMessage(text) {
+  handleBuddyMessage(msg) {
     var messages = this.state.messages.slice();
-    messages.push({
-      "type": typeBuddy,
-      "text": text,
-    });
+    messages.push(msg);
     this.setState({messages: messages});
   }
 
-  handleOwnMessage(text) {
+  handleOwnMessage(msg) {
     var messages = this.state.messages.slice();
-    messages.push({
-      "type": typeOwn,
-      "text": text,
-    });
+    messages.push(msg);
     this.setState({messages: messages});
 
     this.scrollToBottom();
@@ -186,16 +183,16 @@ export default class Chat extends React.Component {
       if (receivedJson === null || receivedJson === undefined) {
         console.log("Received unexpected JSON:", receivedJson);
       }
-      console.log("Received message:", receivedJson);
+
       switch (receivedJson.type) {
         case typeSystem:
-          this.handleSystemMessage(receivedJson.text);
+          this.handleSystemMessage(receivedJson);
           break;
         case typeOwn:
-          this.handleOwnMessage(receivedJson.text);
+          this.handleOwnMessage(receivedJson);
           break;
         case typeBuddy:
-          this.handleBuddyMessage(receivedJson.text);
+          this.handleBuddyMessage(receivedJson);
           break;
         default:
           console.log("Unexpected json:", receivedJson);
@@ -217,7 +214,7 @@ export default class Chat extends React.Component {
     };
 
     if (this.state.websocket === null || this.state.websocket === undefined) {
-      console.log("Not connect to WS");
+      console.log("Not connected to WS");
       return false;
     }
 
@@ -260,6 +257,7 @@ console.log("Disconnecting:", o);
   }
 
   render() {
+console.log(this.state.messages);
     return (
         <div className={`main-content`}>
           <ChatMessages messages={this.state.messages}
@@ -274,10 +272,19 @@ console.log("Disconnecting:", o);
 
 class ChatMessages extends React.Component {
   render() {
-    const messageItems = this.props.messages.map((message) =>
-        <div className={`${ message.type === typeOwn ? 'my-message-container' : 'buddy-message-container'}`}>
+    let msgItems = this.props.messages.filter(function(msg) {
+        if (msg.type === typeSystem) {
+          return false;
+        }
+
+        return true;
+      }
+    );
+
+    msgItems = msgItems.map((msg) =>
+        <div className={`${ msg.type === typeOwn ? 'my-message-container' : 'buddy-message-container'}`}>
           <div
-              className={`chat-message ${ message.type === typeOwn ? 'my-message' : 'buddy-message' }`}>{message.text}</div>
+              className={`chat-message ${ msg.type === typeOwn ? 'my-message' : 'buddy-message' }`}>{msg.text}</div>
         </div>
     );
 
@@ -294,7 +301,7 @@ class ChatMessages extends React.Component {
 
     return (
         <div className='chat-messages fade-in'>
-          {messageItems}
+          {msgItems}
         </div>
     );
   }
