@@ -15,6 +15,9 @@ const systemSearch = "s";
 const systemConnect = "c";
 const systemDisconnect = "d";
 
+const svgArrowUp = require('../images/arrow_up.svg');
+const svgX = require('../images/x.svg');
+
 export default class Chat extends React.Component {
   constructor(props) {
     super(props);
@@ -349,19 +352,19 @@ class ChatControls extends React.Component {
   }
 
   render() {
-// Will this re-render everything?
     return (
-        <div className='chat-controls fade-in'>
+        <div className={`chat-controls fade-in` + (this.props.disconnected ? ' chat-controls-disabled' : '')}>
           {/*Change disconnect button to "Search"*/}
           <DisconnectSearchButton handleDisconnect={this.props.handleDisconnect} handleSearch={this.props.handleSearch}
                                   disconnected={this.props.disconnected}/>
           <input type="text" placeholder="Message"
-                 className={`chat-input` + (this.props.disconnected ? ' disabled' : '')}
+                 className={`chat-input` + (this.props.disconnected ? ' chat-controls-disabled' : '')}
                  onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} maxLength={1024 - 40}
                  disabled={(this.props.disconnected ? ' disabled' : '')}/>
           <button
-              className={`chat-send-button` + (this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}
-              onClick={this.handleSendClick} disabled={(this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}>Send
+              className={`chat-send-button circle` + (this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}
+              onClick={this.handleSendClick} disabled={(this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}>
+            <img className="button-icon" src={svgArrowUp} alt="Send"></img>
           </button>
         </div>
     );
@@ -371,11 +374,16 @@ class ChatControls extends React.Component {
 class DisconnectSearchButton extends React.Component {
   render() {
     if (this.props.disconnected) {
-      return (<button className={`chat-search-disconnect-button`} onClick={this.props.handleSearch}>Search</button>);
+      return (
+      <button className={`chat-search-disconnect-button circle`} onClick={this.props.handleSearch}>
+        <img className="button-icon" src={svgX} alt="Search"></img>
+      </button>);
     }
 
     return (
-        <button className={`chat-search-disconnect-button`} onClick={this.props.handleDisconnect}>Disconnect</button>
+        <button className={`chat-search-disconnect-button circle`} onClick={this.props.handleDisconnect}>
+          <img className="button-icon" src={svgX} alt="Disconnect"></img>
+        </button>
     );
   }
 }

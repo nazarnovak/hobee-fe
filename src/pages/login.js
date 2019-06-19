@@ -24,7 +24,7 @@ export default class Login extends React.Component {
     return (
       <div className="main-content background-shade-darker">
         <div className="auth-page">
-          {/*<h1 className={`header`}>Log in</h1>*/}
+          {/*<h1 className={`heading`}>Log in</h1>*/}
           <form style={{ textAlign: 'center' }}>
             <p><input type="text" placeholder="email" className={`auth-input`} /></p>
             <p><input type="password" placeholder="password" className={`auth-input`} /></p>

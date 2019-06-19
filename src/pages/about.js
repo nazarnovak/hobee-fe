@@ -78,7 +78,7 @@ export default class About extends React.Component {
 
     return (
       <div className={`main-content`}>
-        <h1 className={`header`}>About</h1>
+        <h1 className={`heading`}>About</h1>
         <div style={{ textAlign: 'center', fontSize: '20px' }}>
           <span id={`why`} className={activeTabWho ? '' : 'active-tab'} onClick={this.onTabClick}>Why</span> |
           <span id={`who`} className={activeTabWho ? 'active-tab' : ''} onClick={this.onTabClick}>Who</span>

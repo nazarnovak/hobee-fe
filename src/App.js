@@ -23,6 +23,9 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
     window.addEventListener('resize', this.onResize);
   }
 
@@ -31,6 +34,9 @@ export default class App extends React.Component {
   }
 
   onResize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
     this.setState({ width: window.innerWidth, height: window.innerHeight});
   }
 
@@ -43,7 +49,7 @@ export default class App extends React.Component {
       <BrowserRouter>
         <WithRouterContainer onRouteChange={newLocation => this.handleRouteChange(newLocation)}>
           <Nav style={{ height: '10%' }} height={this.state.height} width={this.state.width} location={this.state.location} />
-          <TransitionGroup style={{ height: '90%' }}>
+          <TransitionGroup>
             <CSSTransition
                   key={this.state.location.pathname}
                   classNames="fade"

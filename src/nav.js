@@ -8,18 +8,6 @@ import { Link } from "react-router-dom";
 // const colorBlueSoft = '#0074d9';
 // const colorBlueDarker = '#005299';
 
-const styles = {
-  nav: {
-    boxShadow: 'rgba(0, 0, 0, 0.3) 0px 1px 2px 0px',
-    zIndex: '2',
-    width: '100%',
-    position: 'absolute',
-  },
-  logo: {
-    outline: 'none',
-  },
-}
-
 const logo = require('./images/h.svg');
 
 export default class Nav extends React.Component {
@@ -35,16 +23,6 @@ export default class Nav extends React.Component {
   }
 
   render() {
-    let navHeight = '7vh';
-    let logoHeight = '4vh';
-    let logoMarginTop = '1.5vh';
-
-    // Make nav smaller when we're in chat mode
-    if (window.location.pathname === "/got") {
-      navHeight = '10%';
-      logoHeight = '70%';
-    }
-
     let signupVisible = true;
     let pathname = this.state.location.pathname;
 
@@ -55,11 +33,10 @@ export default class Nav extends React.Component {
     }
 
     return (
-      <div style={{ height: navHeight}}>
-        <div style={{ ...styles.nav, height: navHeight}}>
-          <Link to="/" style={{ height: '100%'}}>
-            <div style={{ height: '15%' }}></div>
-            <img src={logo} style={{ ...styles.logo, height: logoHeight, width: '100%'}} alt="Logo" />
+      <div class="nav-height">
+        <div class="nav nav-height">
+          <Link class="logo-height" to="/" >
+            <img class="logo logo-height" src={logo} alt="Logo" />
           </Link>
           {/*<SignupButton margin={sideMargin} width={buttonWidth} visible={signupVisible} />*/}
         </div>
