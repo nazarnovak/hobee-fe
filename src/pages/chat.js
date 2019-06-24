@@ -119,19 +119,33 @@ export default class Chat extends React.Component {
   }
 
   handleSystemMessage(msg) {
+    let status;
+
     switch (msg.text) {
       case systemConnect:
         console.log("Matched");
+        status = statusMatched;
         break;
       case systemDisconnect:
         console.log("Disconnected");
-        this.setState({status: statusDisconnected, messages: messages});
+        status = statusDisconnected
         break;
+      case systemSearch:
+        console.log("Available for search");
+        status = statusSearching;
+        break;
+      default:
+        throw new Error("Unknown system message", msg.text);
     }
 
     var messages = this.state.messages.slice();
     messages.push(msg);
-    this.setState({status: statusMatched, messages: messages});
+console.log("Received system message:", msg);
+    if (status === statusSearching) {
+      this.sendWebsocketMessage(typeSystem, systemSearch);
+    }
+
+    this.setState({status: status, messages: messages});
   }
 
   handleBuddyMessage(msg) {
@@ -200,11 +214,7 @@ export default class Chat extends React.Component {
     }
   }
 
-  onOpen() {
-    this.setState({status: statusSearching});
-
-    this.sendWebsocketMessage(typeSystem, systemSearch)
-  }
+  onOpen() {}
 
   sendWebsocketMessage(t, msg) {
     // check type
