@@ -4,6 +4,7 @@ const statusIdentifying = "identifying";
 const statusConnecting = "connecting";
 const statusSearching = "searching";
 const statusMatched = "matched";
+const statusTalking = "talking";
 const statusDisconnected = "disconnected";
 
 const typeSystem = "s";
@@ -14,6 +15,7 @@ const typeBuddy = "b";
 const systemSearch = "s";
 const systemConnect = "c";
 const systemDisconnect = "d";
+const systemTalking = "t";
 
 const svgArrowUp = require('../images/arrow_up.svg');
 const svgX = require('../images/x.svg');
@@ -85,9 +87,9 @@ export default class Chat extends React.Component {
     try {
       var loc = window.location, wsUrl;
       if (loc.protocol === "https:") {
-          wsUrl = "wss:";
+        wsUrl = "wss:";
       } else {
-          wsUrl = "ws:";
+        wsUrl = "ws:";
       }
       wsUrl += "//" + loc.host;
       wsUrl += "/api/got";
@@ -113,13 +115,33 @@ export default class Chat extends React.Component {
   }
 
   async componentDidMount() {
-    window.addEventListener("focus", this.onFocus)
+    window.addEventListener("focus", this.onFocus);
 
     this.connectToChat();
   }
 
-  handleSystemMessage(msg) {
-    let status;
+  async pullRoomMessages() {
+    let url = "/api/messages";
+    let json;
+
+    try {
+      let response = await fetch(url, {credentials: "include"});
+      json = await response.json();
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+
+    if (json.messages === undefined) {
+      console.log("Unknown response:", json);
+      return false;
+    }
+
+    return json.messages;
+  }
+
+  async handleSystemMessage(msg) {
+    let status, messages = this.state.messages.slice();
 
     switch (msg.text) {
       case systemConnect:
@@ -128,19 +150,25 @@ export default class Chat extends React.Component {
         break;
       case systemDisconnect:
         console.log("Disconnected");
-        status = statusDisconnected
+        status = statusDisconnected;
         break;
       case systemSearch:
         console.log("Available for search");
         status = statusSearching;
         break;
+      case systemTalking:
+        console.log("Already talking");
+        status = statusTalking;
+
+        messages = await this.pullRoomMessages();
+console.log("Pulled messages:", messages);
+        break;
       default:
         throw new Error("Unknown system message", msg.text);
     }
 
-    var messages = this.state.messages.slice();
     messages.push(msg);
-console.log("Received system message:", msg);
+
     if (status === statusSearching) {
       this.sendWebsocketMessage(typeSystem, systemSearch);
     }
@@ -214,7 +242,8 @@ console.log("Received system message:", msg);
     }
   }
 
-  onOpen() {}
+  onOpen() {
+  }
 
   sendWebsocketMessage(t, msg) {
     // check type
@@ -271,7 +300,7 @@ console.log("Received system message:", msg);
         <div className={`main-content`}>
           <ChatMessages messages={this.state.messages}
                         searching={this.state.status === statusConnecting || this.state.status === statusSearching}
-                        status={this.state.status} />
+                        status={this.state.status}/>
           <ChatControls websocket={this.state.websocket} handleDisconnect={this.handleDisconnect}
                         handleSearch={this.handleSearch} disconnected={this.state.status === statusDisconnected}/>
         </div>
@@ -281,13 +310,13 @@ console.log("Received system message:", msg);
 
 class ChatMessages extends React.Component {
   render() {
-    let msgItems = this.props.messages.filter(function(msg) {
-        if (msg.type === typeSystem) {
-          return false;
-        }
+    let msgItems = this.props.messages.filter(function (msg) {
+          if (msg.type === typeSystem) {
+            return false;
+          }
 
-        return true;
-      }
+          return true;
+        }
     );
 
     msgItems = msgItems.map((msg) =>
@@ -379,7 +408,8 @@ class ChatControls extends React.Component {
                  disabled={(this.props.disconnected ? ' disabled' : '')}/>
           <button
               className={`chat-send-button circle` + (this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}
-              onClick={this.handleSendClick} disabled={(this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}>
+              onClick={this.handleSendClick}
+              disabled={(this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}>
             <img className="button-icon" src={svgArrowUp} alt="Send"></img>
           </button>
         </div>
@@ -391,9 +421,9 @@ class DisconnectSearchButton extends React.Component {
   render() {
     if (this.props.disconnected) {
       return (
-      <button className={`chat-search-disconnect-button circle`} onClick={this.props.handleSearch}>
-        <img className="button-icon" src={svgX} alt="Search"></img>
-      </button>);
+          <button className={`chat-search-disconnect-button circle`} onClick={this.props.handleSearch}>
+            <img className="button-icon" src={svgX} alt="Search"></img>
+          </button>);
     }
 
     return (
