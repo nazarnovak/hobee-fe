@@ -237,7 +237,7 @@ export default class Chat extends React.Component {
       type: typeSystem,
       text: systemDisconnect,
     };
-console.log("Disconnecting:", o);
+
     this.state.websocket.send(JSON.stringify(o));
 
     this.setState({status: statusDisconnected});
@@ -257,7 +257,6 @@ console.log("Disconnecting:", o);
   }
 
   render() {
-console.log(this.state.messages);
     return (
         <div className={`main-content`}>
           <ChatMessages messages={this.state.messages}
