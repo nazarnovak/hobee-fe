@@ -4,7 +4,6 @@ const statusIdentifying = "identifying";
 const statusConnecting = "connecting";
 const statusSearching = "searching";
 const statusMatched = "matched";
-const statusTalking = "talking";
 const statusDisconnected = "disconnected";
 
 const typeSystem = "s";
@@ -17,8 +16,12 @@ const systemConnect = "c";
 const systemDisconnect = "d";
 const systemTalking = "t";
 
-const svgArrowUp = require('../images/arrow_up.svg');
 const svgX = require('../images/x.svg');
+const svgNext = require('../images/next.svg');
+const svgArrowUp = require('../images/arrow_up.svg');
+const svgHeart = require('../images/heartEmpty.svg');
+const svgDiskette = require('../images/disketteEmpty.svg');
+const svgFlag = require('../images/flagEmpty.svg');
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -158,10 +161,10 @@ export default class Chat extends React.Component {
         break;
       case systemTalking:
         console.log("Already talking");
-        status = statusTalking;
+        status = statusMatched;
 
         messages = await this.pullRoomMessages();
-console.log("Pulled messages:", messages);
+        console.log("Pulled messages:", messages);
         break;
       default:
         throw new Error("Unknown system message", msg.text);
@@ -172,7 +175,7 @@ console.log("Pulled messages:", messages);
     if (status === statusSearching) {
       this.sendWebsocketMessage(typeSystem, systemSearch);
     }
-
+console.log("Settings status to:", status);
     this.setState({status: status, messages: messages});
   }
 
@@ -295,6 +298,18 @@ console.log("Pulled messages:", messages);
     this.setState({status: statusSearching});
   }
 
+  handleLike = () => {
+    console.log("Like clicked");
+  }
+
+  handleSave = () => {
+    console.log("Save clicked");
+  }
+
+  handleReport = () => {
+    console.log("Report clicked");
+  }
+
   render() {
     return (
         <div className={`main-content`}>
@@ -302,7 +317,10 @@ console.log("Pulled messages:", messages);
                         searching={this.state.status === statusConnecting || this.state.status === statusSearching}
                         status={this.state.status}/>
           <ChatControls websocket={this.state.websocket} handleDisconnect={this.handleDisconnect}
-                        handleSearch={this.handleSearch} disconnected={this.state.status === statusDisconnected}/>
+                        handleSearch={this.handleSearch} disconnected={this.state.status === statusDisconnected}
+                        matched={this.state.status === statusMatched} handleLike={this.handleLike}
+                        handleSave={this.handleSave} handleReport={this.handleReport}
+          />
         </div>
     );
   }
@@ -398,16 +416,16 @@ class ChatControls extends React.Component {
 
   render() {
     return (
-        <div className={`chat-controls fade-in` + (this.props.disconnected ? ' chat-controls-disabled' : '')}>
+        <div className={`chat-controls ` + (this.props.matched ? ' connected' : 'disconnected') + ` fade-in`}>
           {/*Change disconnect button to "Search"*/}
           <DisconnectSearchButton handleDisconnect={this.props.handleDisconnect} handleSearch={this.props.handleSearch}
                                   disconnected={this.props.disconnected}/>
-          <input type="text" placeholder="Message"
-                 className={`chat-input` + (this.props.disconnected ? ' chat-controls-disabled' : '')}
-                 onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} maxLength={1024 - 40}
-                 disabled={(this.props.disconnected ? ' disabled' : '')}/>
+          <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}
+                         handleLike={this.props.handleLike} handleSave={this.props.handleSave}
+                         handleReport={this.props.handleReport} />
           <button
-              className={`chat-send-button circle` + (this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}
+              className={`chat-send-button circle` +
+              ((this.props.disconnected || this.state.inputText === '') ? ' disabled' : '')}
               onClick={this.handleSendClick}
               disabled={(this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}>
             <img className="button-icon" src={svgArrowUp} alt="Send"></img>
@@ -421,15 +439,41 @@ class DisconnectSearchButton extends React.Component {
   render() {
     if (this.props.disconnected) {
       return (
-          <button className={`chat-search-disconnect-button circle`} onClick={this.props.handleSearch}>
-            <img className="button-icon" src={svgX} alt="Search"></img>
+          <button className={`chat-next-button circle`} onClick={this.props.handleSearch}>
+            <img className="button-icon" src={svgNext} alt="Next"></img>
           </button>);
     }
 
     return (
-        <button className={`chat-search-disconnect-button circle`} onClick={this.props.handleDisconnect}>
+        <button className={`chat-disconnect-button circle`} onClick={this.props.handleDisconnect}>
           <img className="button-icon" src={svgX} alt="Disconnect"></img>
         </button>
+    );
+  }
+}
+
+class MiddleControl extends React.Component {
+  render() {
+    if (this.props.matched) {
+      return (
+          <input type="text" placeholder="Message"
+                 className={`chat-input` + (this.props.disconnected ? ' chat-controls-disabled' : '')}
+                 onKeyDown={this.props.onKeyDown} onChange={this.props.onChange} maxLength={1024 - 40}
+                 disabled={(this.props.disconnected ? ' disabled' : '')}/>
+      );
+    }
+    return (
+        <div className={`middle-buttons`}>
+          <button className={`middle-button circle`} onClick={this.props.handleLike}>
+            <img className="button-icon" src={svgHeart} alt="Like"></img>
+          </button>
+          <button className={`middle-button circle`} onClick={this.props.handleSave}>
+            <img className="button-icon" src={svgDiskette} alt="Save"></img>
+          </button>
+          <button className={`middle-button circle`} onClick={this.props.handleReport}>
+            <img className="button-icon" src={svgFlag} alt="Report"></img>
+          </button>
+        </div>
     );
   }
 }

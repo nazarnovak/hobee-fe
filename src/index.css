@@ -358,7 +358,7 @@ a:hover {
 }
 
 .nav-height {
-  height: 10vh;
+  height: 8vh;
 }
 
 .logo {
@@ -368,7 +368,7 @@ a:hover {
 }
 
 .logo-height {
-  height: 8vh;
+  height: 6vh;
 }
 
 .chat-messages {
@@ -376,7 +376,7 @@ a:hover {
   box-sizing: border-box;
   background-color: #fff;
   /*border-bottom: 1px solid #999;*/
-  height: 80vh;
+  height: 82vh;
   overflow-y: scroll;
   padding: 15px;
 }
@@ -437,36 +437,59 @@ a:hover {
 }
 
 .chat-controls {
-  height: 10vh;
+  height: 8vh;
   /*padding: 0 10px;*/
-  width: 100vw;
+  width: 98vw;
+  margin-left: 1vw;
   border-radius: 999px;
   box-sizing: border-box;
   /*box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 2px -2px;*/
   display: grid;
-  grid-template-columns: calc(100vh / 10) auto calc(100vh / 10);
-  border-top: 1px solid #aaaaaa;
+  grid-template-columns: 8vh auto 8vh;
+}
+
+.chat-controls.connected {
+  border: 1px solid #aaaaaa;
+}
+
+.chat-controls.disconnected {
+  border: none;
 }
 
 .circle {
   border-radius: 50%;
-  height: 100%;
-  width: 100%;
+  height: 84%;
+  width: 84%;
+  margin-top: 8%;
+  margin-left: 8%;
+  outline: none;
+  border: none;
 }
 
 .button-icon {
-  height: 55%;
-  width: 55%;
+  height: 65%;
+  width: 65%;
 }
 
-.chat-search-disconnect-button {
+.chat-disconnect-button {
   background-color: #AA0000;
   outline: none;
   box-sizing: border-box;
 }
 
-.chat-controls-disabled {
-  background-color: lightgray;
+.chat-next-button {
+  background-color: #00AA00;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.middle-buttons {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 8vh 8vh 8vh;
+  justify-content: space-evenly;
 }
 
 .chat-input {
@@ -485,7 +508,7 @@ a:hover {
 }
 
 .chat-send-button.disabled {
-  /*color: darkgray;*/
+  background-color: #aaaaaa;
 }
 
 /* /Chat */
