@@ -14,7 +14,9 @@ const typeBuddy = "b";
 const systemSearch = "s";
 const systemConnect = "c";
 const systemDisconnect = "d";
-const systemTalking = "t";
+
+const systemRoomActive = "ra";
+const systemRoomInactive = "ri";
 
 const svgX = require('../images/x.svg');
 const svgNext = require('../images/next.svg');
@@ -159,12 +161,17 @@ export default class Chat extends React.Component {
         console.log("Available for search");
         status = statusSearching;
         break;
-      case systemTalking:
-        console.log("Already talking");
+      case systemRoomActive:
+        console.log("Room active");
         status = statusMatched;
 
         messages = await this.pullRoomMessages();
-        console.log("Pulled messages:", messages);
+        break;
+      case systemRoomInactive:
+        console.log("Room inactive");
+        status = statusDisconnected;
+
+        messages = await this.pullRoomMessages();
         break;
       default:
         throw new Error("Unknown system message", msg.text);
@@ -175,7 +182,7 @@ export default class Chat extends React.Component {
     if (status === statusSearching) {
       this.sendWebsocketMessage(typeSystem, systemSearch);
     }
-console.log("Settings status to:", status);
+
     this.setState({status: status, messages: messages});
   }
 
@@ -422,7 +429,7 @@ class ChatControls extends React.Component {
                                   disconnected={this.props.disconnected}/>
           <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}
                          handleLike={this.props.handleLike} handleSave={this.props.handleSave}
-                         handleReport={this.props.handleReport} />
+                         handleReport={this.props.handleReport}/>
           <button
               className={`chat-send-button circle` +
               ((this.props.disconnected || this.state.inputText === '') ? ' disabled' : '')}
