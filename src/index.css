@@ -457,8 +457,8 @@ a:hover {
 }
 
 .circle-wrapper {
-  height: 8vh;
-  width: 8vh;
+  height: calc(8vh - 2px);
+  width: calc(8vh - 2px);
 }
 
 .circle-wrapper.send {
@@ -470,9 +470,7 @@ a:hover {
   box-sizing: border-box;
   height: 80%;
   width: 80%;
-  margin-top: 8%;
-  margin-left: 8%;
-  margin-right: 8%;
+  margin: 10% 8%;
   outline: none;
   border: none;
 }
@@ -568,7 +566,7 @@ a:hover {
 .chat-input {
   border: none;
   outline: none;
-  height: 100%;
+  height: calc(100% - 2px); /*border of the controls*/
   width: 100%;
   box-sizing: border-box;
   padding: 0 10px;
