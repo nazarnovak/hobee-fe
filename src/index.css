@@ -456,31 +456,51 @@ a:hover {
   border: none;
 }
 
+.circle-wrapper {
+  height: 8vh;
+  width: 8vh;
+}
+
+.circle-wrapper.send {
+  text-align: right;
+}
+
 .circle {
   border-radius: 50%;
-  height: 84%;
-  width: 84%;
+  box-sizing: border-box;
+  height: 80%;
+  width: 80%;
   margin-top: 8%;
   margin-left: 8%;
+  margin-right: 8%;
   outline: none;
   border: none;
 }
 
 .button-icon {
-  height: 65%;
-  width: 65%;
+  height: 60%;
+  width: 60%;
+}
+
+.button-icon.x {
+  height: 50%;
+  width: 50%;
+}
+
+/* Lower the heart a bit so it's more centered */
+.button-icon.like {
+  margin-top: 5%;
 }
 
 .chat-disconnect-button {
   background-color: #AA0000;
   outline: none;
-  box-sizing: border-box;
 }
 
 .chat-next-button {
+  border: 1px solid #00AA00;
   background-color: #00AA00;
   outline: none;
-  box-sizing: border-box;
 }
 
 .middle-buttons {
@@ -488,8 +508,61 @@ a:hover {
   width: 100%;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: 8vh 8vh 8vh;
+  grid-template-columns: 8vh 8vh;
   justify-content: space-evenly;
+}
+
+.like-button {
+  border: 2px solid #4A5AE5;
+  background-color: #FFFFFF;
+  position:relative;
+}
+
+.like-button.active {
+  border: 2px solid #4A5AE5;
+  background-color: #4A5AE5;
+}
+
+.like-text {
+  position: absolute;
+  top: -15px;
+  text-align: center;
+  width: 100%;
+  color: blue;
+  font-size: 18px;
+  opacity: 0.0;
+}
+
+.like-text.animate {
+  animation: up-text 1.2s ease-in-out;
+}
+
+@keyframes up-text {
+  0% {opacity: 0.0; top: -15px;}
+  10% {opacity: 0.0;}
+  40% {opacity: 0.6;}
+  90% {opacity: 0.0;}
+  100% {opacity: 0.0; top: -50px;}
+}
+
+.save-button {
+  border: 1px solid #7F00FF;
+  background-color: #7F00FF;
+  /*background-color: #FFFFFF;*/
+}
+
+.save-button.active {
+  background-color: #7F00FF;
+}
+
+.report-button {
+  border: 2px solid #CC0000;
+  background-color: #FFFFFF;
+}
+
+.report-button.active {
+  border: 2px solid #CC0000;
+  background-color: #CC0000;
 }
 
 .chat-input {
@@ -503,12 +576,14 @@ a:hover {
 }
 
 .chat-send-button {
+  border: 1px solid #0074d9;
   background-color: #0074d9;
   outline: none;
 }
 
 .chat-send-button.disabled {
   background-color: #aaaaaa;
+  border: 1px solid #aaaaaa;
 }
 
 /* /Chat */

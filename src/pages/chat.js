@@ -18,12 +18,18 @@ const systemDisconnect = "d";
 const systemRoomActive = "ra";
 const systemRoomInactive = "ri";
 
-const svgX = require('../images/x.svg');
-const svgNext = require('../images/next.svg');
-const svgArrowUp = require('../images/arrow_up.svg');
-const svgHeart = require('../images/heartEmpty.svg');
-const svgDiskette = require('../images/disketteEmpty.svg');
-const svgFlag = require('../images/flagEmpty.svg');
+const svgX = require('../images/xWhite.svg');
+const svgNext = require('../images/nextWhite2.svg');
+const svgSendWhite = require('../images/sendWhite.svg');
+
+const svgHeartWhite = require('../images/heartWhite.svg');
+const svgDisketteWhite = require('../images/disketteWhite.svg');
+const svgExclamationWhite = require('../images/exclamationWhite.svg');
+
+const svgHeartBlueEmpty = require('../images/heartBlueEmpty.svg');
+const svgHeartBlueFilled = require('../images/heartBlue2.svg');
+const svgDisketteYellow = require('../images/disketteYellow.svg');
+const svgExclamationRed = require('../images/exclamationRed.svg');
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -32,6 +38,8 @@ export default class Chat extends React.Component {
       messages: [],
       status: statusIdentifying,
       websocket: null,
+      liked: false,
+      reported: false,
     };
 
     this.connectToChat = this.connectToChat.bind(this);
@@ -306,7 +314,7 @@ export default class Chat extends React.Component {
   }
 
   handleLike = () => {
-    console.log("Like clicked");
+    this.setState({liked: !this.state.liked});
   }
 
   handleSave = () => {
@@ -326,7 +334,9 @@ export default class Chat extends React.Component {
           <ChatControls websocket={this.state.websocket} handleDisconnect={this.handleDisconnect}
                         handleSearch={this.handleSearch} disconnected={this.state.status === statusDisconnected}
                         matched={this.state.status === statusMatched} handleLike={this.handleLike}
+                        liked={this.state.liked}
                         handleSave={this.handleSave} handleReport={this.handleReport}
+                        searching={this.state.status === statusConnecting || this.state.status === statusSearching}
           />
         </div>
     );
@@ -423,20 +433,21 @@ class ChatControls extends React.Component {
 
   render() {
     return (
-        <div className={`chat-controls ` + (this.props.matched ? ' connected' : 'disconnected') + ` fade-in`}>
-          {/*Change disconnect button to "Search"*/}
+        <div className={`chat-controls connected fade-in`}>
           <DisconnectSearchButton handleDisconnect={this.props.handleDisconnect} handleSearch={this.props.handleSearch}
                                   disconnected={this.props.disconnected}/>
           <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}
-                         handleLike={this.props.handleLike} handleSave={this.props.handleSave}
-                         handleReport={this.props.handleReport}/>
-          <button
-              className={`chat-send-button circle` +
-              ((this.props.disconnected || this.state.inputText === '') ? ' disabled' : '')}
-              onClick={this.handleSendClick}
-              disabled={(this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}>
-            <img className="button-icon" src={svgArrowUp} alt="Send"></img>
-          </button>
+                         handleLike={this.props.handleLike} liked={this.props.liked} handleSave={this.props.handleSave}
+                         handleReport={this.props.handleReport} searching={this.props.searching}/>
+          <div className="circle-wrapper send">
+            <button
+                className={`chat-send-button circle` +
+                ((this.props.disconnected || this.state.inputText === '') ? ' disabled' : '')}
+                onClick={this.handleSendClick}
+                disabled={(this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}>
+              <img className="button-icon" src={svgSendWhite} alt="Send"></img>
+            </button>
+          </div>
         </div>
     );
   }
@@ -446,21 +457,32 @@ class DisconnectSearchButton extends React.Component {
   render() {
     if (this.props.disconnected) {
       return (
-          <button className={`chat-next-button circle`} onClick={this.props.handleSearch}>
-            <img className="button-icon" src={svgNext} alt="Next"></img>
-          </button>);
+          <div className="circle-wrapper">
+            <button className={`chat-next-button circle`} onClick={this.props.handleSearch}>
+              <img className="button-icon" src={svgNext} alt="Next"></img>
+            </button>
+          </div>
+      );
     }
 
     return (
-        <button className={`chat-disconnect-button circle`} onClick={this.props.handleDisconnect}>
-          <img className="button-icon" src={svgX} alt="Disconnect"></img>
-        </button>
+        <div className="circle-wrapper">
+          <button className={`chat-disconnect-button circle`} onClick={this.props.handleDisconnect}>
+            <img className="button-icon x" src={svgX} alt="Disconnect"></img>
+          </button>
+        </div>
     );
   }
 }
-
+// TODO: mobile vh is not set ATM. will break for height, need to do --vh for classes?
 class MiddleControl extends React.Component {
   render() {
+    if (this.props.searching) {
+      return (
+          <div className={`middle-buttons`}></div>
+      );
+    }
+
     if (this.props.matched) {
       return (
           <input type="text" placeholder="Message"
@@ -471,15 +493,26 @@ class MiddleControl extends React.Component {
     }
     return (
         <div className={`middle-buttons`}>
-          <button className={`middle-button circle`} onClick={this.props.handleLike}>
-            <img className="button-icon" src={svgHeart} alt="Like"></img>
-          </button>
-          <button className={`middle-button circle`} onClick={this.props.handleSave}>
-            <img className="button-icon" src={svgDiskette} alt="Save"></img>
-          </button>
-          <button className={`middle-button circle`} onClick={this.props.handleReport}>
-            <img className="button-icon" src={svgFlag} alt="Report"></img>
-          </button>
+          <div className="circle-wrapper">
+            <button className={`middle-button circle like-button` + (this.props.liked ? ' active' : '')}
+                    onClick={this.props.handleLike}>
+              <img className="button-icon like" src={(this.props.liked ? svgHeartBlueFilled : svgHeartBlueEmpty)}
+                   alt="Like"></img>
+              <div className={(this.props.liked ? ' like-text animate' : 'like-text')}>Liked</div>
+            </button>
+          </div>
+          {/*<div className="circle-wrapper">*/}
+          {/*<button className={`middle-button circle save-button`} onClick={this.props.handleSave}>*/}
+          {/*<img className="button-icon" src={svgDisketteWhite} alt="Save"></img>*/}
+          {/*</button>*/}
+          {/*</div>*/}
+          <div className="circle-wrapper">
+            <button className={`middle-button circle report-button` + (this.props.liked ? ' active' : '')}
+                    onClick={this.props.handleReport}>
+              <img className="button-icon" src={(this.props.liked ? svgExclamationWhite : svgExclamationRed)}
+                   alt="Report"></img>
+            </button>
+          </div>
         </div>
     );
   }
