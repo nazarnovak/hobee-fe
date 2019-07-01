@@ -15,6 +15,9 @@ const systemSearch = "s";
 const systemConnect = "c";
 const systemDisconnect = "d";
 
+const systemUserActive = "ua";
+const systemUserInactive = "ui";
+
 const systemRoomActive = "ra";
 const systemRoomInactive = "ri";
 
@@ -26,7 +29,7 @@ const svgHeartWhite = require('../images/heartWhite.svg');
 const svgDisketteWhite = require('../images/disketteWhite.svg');
 const svgExclamationWhite = require('../images/exclamationWhite.svg');
 
-const svgHeartBlueEmpty = require('../images/heartBlueEmpty.svg');
+const svgHeartBlueEmpty = require('../images/heartBlueEmpty2.svg');
 const svgHeartBlueFilled = require('../images/heartBlue2.svg');
 const svgDisketteYellow = require('../images/disketteYellow.svg');
 const svgExclamationRed = require('../images/exclamationRed.svg');
@@ -181,11 +184,20 @@ export default class Chat extends React.Component {
 
         messages = await this.pullRoomMessages();
         break;
+      case systemUserActive:
+      case systemUserInactive:
+        console.log("User activeness");
+
+        status = this.state.status;
+
+        break;
       default:
         throw new Error("Unknown system message", msg.text);
     }
 
-    messages.push(msg);
+    if (status != statusSearching) {
+      messages.push(msg);
+    }
 
     if (status === statusSearching) {
       this.sendWebsocketMessage(typeSystem, systemSearch);
@@ -345,22 +357,6 @@ export default class Chat extends React.Component {
 
 class ChatMessages extends React.Component {
   render() {
-    let msgItems = this.props.messages.filter(function (msg) {
-          if (msg.type === typeSystem) {
-            return false;
-          }
-
-          return true;
-        }
-    );
-
-    msgItems = msgItems.map((msg) =>
-        <div className={`${ msg.type === typeOwn ? 'my-message-container' : 'buddy-message-container'}`}>
-          <div
-              className={`chat-message ${ msg.type === typeOwn ? 'my-message' : 'buddy-message' }`}>{msg.text}</div>
-        </div>
-    );
-
     if (this.props.searching) {
       return (
           <div className="chat-messages">
@@ -372,9 +368,76 @@ class ChatMessages extends React.Component {
       )
     }
 
+    // let msgItems = this.props.messages.filter(function (msg) {
+    //       if (msg.type === typeSystem) {
+    //         return false;
+    //       }
+    //
+    //       return true;
+    //     }
+    // );
+    let msgs = this.props.messages;
+
+    let msgsHTML = msgs.map((msg) => {
+          // We skip the room active/inactive messages, which are only for us to know if we need to pull messages and
+          // show disconnected state
+          if ((msg.type === typeSystem) && (msg.text === systemRoomActive || msg.text === systemRoomInactive)) {
+            return;
+          }
+
+          let wrapperClass = '', messageClass = '';
+
+          switch (msg.type) {
+            case typeOwn:
+              wrapperClass = 'my-message-container';
+              messageClass = 'my-message';
+              break;
+            case typeBuddy:
+              wrapperClass = 'buddy-message-container';
+              messageClass = 'buddy-message';
+              break;
+            case typeSystem:
+              wrapperClass = 'system-message-container';
+              messageClass = 'system-message';
+              break;
+            default:
+              throw new Error('Unknown message type', msg.type);
+          }
+
+          let text = msg.text;
+
+          if (msg.type === typeSystem) {
+            // We substitute the system messages to UI readable texts
+
+            switch (msg.text) {
+              case systemConnect:
+                text = 'Matched';
+                break;
+              case systemDisconnect:
+                text = 'Disconnected';
+                break;
+              case systemUserActive:
+                text = 'Is active';
+                break;
+              case systemUserInactive:
+                text = 'Is inactive';
+                break;
+            }
+          }
+
+          return (
+              <div className={wrapperClass}>
+                <div className={`chat-message ${messageClass}`}>
+                  {text}
+                </div>
+              </div>
+          );
+        }
+    );
+
     return (
         <div className='chat-messages fade-in'>
-          {msgItems}
+          {msgsHTML}
         </div>
     );
   }
@@ -474,7 +537,7 @@ class DisconnectSearchButton extends React.Component {
     );
   }
 }
-// TODO: mobile vh is not set ATM. will break for height, need to do --vh for classes?
+
 class MiddleControl extends React.Component {
   render() {
     if (this.props.searching) {
@@ -498,7 +561,7 @@ class MiddleControl extends React.Component {
                     onClick={this.props.handleLike}>
               <img className="button-icon like" src={(this.props.liked ? svgHeartBlueFilled : svgHeartBlueEmpty)}
                    alt="Like"></img>
-              <div className={(this.props.liked ? ' like-text animate' : 'like-text')}>Liked</div>
+              {/*<div className={(this.props.liked ? ' like-text animate' : 'like-text')}>Liked</div>*/}
             </button>
           </div>
           {/*<div className="circle-wrapper">*/}
