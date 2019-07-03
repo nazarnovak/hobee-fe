@@ -43,6 +43,8 @@ export default class Chat extends React.Component {
       websocket: null,
       liked: false,
       reported: false,
+      tabActive: true,
+      unread: 0,
     };
 
     this.connectToChat = this.connectToChat.bind(this);
@@ -62,7 +64,8 @@ export default class Chat extends React.Component {
   }
 
   componentWilUnmount() {
-    window.removeEventListener("focus", this.onFocus)
+    window.removeEventListener("focus", this.onFocus);
+    window.removeEventListener("blur", this.onBlur);
   }
 
   clearChat() {
@@ -71,6 +74,13 @@ export default class Chat extends React.Component {
 
   onFocus = () => {
     this.scrollToBottom();
+    this.setState({tabActive: true, unread: 0});
+
+    document.title = 'hobee: Dialogue definite';
+  }
+
+  onBlur = () => {
+    this.setState({tabActive: false});
   }
 
   async connectToChat() {
@@ -132,6 +142,7 @@ export default class Chat extends React.Component {
 
   async componentDidMount() {
     window.addEventListener("focus", this.onFocus);
+    window.addEventListener("blur", this.onBlur);
 
     this.connectToChat();
   }
@@ -192,6 +203,9 @@ export default class Chat extends React.Component {
     var messages = this.state.messages.slice();
     messages.push(msg);
     this.setState({messages: messages});
+
+    this.scrollToBottom();
+    this.pushUnreadMessage();
   }
 
   handleOwnMessage(msg) {
@@ -200,6 +214,7 @@ export default class Chat extends React.Component {
     this.setState({messages: messages});
 
     this.scrollToBottom();
+    this.pushUnreadMessage();
   }
 
   async handleActivityMessage(msg) {
@@ -227,6 +242,20 @@ export default class Chat extends React.Component {
     messages.push(msg);
 
     this.setState({status: status, messages: messages});
+
+    this.scrollToBottom();
+    this.pushUnreadMessage();
+  }
+
+  pushUnreadMessage() {
+    // We only push unread messages when the tab is not active
+    if (this.state.tabActive) {
+      return false;
+    }
+
+    this.setState({unread: this.state.unread + 1});
+
+    document.title = '(' + this.state.unread + ')' + 'hobee: Dialogue definite';
   }
 
   scrollToBottom() {
@@ -281,6 +310,8 @@ export default class Chat extends React.Component {
         default:
           console.log("Unexpected json:", receivedJson);
       }
+
+
     }
   }
 
