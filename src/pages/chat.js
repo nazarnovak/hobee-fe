@@ -6,6 +6,7 @@ const statusSearching = "searching";
 const statusMatched = "matched";
 const statusDisconnected = "disconnected";
 
+const typeActivity = "a";
 const typeSystem = "s";
 const typeOwn = "o";
 const typeBuddy = "b";
@@ -15,11 +16,10 @@ const systemSearch = "s";
 const systemConnect = "c";
 const systemDisconnect = "d";
 
-const systemUserActive = "ua";
-const systemUserInactive = "ui";
-
-const systemRoomActive = "ra";
-const systemRoomInactive = "ri";
+const activityUserActive = "ua";
+const activityUserInactive = "ui";
+const activityRoomActive = "ra";
+const activityRoomInactive = "ri";
 
 const svgX = require('../images/xWhite.svg');
 const svgNext = require('../images/nextWhite2.svg');
@@ -172,25 +172,6 @@ export default class Chat extends React.Component {
         console.log("Available for search");
         status = statusSearching;
         break;
-      case systemRoomActive:
-        console.log("Room active");
-        status = statusMatched;
-
-        messages = await this.pullRoomMessages();
-        break;
-      case systemRoomInactive:
-        console.log("Room inactive");
-        status = statusDisconnected;
-
-        messages = await this.pullRoomMessages();
-        break;
-      case systemUserActive:
-      case systemUserInactive:
-        console.log("User activeness");
-
-        status = this.state.status;
-
-        break;
       default:
         throw new Error("Unknown system message", msg.text);
     }
@@ -200,6 +181,7 @@ export default class Chat extends React.Component {
     }
 
     if (status === statusSearching) {
+      this.clearChat();
       this.sendWebsocketMessage(typeSystem, systemSearch);
     }
 
@@ -218,6 +200,33 @@ export default class Chat extends React.Component {
     this.setState({messages: messages});
 
     this.scrollToBottom();
+  }
+
+  async handleActivityMessage(msg) {
+    let status, messages = this.state.messages.slice();
+
+    switch (msg.text) {
+      case activityRoomActive:
+        console.log("Room active");
+        status = statusMatched;
+
+        messages = await this.pullRoomMessages();
+        break;
+      case activityRoomInactive:
+        console.log("Room inactive");
+        status = statusDisconnected;
+        messages = await this.pullRoomMessages();
+        break;
+      case activityUserActive:
+      case activityUserInactive:
+        console.log("User activeness");
+        status = this.state.status;
+        break;
+    }
+
+    messages.push(msg);
+
+    this.setState({status: status, messages: messages});
   }
 
   scrollToBottom() {
@@ -265,6 +274,9 @@ export default class Chat extends React.Component {
           break;
         case typeBuddy:
           this.handleBuddyMessage(receivedJson);
+          break;
+        case typeActivity:
+          this.handleActivityMessage(receivedJson);
           break;
         default:
           console.log("Unexpected json:", receivedJson);
@@ -381,7 +393,7 @@ class ChatMessages extends React.Component {
     let msgsHTML = msgs.map((msg) => {
           // We skip the room active/inactive messages, which are only for us to know if we need to pull messages and
           // show disconnected state
-          if ((msg.type === typeSystem) && (msg.text === systemRoomActive || msg.text === systemRoomInactive)) {
+          if ((msg.type === typeActivity) && (msg.text === activityRoomActive || msg.text === activityRoomInactive)) {
             return;
           }
 
@@ -396,6 +408,7 @@ class ChatMessages extends React.Component {
               wrapperClass = 'buddy-message-container';
               messageClass = 'buddy-message';
               break;
+            case typeActivity:
             case typeSystem:
               wrapperClass = 'system-message-container';
               messageClass = 'system-message';
@@ -406,9 +419,8 @@ class ChatMessages extends React.Component {
 
           let text = msg.text;
 
+          // We substitute the system messages to UI readable texts
           if (msg.type === typeSystem) {
-            // We substitute the system messages to UI readable texts
-
             switch (msg.text) {
               case systemConnect:
                 text = 'Matched';
@@ -416,10 +428,15 @@ class ChatMessages extends React.Component {
               case systemDisconnect:
                 text = 'Disconnected';
                 break;
-              case systemUserActive:
+            }
+          }
+
+          if (msg.type === typeActivity) {
+            switch (msg.text) {
+              case activityUserActive:
                 text = 'Is active';
                 break;
-              case systemUserInactive:
+              case activityUserInactive:
                 text = 'Is inactive';
                 break;
             }
