@@ -390,7 +390,7 @@ a:hover {
   text-align: left;
   word-wrap: break-word;
   font-size: 18px;
-  white-space: pre;
+  white-space: pre-wrap;
 }
 
 .my-message-container {
