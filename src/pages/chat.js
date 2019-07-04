@@ -380,12 +380,23 @@ export default class Chat extends React.Component {
     console.log("Report clicked");
   }
 
+  handleMouseEnter = (e) => {
+    let el = e.target;
+    el.parentElement.querySelector('.message-timestamp').classList.add('visible');
+  }
+
+  handleMouseLeave = (e) => {
+    let el = e.target;
+    el.parentElement.querySelector('.message-timestamp').classList.remove('visible');
+  }
+
   render() {
     return (
         <div className={`main-content`}>
           <ChatMessages messages={this.state.messages}
                         searching={this.state.status === statusConnecting || this.state.status === statusSearching}
-                        status={this.state.status}/>
+                        status={this.state.status} handleMouseEnter={this.handleMouseEnter}
+                        handleMouseLeave={this.handleMouseLeave}/>
           <ChatControls websocket={this.state.websocket} handleDisconnect={this.handleDisconnect}
                         handleSearch={this.handleSearch} disconnected={this.state.status === statusDisconnected}
                         matched={this.state.status === statusMatched} handleLike={this.handleLike}
@@ -473,11 +484,37 @@ class ChatMessages extends React.Component {
             }
           }
 
+          if (msg.type === typeOwn) {
+            return (
+                <div className={wrapperClass}>
+                  <Timestamp direction={'left'} timestamp={msg.timestamp}/>
+                  <div className={`chat-message ${messageClass}`} onMouseEnter={this.props.handleMouseEnter}
+                       onMouseLeave={this.props.handleMouseLeave}>
+                    {text}
+                  </div>
+                </div>
+            );
+          }
+
+          if (msg.type === typeBuddy) {
+            return (
+                <div className={wrapperClass}>
+                  <div className={`chat-message ${messageClass}`} onMouseEnter={this.props.handleMouseEnter}
+                       onMouseLeave={this.props.handleMouseLeave}>
+                    {text}
+                  </div>
+                  <Timestamp direction={'right'} timestamp={msg.timestamp}/>
+                </div>
+            );
+          }
+
           return (
               <div className={wrapperClass}>
-                <div className={`chat-message ${messageClass}`}>
+                <div className={`chat-message ${messageClass}`} onMouseEnter={this.props.handleMouseEnter}
+                     onMouseLeave={this.props.handleMouseLeave}>
                   {text}
                 </div>
+                <Timestamp direction={'bottom'} timestamp={msg.timestamp}/>
               </div>
           );
         }
@@ -625,6 +662,30 @@ class MiddleControl extends React.Component {
             </button>
           </div>
         </div>
+    );
+  }
+}
+
+class Timestamp extends React.Component {
+  render() {
+    // let hoursOffset = -(new Date().getTimezoneOffset() / 60);
+    let dateTimestamp = new Date(this.props.timestamp);
+
+    // dateTimestamp.setHours(dateTimestamp.getHours()+ hoursOffset);
+
+    let hours = dateTimestamp.getHours();
+    let minutes = dateTimestamp.getMinutes();
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+    let strTime = hours + ':' + minutes + ' ' + ampm;
+
+    return (
+        <span
+            className={`message-timestamp` + (this.props.direction === 'bottom' ? ' timestamp-system' : '')}>{strTime}</span>
     );
   }
 }

@@ -385,7 +385,6 @@ a:hover {
   border-radius: 20px;
   padding: 6px 12px 6px 12px;
   max-width: 75vw;
-  margin-bottom: 10px;
   display: inline-block;
   text-align: left;
   word-wrap: break-word;
@@ -395,12 +394,27 @@ a:hover {
 
 .my-message-container {
   text-align: right;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: end;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .my-message {
   background-color: #0074d9;
   color: white;
   margin-left: auto;
+}
+
+.buddy-message-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .buddy-message {
@@ -410,11 +424,37 @@ a:hover {
 
 .system-message-container {
   text-align: center;
+  position: relative;
 }
 
 .system-message {
   border: 1px solid #666;
   color: #666;
+}
+
+.message-timestamp-container {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.message-timestamp {
+  color: #666;
+  text-align: center;
+  padding: 6px;
+  z-index: 1;
+  font-size: 14px;
+  visibility: hidden;
+  margin: 0px 5px;
+}
+
+.message-timestamp.visible {
+  visibility: visible;
+}
+.timestamp-system {
+  position: absolute;
+  padding-top: 10px;
+  padding-left: 6px;
 }
 
 /*Add the corner tooltip to buddy messages*/
