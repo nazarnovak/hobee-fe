@@ -425,6 +425,7 @@ a:hover {
 .system-message-container {
   text-align: center;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .system-message {
