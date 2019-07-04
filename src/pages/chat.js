@@ -255,7 +255,7 @@ export default class Chat extends React.Component {
 
     this.setState({unread: this.state.unread + 1});
 
-    document.title = '(' + this.state.unread + ')' + 'hobee: Dialogue definite';
+    document.title = '(' + this.state.unread + ')' + ' hobee: Dialogue definite';
   }
 
   scrollToBottom() {
