@@ -358,17 +358,20 @@ a:hover {
 }
 
 .nav-height {
-  height: 8vh;
+  height: 8vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 8);
 }
 
 .logo {
-  margin-top: 1vh;
+  margin-top: 1vh; /* Fallback for browsers that do not support Custom Properties */
+  margin-top: calc(var(--vh, 1vh) * 1);
   outline: none;
   width: 100vw;
 }
 
 .logo-height {
-  height: 6vh;
+  height: 6vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 6);
 }
 
 .chat-messages {
@@ -376,7 +379,8 @@ a:hover {
   box-sizing: border-box;
   background-color: #fff;
   /*border-bottom: 1px solid #999;*/
-  height: 82vh;
+  height: 82vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 82);
   overflow-y: scroll;
   padding: 15px;
 }
@@ -488,7 +492,8 @@ a:hover {
 /*}*/
 
 .chat-controls {
-  height: 8vh;
+  height: 8vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 8);
   /*padding: 0 10px;*/
   width: 98vw;
   margin-left: 1vw;
@@ -496,7 +501,8 @@ a:hover {
   box-sizing: border-box;
   /*box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 2px -2px;*/
   display: grid;
-  grid-template-columns: calc(8vh - 2px) auto calc(8vh - 2px);
+  grid-template-columns: calc(8vh - 2px) auto calc(8vh - 2px); /* Fallback for browsers that do not support Custom Properties */
+  grid-template-columns: calc(calc(var(--vh, 1vh) * 8) - 2px) auto calc(calc(var(--vh, 1vh) * 8) - 2px);
 }
 
 .chat-controls.connected {
@@ -508,8 +514,10 @@ a:hover {
 }
 
 .circle-wrapper {
-  height: calc(8vh - 2px);
-  width: calc(8vh - 2px);
+  height: calc(8vh - 2px); /* Fallback for browsers that do not support Custom Properties */
+  height: calc(calc(var(--vh, 1vh) * 8) - 2px);
+  width: calc(8vh - 2px); /* Fallback for browsers that do not support Custom Properties */
+  width: calc(calc(var(--vh, 1vh) * 8) - 2px);
 }
 
 .circle-wrapper.send {
@@ -557,7 +565,8 @@ a:hover {
   width: 100%;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: 8vh 8vh;
+  grid-template-columns: 8vh 8vh; /* Fallback for browsers that do not support Custom Properties */
+  grid-template-columns: calc(var(--vh, 1vh) * 8) calc(var(--vh, 1vh) * 8);
   justify-content: space-evenly;
 }
 
