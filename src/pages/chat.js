@@ -67,7 +67,8 @@ export default class Chat extends React.Component {
     }
   }
 
-  componentWilUnmount() {
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleEscKey, false);
     window.removeEventListener("focus", this.onFocus);
     window.removeEventListener("blur", this.onBlur);
   }
@@ -145,6 +146,7 @@ export default class Chat extends React.Component {
   }
 
   async componentDidMount() {
+    window.addEventListener("keydown", this.handleEscKey, false);
     window.addEventListener("focus", this.onFocus);
     window.addEventListener("blur", this.onBlur);
 
@@ -242,6 +244,13 @@ export default class Chat extends React.Component {
     this.pushUnreadMessage();
   }
 
+  handleEscKey = (e) => {
+    if (e.key === "Escape") {
+      this.handleDisconnect();
+      return true;
+    }
+}
+
   pushUnreadMessage() {
     // We only push unread messages when the tab is not active
     if (this.state.tabActive) {
@@ -334,6 +343,10 @@ export default class Chat extends React.Component {
   }
 
   handleDisconnect = () => {
+    if (this.state.status !== statusMatched) {
+      return false;
+    }
+
     if (!window.confirm("Are you sure you want to disconnect?")) {
       return false;
     }
@@ -573,7 +586,7 @@ class ChatControls extends React.Component {
   }
 
   handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       this.sendInputMessage();
       return true;
     }
@@ -596,7 +609,7 @@ class ChatControls extends React.Component {
     return (
         <div className={`chat-controls connected fade-in`}>
           <DisconnectSearchButton handleDisconnect={this.props.handleDisconnect} handleSearch={this.props.handleSearch}
-                                  disconnected={this.props.disconnected}/>
+                                  disconnected={this.props.disconnected} matched={this.props.matched}/>
           <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}
                          handleLike={this.props.handleLike} liked={this.props.liked} reported={this.props.reported}
                          handleSave={this.props.handleSave} handleReport={this.props.handleReport}
@@ -629,7 +642,8 @@ class DisconnectSearchButton extends React.Component {
 
     return (
         <div className="circle-wrapper">
-          <button className={`chat-disconnect-button circle`} onClick={this.props.handleDisconnect}>
+          <button className={`chat-disconnect-button circle` +
+          ((this.props.matched) ? '' : ' disabled')} onClick={this.props.handleDisconnect}>
             <img className="button-icon x" src={svgX} alt="Disconnect"></img>
           </button>
         </div>

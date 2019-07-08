@@ -554,6 +554,11 @@ a:hover {
   outline: none;
 }
 
+.chat-disconnect-button.disabled {
+  background-color: #aaaaaa;
+  border: 1px solid #aaaaaa;
+}
+
 .chat-next-button {
   border: 1px solid #00AA00;
   background-color: #00AA00;
