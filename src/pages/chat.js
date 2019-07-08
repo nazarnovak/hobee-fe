@@ -8,6 +8,7 @@ const statusDisconnected = "disconnected";
 
 const typeActivity = "a";
 const typeSystem = "s";
+const typeChatting = "c";
 const typeOwn = "o";
 const typeBuddy = "b";
 // const ADMIN = "a";
@@ -53,7 +54,7 @@ export default class Chat extends React.Component {
     this.onClose = this.onClose.bind(this);
     this.sendWebsocketMessage = this.sendWebsocketMessage.bind(this);
     this.handleSystemMessage = this.handleSystemMessage.bind(this);
-    this.handleOwnMessage = this.handleOwnMessage.bind(this);
+    this.handleChatMessage = this.handleChatMessage.bind(this);
     this.clearChat = this.clearChat.bind(this);
   }
 
@@ -199,16 +200,7 @@ export default class Chat extends React.Component {
     this.setState({status: status, messages: messages});
   }
 
-  handleBuddyMessage(msg) {
-    var messages = this.state.messages.slice();
-    messages.push(msg);
-    this.setState({messages: messages});
-
-    this.scrollToBottom();
-    this.pushUnreadMessage();
-  }
-
-  handleOwnMessage(msg) {
+  handleChatMessage(msg) {
     var messages = this.state.messages.slice();
     messages.push(msg);
     this.setState({messages: messages});
@@ -298,11 +290,9 @@ export default class Chat extends React.Component {
         case typeSystem:
           this.handleSystemMessage(receivedJson);
           break;
-        case typeOwn:
-          this.handleOwnMessage(receivedJson);
-          break;
-        case typeBuddy:
-          this.handleBuddyMessage(receivedJson);
+
+        case typeChatting:
+          this.handleChatMessage(receivedJson);
           break;
         case typeActivity:
           this.handleActivityMessage(receivedJson);
@@ -442,13 +432,19 @@ class ChatMessages extends React.Component {
           let wrapperClass = '', messageClass = '';
 
           switch (msg.type) {
-            case typeOwn:
-              wrapperClass = 'my-message-container';
-              messageClass = 'my-message';
-              break;
-            case typeBuddy:
-              wrapperClass = 'buddy-message-container';
-              messageClass = 'buddy-message';
+            case typeChatting:
+              // Chatting messages should only be own or buddy's
+              if (msg.authoruuid !== typeOwn && msg.authoruuid !== typeBuddy) {
+                throw new Error("Unknown message author", msg);
+              }
+              if (msg.authoruuid === typeOwn) {
+                wrapperClass = 'my-message-container';
+                messageClass = 'my-message';
+              }
+              if (msg.authoruuid === typeBuddy) {
+                wrapperClass = 'buddy-message-container';
+                messageClass = 'buddy-message';
+              }
               break;
             case typeActivity:
             case typeSystem:
@@ -468,7 +464,10 @@ class ChatMessages extends React.Component {
                 text = 'Matched';
                 break;
               case systemDisconnect:
-                text = 'Disconnected';
+                text = 'You disconnected';
+                if (msg.authoruuid === typeBuddy) {
+                  text = `Buddy disconnected`;
+                }
                 break;
             }
           }
@@ -476,15 +475,34 @@ class ChatMessages extends React.Component {
           if (msg.type === typeActivity) {
             switch (msg.text) {
               case activityUserActive:
-                text = 'Is active';
+                text = `You're active`;
+                if (msg.authoruuid === typeBuddy) {
+                  text = `Buddy is active`;
+                }
                 break;
               case activityUserInactive:
-                text = 'Is inactive';
+                text = `You're inactive`;
+                if (msg.authoruuid === typeBuddy) {
+                  text = `Buddy is inactive`;
+                }
                 break;
             }
           }
 
-          if (msg.type === typeOwn) {
+          // Hack activity to always show timestamp on the right. Hard to make timestamp absolute on the left for now
+          if (msg.type === typeActivity || msg.type === typeSystem) {
+            return (
+              <div className={wrapperClass}>
+                <div className={`chat-message ${messageClass}`} onMouseEnter={this.props.handleMouseEnter}
+                     onMouseLeave={this.props.handleMouseLeave}>
+                  {text}
+                </div>
+                <Timestamp direction={'bottom'} timestamp={msg.timestamp}/>
+              </div>
+            );
+          }
+
+          if (msg.authoruuid === typeOwn) {
             return (
                 <div className={wrapperClass}>
                   <Timestamp direction={'left'} timestamp={msg.timestamp}/>
@@ -496,7 +514,7 @@ class ChatMessages extends React.Component {
             );
           }
 
-          if (msg.type === typeBuddy) {
+          if (msg.authoruuid === typeBuddy) {
             return (
                 <div className={wrapperClass}>
                   <div className={`chat-message ${messageClass}`} onMouseEnter={this.props.handleMouseEnter}
@@ -508,15 +526,7 @@ class ChatMessages extends React.Component {
             );
           }
 
-          return (
-              <div className={wrapperClass}>
-                <div className={`chat-message ${messageClass}`} onMouseEnter={this.props.handleMouseEnter}
-                     onMouseLeave={this.props.handleMouseLeave}>
-                  {text}
-                </div>
-                <Timestamp direction={'bottom'} timestamp={msg.timestamp}/>
-              </div>
-          );
+          throw new Error("Unknown where to show the message", msg);
         }
     );
 
