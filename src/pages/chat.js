@@ -30,10 +30,13 @@ const svgHeartWhite = require('../images/heartWhite.svg');
 const svgDisketteWhite = require('../images/disketteWhite.svg');
 const svgExclamationWhite = require('../images/exclamationWhite.svg');
 
-const svgHeartBlueEmpty = require('../images/heartBlueEmpty2.svg');
-const svgHeartBlueFilled = require('../images/heartBlue2.svg');
-const svgDisketteYellow = require('../images/disketteYellow.svg');
-const svgExclamationRed = require('../images/exclamationRed.svg');
+const svgHeartBlueEmpty = require('../images/heartBlueEmpty.svg');
+const svgHeartBlueFilled = require('../images/heartBlueFilled.svg');
+
+// const svgDisketteYellow = require('../images/disketteYellow.svg');
+
+const svgReportEmpty = require('../images/reportEmpty.svg');
+const svgReportFilled = require('../images/reportFilled.svg');
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -367,7 +370,7 @@ export default class Chat extends React.Component {
   }
 
   handleReport = () => {
-    console.log("Report clicked");
+    this.setState({reported: !this.state.reported});
   }
 
   handleMouseEnter = (e) => {
@@ -390,7 +393,7 @@ export default class Chat extends React.Component {
           <ChatControls websocket={this.state.websocket} handleDisconnect={this.handleDisconnect}
                         handleSearch={this.handleSearch} disconnected={this.state.status === statusDisconnected}
                         matched={this.state.status === statusMatched} handleLike={this.handleLike}
-                        liked={this.state.liked}
+                        liked={this.state.liked} reported={this.state.reported}
                         handleSave={this.handleSave} handleReport={this.handleReport}
                         searching={this.state.status === statusConnecting || this.state.status === statusSearching}
           />
@@ -595,8 +598,9 @@ class ChatControls extends React.Component {
           <DisconnectSearchButton handleDisconnect={this.props.handleDisconnect} handleSearch={this.props.handleSearch}
                                   disconnected={this.props.disconnected}/>
           <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}
-                         handleLike={this.props.handleLike} liked={this.props.liked} handleSave={this.props.handleSave}
-                         handleReport={this.props.handleReport} searching={this.props.searching}/>
+                         handleLike={this.props.handleLike} liked={this.props.liked} reported={this.props.reported}
+                         handleSave={this.props.handleSave} handleReport={this.props.handleReport}
+                         searching={this.props.searching}/>
           <div className="circle-wrapper send">
             <button
                 className={`chat-send-button circle` +
@@ -665,9 +669,9 @@ class MiddleControl extends React.Component {
           {/*</button>*/}
           {/*</div>*/}
           <div className="circle-wrapper">
-            <button className={`middle-button circle report-button` + (this.props.liked ? ' active' : '')}
+            <button className={`middle-button circle report-button` + (this.props.reported ? ' active' : '')}
                     onClick={this.props.handleReport}>
-              <img className="button-icon" src={(this.props.liked ? svgExclamationWhite : svgExclamationRed)}
+              <img className="button-icon" src={(this.props.reported ? svgReportFilled : svgReportEmpty)}
                    alt="Report"></img>
             </button>
           </div>
