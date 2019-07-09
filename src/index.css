@@ -544,13 +544,13 @@ a:hover {
     right: 0;
     opacity: 0;
     visibility: hidden;
-    transition: opacity ease-in-out 300ms, visibility 300ms linear 0ms;
+    transition: opacity ease-in-out 300ms, visibility 0ms linear 300ms;
 }
 
 .chat-status-container.visible {
     visibility: visible;
     opacity: 1;
-    transition: opacity ease-in-out 300ms, visibility 300ms linear 0ms;
+    transition: opacity ease-in-out 300ms, visibility 0ms linear 300ms;
 }
 
 .chat-status {

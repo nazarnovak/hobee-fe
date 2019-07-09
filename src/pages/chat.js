@@ -21,6 +21,7 @@ const activityUserActive = "ua";
 const activityUserInactive = "ui";
 const activityRoomActive = "ra";
 const activityRoomInactive = "ri";
+const activityOwnTyping = "t";
 
 const svgX = require('../images/xWhite.svg');
 const svgNext = require('../images/nextWhite2.svg');
@@ -41,6 +42,9 @@ const svgReportFilled = require('../images/reportFilled.svg');
 export default class Chat extends React.Component {
   constructor(props) {
     super(props);
+
+    let that = this;
+
     this.state = {
       messages: [],
       status: statusIdentifying,
@@ -51,6 +55,13 @@ export default class Chat extends React.Component {
       unread: 0,
       statusShow: false,
       statusText: '',
+      typingTimeout: setTimeout(function() {
+        if (that.state.statusText !== 'Buddy is typing...') {
+          return false;
+        }
+
+        that.setState({statusShow: false});
+      }, 2000),
     };
 
     this.connectToChat = this.connectToChat.bind(this);
@@ -187,7 +198,6 @@ export default class Chat extends React.Component {
 
       if (msg.type === typeActivity && msg.authoruuid === typeBuddy && msg.text === activityUserActive) {
         statusShow = false;
-        statusText = '';
       }
 
       if (msg.type === typeSystem && msg.text === systemDisconnect) {
@@ -270,7 +280,7 @@ export default class Chat extends React.Component {
       case activityUserActive:
         // If buddy goes active - remove the status
         if (msg.authoruuid === typeBuddy) {
-          this.setState({statusShow: false, statusText: ''});
+          this.setState({statusShow: false});
         }
         break;
       case activityUserInactive:
@@ -279,6 +289,29 @@ export default class Chat extends React.Component {
             this.setState({statusShow: true, statusText: 'Buddy is inactive'});
           }
         break;
+      case activityOwnTyping:
+        this.setState({statusShow: true, statusText: 'Buddy is typing...'});
+
+        clearTimeout(this.state.typingTimeout);
+
+        let that = this;
+
+        this.setState({
+          typingTimeout: setTimeout(function(){
+            // User might go inactive right after typing, this will cause a bug where the status will be removed
+            if (that.state.statusText !== 'Buddy is typing...') {
+              return false;
+            }
+
+            that.setState({statusShow: false});
+            }, 2000
+          ),
+        });
+
+        // Return now, we don't need to update status/messages, or scroll to the bottom
+        return;
+      default:
+        throw new Error("Unknown activity received", msg);
     }
 
     messages.push(msg);
@@ -356,8 +389,6 @@ export default class Chat extends React.Component {
         default:
           console.log("Unexpected json:", receivedJson);
       }
-
-
     }
   }
 
@@ -452,6 +483,7 @@ export default class Chat extends React.Component {
                         handleSave={this.handleSave} handleReport={this.handleReport}
                         searching={this.state.status === statusConnecting || this.state.status === statusSearching}
                         statusShow={this.state.statusShow} statusText={this.state.statusText}
+                        sendWebsocketMessage={this.sendWebsocketMessage}
           />
         </div>
     );
@@ -560,6 +592,7 @@ class ChatControls extends React.Component {
     super(props);
     this.state = {
       inputText: '',
+      typing: false,
     };
   }
 
@@ -595,11 +628,26 @@ class ChatControls extends React.Component {
 
   handleOnChange = (e) => {
     let input = document.getElementsByTagName('input')[0];
-    if (!!input) {
-      this.setState({inputText: input.value});
-      return true;
+
+    // Ignore on change if we can't find the element
+    if (!input) {
+      return false;
     }
-// + send "typing" event here?
+
+    this.setState({inputText: input.value});
+
+    if(!this.state.typing) {
+      this.setState({typing: true});
+
+      var that = this;
+
+      this.props.sendWebsocketMessage(typeActivity, activityOwnTyping);
+
+      // Reset the typing in the state after 1 second
+      setTimeout(function(){
+        that.setState({typing: false});
+      }, 1000);
+    }
   }
 
   handleSendClick = () => {
