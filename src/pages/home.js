@@ -77,7 +77,7 @@ export default class Home extends React.Component {
 
 // If height is less than 750 only then do we not fit everything on the screen? Or should we scale it down?
   render() {
-    const sectionHeightHalf = (this.props.height - 140) / 2
+    const sectionHeightHalf = (this.props.height - 140) / 2;
     // const sectionHeightTwoThirds = (this.props.height - 140) * 0.6
     // const sectionHeightOneThirds = (this.props.height - 140) * 0.4
     const sectionWidthThird = (this.props.width - 100) / 3;

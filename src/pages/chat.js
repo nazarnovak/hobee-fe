@@ -49,6 +49,8 @@ export default class Chat extends React.Component {
       reported: false,
       tabActive: true,
       unread: 0,
+      statusShow: false,
+      statusText: '',
     };
 
     this.connectToChat = this.connectToChat.bind(this);
@@ -173,6 +175,34 @@ export default class Chat extends React.Component {
     return json.messages;
   }
 
+  chatStatusFromMessages(messages) {
+    let statusShow = this.state.statusShow;
+    let statusText = this.state.statusText;
+
+    messages.map((msg) => {
+      if (msg.type === typeActivity && msg.authoruuid === typeBuddy && msg.text === activityUserInactive) {
+        statusShow = true;
+        statusText = 'Buddy is inactive';
+      }
+
+      if (msg.type === typeActivity && msg.authoruuid === typeBuddy && msg.text === activityUserActive) {
+        statusShow = false;
+        statusText = '';
+      }
+
+      if (msg.type === typeSystem && msg.text === systemDisconnect) {
+        statusShow = true;
+        statusText = 'You disconnected';
+
+        if (msg.authoruuid === typeBuddy) {
+          statusText = 'Buddy disconnected';
+        }
+      }
+    });
+
+    this.setState({statusShow: statusShow, statusText: statusText});
+  }
+
   async handleSystemMessage(msg) {
     let status, messages = this.state.messages.slice();
 
@@ -183,6 +213,13 @@ export default class Chat extends React.Component {
         break;
       case systemDisconnect:
         console.log("Disconnected");
+        let statusText = 'You disconnected';
+        if (msg.authoruuid === typeBuddy) {
+          statusText = 'Buddy disconnected';
+        }
+
+        this.setState({statusShow: true, statusText: statusText});
+
         status = statusDisconnected;
         break;
       case systemSearch:
@@ -215,7 +252,7 @@ export default class Chat extends React.Component {
   }
 
   async handleActivityMessage(msg) {
-    let status, messages = this.state.messages.slice();
+    let status = this.state.status, messages = this.state.messages.slice();
 
     switch (msg.text) {
       case activityRoomActive:
@@ -223,16 +260,24 @@ export default class Chat extends React.Component {
         status = statusMatched;
 
         messages = await this.pullRoomMessages();
+        this.chatStatusFromMessages(messages);
         break;
       case activityRoomInactive:
-        console.log("Room inactive");
         status = statusDisconnected;
         messages = await this.pullRoomMessages();
+        this.chatStatusFromMessages(messages);
         break;
       case activityUserActive:
+        // If buddy goes active - remove the status
+        if (msg.authoruuid === typeBuddy) {
+          this.setState({statusShow: false, statusText: ''});
+        }
+        break;
       case activityUserInactive:
-        console.log("User activeness");
-        status = this.state.status;
+        // If buddy goes inactive - add the status
+          if (msg.authoruuid === typeBuddy) {
+            this.setState({statusShow: true, statusText: 'Buddy is inactive'});
+          }
         break;
     }
 
@@ -241,7 +286,6 @@ export default class Chat extends React.Component {
     this.setState({status: status, messages: messages});
 
     this.scrollToBottom();
-    this.pushUnreadMessage();
   }
 
   handleEscKey = (e) => {
@@ -249,7 +293,7 @@ export default class Chat extends React.Component {
       this.handleDisconnect();
       return true;
     }
-}
+  }
 
   pushUnreadMessage() {
     // We only push unread messages when the tab is not active
@@ -357,8 +401,6 @@ export default class Chat extends React.Component {
     };
 
     this.state.websocket.send(JSON.stringify(o));
-
-    this.setState({status: statusDisconnected});
   }
 
   handleSearch = () => {
@@ -409,6 +451,7 @@ export default class Chat extends React.Component {
                         liked={this.state.liked} reported={this.state.reported}
                         handleSave={this.handleSave} handleReport={this.handleReport}
                         searching={this.state.status === statusConnecting || this.state.status === statusSearching}
+                        statusShow={this.state.statusShow} statusText={this.state.statusText}
           />
         </div>
     );
@@ -441,7 +484,7 @@ class ChatMessages extends React.Component {
     let msgsHTML = msgs.map((msg) => {
           // We skip the room active/inactive messages, which are only for us to know if we need to pull messages and
           // show disconnected state
-          if ((msg.type === typeActivity) && (msg.text === activityRoomActive || msg.text === activityRoomInactive)) {
+          if (msg.type === typeSystem || msg.type === typeActivity) {
             return;
           }
 
@@ -462,60 +505,8 @@ class ChatMessages extends React.Component {
                 messageClass = 'buddy-message';
               }
               break;
-            case typeActivity:
-            case typeSystem:
-              wrapperClass = 'system-message-container';
-              messageClass = 'system-message';
-              break;
             default:
               throw new Error('Unknown message type', msg.type);
-          }
-
-          let text = msg.text;
-
-          // We substitute the system messages to UI readable texts
-          if (msg.type === typeSystem) {
-            switch (msg.text) {
-              case systemConnect:
-                text = 'Matched';
-                break;
-              case systemDisconnect:
-                text = 'You disconnected';
-                if (msg.authoruuid === typeBuddy) {
-                  text = `Buddy disconnected`;
-                }
-                break;
-            }
-          }
-
-          if (msg.type === typeActivity) {
-            switch (msg.text) {
-              case activityUserActive:
-                text = `You're active`;
-                if (msg.authoruuid === typeBuddy) {
-                  text = `Buddy is active`;
-                }
-                break;
-              case activityUserInactive:
-                text = `You're inactive`;
-                if (msg.authoruuid === typeBuddy) {
-                  text = `Buddy is inactive`;
-                }
-                break;
-            }
-          }
-
-          // Hack activity to always show timestamp on the right. Hard to make timestamp absolute on the left for now
-          if (msg.type === typeActivity || msg.type === typeSystem) {
-            return (
-              <div className={wrapperClass}>
-                <div className={`chat-message ${messageClass}`} onMouseEnter={this.props.handleMouseEnter}
-                     onMouseLeave={this.props.handleMouseLeave}>
-                  {text}
-                </div>
-                <Timestamp direction={'bottom'} timestamp={msg.timestamp}/>
-              </div>
-            );
           }
 
           if (msg.authoruuid === typeOwn) {
@@ -524,7 +515,7 @@ class ChatMessages extends React.Component {
                   <Timestamp direction={'left'} timestamp={msg.timestamp}/>
                   <div className={`chat-message ${messageClass}`} onMouseEnter={this.props.handleMouseEnter}
                        onMouseLeave={this.props.handleMouseLeave}>
-                    {text}
+                    {msg.text}
                   </div>
                 </div>
             );
@@ -535,7 +526,7 @@ class ChatMessages extends React.Component {
                 <div className={wrapperClass}>
                   <div className={`chat-message ${messageClass}`} onMouseEnter={this.props.handleMouseEnter}
                        onMouseLeave={this.props.handleMouseLeave}>
-                    {text}
+                    {msg.text}
                   </div>
                   <Timestamp direction={'right'} timestamp={msg.timestamp}/>
                 </div>
@@ -549,6 +540,16 @@ class ChatMessages extends React.Component {
     return (
         <div className='chat-messages fade-in'>
           {msgsHTML}
+        </div>
+    );
+  }
+}
+
+class ChatStatus extends React.Component {
+  render() {
+    return (
+        <div className={`chat-status-container` + (this.props.show ? ' visible' : '')}>
+          <div className="chat-status">{this.props.text}</div>
         </div>
     );
   }
@@ -608,6 +609,7 @@ class ChatControls extends React.Component {
   render() {
     return (
         <div className={`chat-controls connected fade-in`}>
+          <ChatStatus show={this.props.statusShow} text={this.props.statusText}/>
           <DisconnectSearchButton handleDisconnect={this.props.handleDisconnect} handleSearch={this.props.handleSearch}
                                   disconnected={this.props.disconnected} matched={this.props.matched}/>
           <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}
