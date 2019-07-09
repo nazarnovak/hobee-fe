@@ -266,7 +266,6 @@ export default class Chat extends React.Component {
 
     switch (msg.text) {
       case activityRoomActive:
-        console.log("Room active");
         status = statusMatched;
 
         messages = await this.pullRoomMessages();
@@ -444,7 +443,7 @@ export default class Chat extends React.Component {
 
     this.state.websocket.send(JSON.stringify(o));
 
-    this.setState({status: statusSearching});
+    this.setState({status: statusSearching, statusShow: false});
   }
 
   handleLike = () => {
