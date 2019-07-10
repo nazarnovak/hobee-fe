@@ -84,6 +84,7 @@ export default class Chat extends React.Component {
     window.removeEventListener("keydown", this.handleEscKey, false);
     window.removeEventListener("focus", this.onFocus);
     window.removeEventListener("blur", this.onBlur);
+    window.removeEventListener('resize', this.onResize);
   }
 
   clearChat() {
@@ -162,6 +163,7 @@ export default class Chat extends React.Component {
     window.addEventListener("keydown", this.handleEscKey, false);
     window.addEventListener("focus", this.onFocus);
     window.addEventListener("blur", this.onBlur);
+    window.addEventListener('resize', this.onResize);
 
     this.connectToChat();
   }
@@ -394,6 +396,10 @@ export default class Chat extends React.Component {
   onOpen() {
   }
 
+  onResize = () => {
+    this.scrollToBottom()
+  }
+
   sendWebsocketMessage(t, msg) {
     // check type
     var o = {
@@ -433,6 +439,17 @@ export default class Chat extends React.Component {
     this.state.websocket.send(JSON.stringify(o));
   }
 
+  handleMessageClick = (e) => {
+    let el = e.target;
+    if (el.parentElement.querySelector('.message-timestamp').classList.contains('visible')) {
+      el.parentElement.querySelector('.message-timestamp').classList.remove('visible');
+      return true;
+    }
+
+    el.parentElement.querySelector('.message-timestamp').classList.add('visible');
+    return true;
+  }
+
   handleSearch = () => {
     this.clearChat();
 
@@ -458,23 +475,23 @@ export default class Chat extends React.Component {
     this.setState({reported: !this.state.reported});
   }
 
-  handleMouseEnter = (e) => {
-    let el = e.target;
-    el.parentElement.querySelector('.message-timestamp').classList.add('visible');
-  }
-
-  handleMouseLeave = (e) => {
-    let el = e.target;
-    el.parentElement.querySelector('.message-timestamp').classList.remove('visible');
-  }
+  // Temporarily disabled, to allow mobile to see timestamp too, so now it's on click instead
+  // handleMouseEnter = (e) => {
+  //   let el = e.target;
+  //   el.parentElement.querySelector('.message-timestamp').classList.add('visible');
+  // }
+  //
+  // handleMouseLeave = (e) => {
+  //   let el = e.target;
+  //   el.parentElement.querySelector('.message-timestamp').classList.remove('visible');
+  // }
 
   render() {
     return (
         <div className={`main-content`}>
           <ChatMessages messages={this.state.messages}
                         searching={this.state.status === statusConnecting || this.state.status === statusSearching}
-                        status={this.state.status} handleMouseEnter={this.handleMouseEnter}
-                        handleMouseLeave={this.handleMouseLeave}/>
+                        status={this.state.status} handleMessageClick={this.handleMessageClick}/>
           <ChatControls websocket={this.state.websocket} handleDisconnect={this.handleDisconnect}
                         handleSearch={this.handleSearch} disconnected={this.state.status === statusDisconnected}
                         matched={this.state.status === statusMatched} handleLike={this.handleLike}
@@ -544,8 +561,7 @@ class ChatMessages extends React.Component {
             return (
                 <div className={wrapperClass}>
                   <Timestamp direction={'left'} timestamp={msg.timestamp}/>
-                  <div className={`chat-message ${messageClass}`} onMouseEnter={this.props.handleMouseEnter}
-                       onMouseLeave={this.props.handleMouseLeave}>
+                  <div className={`chat-message ${messageClass}`} onClick={this.props.handleMessageClick}>
                     {msg.text}
                   </div>
                 </div>
@@ -555,8 +571,7 @@ class ChatMessages extends React.Component {
           if (msg.authoruuid === typeBuddy) {
             return (
                 <div className={wrapperClass}>
-                  <div className={`chat-message ${messageClass}`} onMouseEnter={this.props.handleMouseEnter}
-                       onMouseLeave={this.props.handleMouseLeave}>
+                  <div className={`chat-message ${messageClass}`} onClick={this.props.handleMessageClick}>
                     {msg.text}
                   </div>
                   <Timestamp direction={'right'} timestamp={msg.timestamp}/>
