@@ -536,42 +536,34 @@ class ChatMessages extends React.Component {
             return;
           }
 
-          let wrapperClass = '', messageClass = '';
-
-          switch (msg.type) {
-            case typeChatting:
-              // Chatting messages should only be own or buddy's
-              if (msg.authoruuid !== typeOwn && msg.authoruuid !== typeBuddy) {
-                throw new Error("Unknown message author", msg);
-              }
-              if (msg.authoruuid === typeOwn) {
-                wrapperClass = 'my-message-container';
-                messageClass = 'my-message';
-              }
-              if (msg.authoruuid === typeBuddy) {
-                wrapperClass = 'buddy-message-container';
-                messageClass = 'buddy-message';
-              }
-              break;
-            default:
-              throw new Error('Unknown message type', msg.type);
+          if (msg.type !== typeChatting) {
+            throw new Error('Unknown message type in chat messages', msg.type);
+            return;
           }
 
           if (msg.authoruuid === typeOwn) {
             return (
-                <div className={wrapperClass}>
+                <div className={`my-message-container`}>
                   <Timestamp direction={'left'} timestamp={msg.timestamp}/>
-                  <div className={`chat-message ${messageClass}`} onClick={this.props.handleMessageClick}>
+                  <div className={`chat-message my-message`} onClick={this.props.handleMessageClick}>
                     {msg.text}
                   </div>
+                  {/*<div className={`my-message-corner`}>*/}
+                    {/*<div className={`my-message-corner-blue`}></div>*/}
+                    {/*<div className={`my-message-corner-white`}></div>*/}
+                  {/*</div>*/}
                 </div>
             );
           }
 
           if (msg.authoruuid === typeBuddy) {
             return (
-                <div className={wrapperClass}>
-                  <div className={`chat-message ${messageClass}`} onClick={this.props.handleMessageClick}>
+                <div className={`buddy-message-container`}>
+                  {/*<div className={`buddy-message-corner`}>*/}
+                    {/*<div className={`buddy-message-corner-grey`}></div>*/}
+                    {/*<div className={`buddy-message-corner-white`}></div>*/}
+                  {/*</div>*/}
+                  <div className={`chat-message buddy-message`} onClick={this.props.handleMessageClick}>
                     {msg.text}
                   </div>
                   <Timestamp direction={'right'} timestamp={msg.timestamp}/>

@@ -369,7 +369,7 @@ a:hover {
 
 .nav {
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px;
-    z-index: 2;
+    z-index: 10;
     width: 100vw;
     position: absolute;
 }
@@ -417,25 +417,56 @@ a:hover {
     text-align: right;
     position: relative;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto; /*TODO: Disabled for now too. Moves it to have space for the corner*/
     justify-content: end;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 1px;
 }
 
 .my-message {
     background-color: #0074d9;
     color: white;
     margin-left: auto;
+    /*!*margin-right: 7px;*! TODO: Disabled for now too. Moves it to have space for the corner*/
+    z-index: 3;
 }
+
+/*TODO: Disabled for now, since hard to figure out how to put the triangle only on the last message, because it's wrapped*/
+/*in many divs*/
+/*.my-message-corner {*/
+    /*bottom: 0;*/
+    /*position: absolute;*/
+    /*right: 0;*/
+/*}*/
+
+/*.my-message-corner-blue {*/
+    /*z-index: 1;*/
+    /*bottom: 0px;*/
+    /*height: 18px;*/
+    /*right: -8px;*/
+    /*width: 21px;*/
+    /*background: #0074d9;*/
+    /*border-bottom-left-radius: 15px;*/
+/*}*/
+
+/*.my-message-corner-white {*/
+    /*z-index: 2;*/
+    /*right: -3px;*/
+    /*width: 10px;*/
+    /*height: 20px;*/
+    /*background: white;*/
+    /*border-bottom-left-radius: 19px;*/
+    /*bottom: 0px;*/
+    /*position: absolute;*/
+/*}*/
 
 .buddy-message-container {
     position: relative;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto; /*TODO: Disabled for now too. Moves it to have space for the corner*/
     justify-content: start;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 1px;
 }
 
 .my-message-container:last-child, .buddy-message-container:last-child {
@@ -445,7 +476,36 @@ a:hover {
 .buddy-message {
     background-color: #e9e9e9;
     color: #000;
+    z-index: 3;
+    /*margin-left: 7px; TODO: Disabled for now too. Moves it to have space for the corner*/
 }
+
+/*TODO: Disabled for now too. Moves it to have space for the corner*/
+/*.buddy-message-corner {*/
+    /*bottom: 0;*/
+    /*position: absolute;*/
+/*}*/
+
+/*.buddy-message-corner-grey {*/
+    /*z-index: 1;*/
+    /*bottom: 0px;*/
+    /*height: 18px;*/
+    /*left: -8px;*/
+    /*width: 21px;*/
+    /*background: #e9e9e9;*/
+    /*border-bottom-right-radius: 15px;*/
+/*}*/
+
+/*.buddy-message-corner-white {*/
+    /*z-index: 2;*/
+    /*left: -3px;*/
+    /*width: 10px;*/
+    /*height: 20px;*/
+    /*background: white;*/
+    /*border-bottom-right-radius: 19px;*/
+    /*bottom: 0px;*/
+    /*position: absolute;*/
+/*}*/
 
 .system-message-container {
     text-align: center;
@@ -484,35 +544,6 @@ a:hover {
     padding-left: 6px;
 }
 
-/*Add the corner tooltip to buddy messages*/
-/*.buddy-message-container {*/
-/*position: relative;*/
-/*}*/
-
-/*.buddy-message:before {*/
-/*content: "";*/
-/*position: absolute;*/
-/*z-index: 0;*/
-/*bottom: 0;*/
-/*left: -7px;*/
-/*height: 20px;*/
-/*width: 20px;*/
-/*background: #eee;*/
-/*border-bottom-right-radius: 15px;*/
-/*}*/
-
-/*.buddy-message:after {*/
-/*content: "";*/
-/*position: absolute;*/
-/*z-index: 1;*/
-/*bottom: 0;*/
-/*left: -10px;*/
-/*width: 10px;*/
-/*height: 20px;*/
-/*background: white;*/
-/*border-bottom-right-radius: 10px;*/
-/*}*/
-
 .chat-controls {
     height: 8vh; /* Fallback for browsers that do not support Custom Properties */
     height: calc(var(--vh, 1vh) * 8);
@@ -539,12 +570,13 @@ a:hover {
 .chat-status-container {
     position: absolute;
     text-align: center;
-    top: -34px; /* Top+bottom paddings + height of the text at the font-size of 18px*/
+    top: -38px; /* Top+bottom paddings + height of the text at the font-size of 18px*/
     left: 0;
     right: 0;
     opacity: 0;
     visibility: hidden;
     transition: opacity ease-in-out 300ms, visibility 0ms linear 300ms;
+    z-index: 4;
 }
 
 .chat-status-container.visible {
@@ -555,12 +587,9 @@ a:hover {
 
 .chat-status {
     padding: 6px 18px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-radius: 20px;
     background-color: white;
-    border-left: 1px solid #666;
-    border-top: 1px solid #666;
-    border-right: 1px solid #666;
+    border: 1px solid #aaa;
     color: #666;
     max-width: 75vw;
     display: inline-block;
