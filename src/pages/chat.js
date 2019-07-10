@@ -6,22 +6,26 @@ const statusSearching = "searching";
 const statusMatched = "matched";
 const statusDisconnected = "disconnected";
 
-const typeActivity = "a";
-const typeSystem = "s";
-const typeChatting = "c";
-const typeOwn = "o";
-const typeBuddy = "b";
-// const ADMIN = "a";
-
-const systemSearch = "s";
-const systemConnect = "c";
-const systemDisconnect = "d";
+const messageTypeActivity = "a";
+const messageTypeChatting = "c";
+const messageTypeResult = "r";
+const messageTypeSystem = "s";
 
 const activityUserActive = "ua";
 const activityUserInactive = "ui";
 const activityRoomActive = "ra";
 const activityRoomInactive = "ri";
 const activityOwnTyping = "t";
+
+const messageTypeOwn = "o";
+const messageTypeBuddy = "b";
+
+const resultLike = "rl";
+const	resultDislike = "rd";
+
+const systemSearch = "s";
+const systemConnect = "c";
+const systemDisconnect = "d";
 
 const svgX = require('../images/xWhite.svg');
 const svgNext = require('../images/nextWhite2.svg');
@@ -193,20 +197,20 @@ export default class Chat extends React.Component {
     let statusText = this.state.statusText;
 
     messages.map((msg) => {
-      if (msg.type === typeActivity && msg.authoruuid === typeBuddy && msg.text === activityUserInactive) {
+      if (msg.type === messageTypeActivity && msg.authoruuid === messageTypeBuddy && msg.text === activityUserInactive) {
         statusShow = true;
         statusText = 'Buddy is inactive';
       }
 
-      if (msg.type === typeActivity && msg.authoruuid === typeBuddy && msg.text === activityUserActive) {
+      if (msg.type === messageTypeActivity && msg.authoruuid === messageTypeBuddy && msg.text === activityUserActive) {
         statusShow = false;
       }
 
-      if (msg.type === typeSystem && msg.text === systemDisconnect) {
+      if (msg.type === messageTypeSystem && msg.text === systemDisconnect) {
         statusShow = true;
         statusText = 'You disconnected';
 
-        if (msg.authoruuid === typeBuddy) {
+        if (msg.authoruuid === messageTypeBuddy) {
           statusText = 'Buddy disconnected';
         }
       }
@@ -226,7 +230,7 @@ export default class Chat extends React.Component {
       case systemDisconnect:
         console.log("Disconnected");
         let statusText = 'You disconnected';
-        if (msg.authoruuid === typeBuddy) {
+        if (msg.authoruuid === messageTypeBuddy) {
           statusText = 'Buddy disconnected';
         }
 
@@ -248,7 +252,7 @@ export default class Chat extends React.Component {
 
     if (status === statusSearching) {
       this.clearChat();
-      this.sendWebsocketMessage(typeSystem, systemSearch);
+      this.sendWebsocketMessage(messageTypeSystem, systemSearch);
     }
 
     this.setState({status: status, messages: messages});
@@ -280,13 +284,13 @@ export default class Chat extends React.Component {
         break;
       case activityUserActive:
         // If buddy goes active - remove the status
-        if (msg.authoruuid === typeBuddy) {
+        if (msg.authoruuid === messageTypeBuddy) {
           this.setState({statusShow: false});
         }
         break;
       case activityUserInactive:
         // If buddy goes inactive - add the status
-          if (msg.authoruuid === typeBuddy) {
+          if (msg.authoruuid === messageTypeBuddy) {
             this.setState({statusShow: true, statusText: 'Buddy is inactive'});
           }
         break;
@@ -377,14 +381,14 @@ export default class Chat extends React.Component {
       }
 
       switch (receivedJson.type) {
-        case typeSystem:
+        case messageTypeSystem:
           this.handleSystemMessage(receivedJson);
           break;
 
-        case typeChatting:
+        case messageTypeChatting:
           this.handleChatMessage(receivedJson);
           break;
-        case typeActivity:
+        case messageTypeActivity:
           this.handleActivityMessage(receivedJson);
           break;
         default:
@@ -432,7 +436,7 @@ export default class Chat extends React.Component {
     }
 
     var o = {
-      type: typeSystem,
+      type: messageTypeSystem,
       text: systemDisconnect,
     };
 
@@ -454,7 +458,7 @@ export default class Chat extends React.Component {
     this.clearChat();
 
     var o = {
-      type: typeSystem,
+      type: messageTypeSystem,
       text: systemSearch,
     };
 
@@ -464,6 +468,14 @@ export default class Chat extends React.Component {
   }
 
   handleLike = () => {
+    if (this.state.liked) {
+      this.sendWebsocketMessage(messageTypeResult, resultDislike);
+    }
+
+    if (!this.state.liked) {
+      this.sendWebsocketMessage(messageTypeResult, resultLike);
+    }
+
     this.setState({liked: !this.state.liked});
   }
 
@@ -519,29 +531,21 @@ class ChatMessages extends React.Component {
       )
     }
 
-    // let msgItems = this.props.messages.filter(function (msg) {
-    //       if (msg.type === typeSystem) {
-    //         return false;
-    //       }
-    //
-    //       return true;
-    //     }
-    // );
     let msgs = this.props.messages;
 
     let msgsHTML = msgs.map((msg) => {
           // We skip the room active/inactive messages, which are only for us to know if we need to pull messages and
           // show disconnected state
-          if (msg.type === typeSystem || msg.type === typeActivity) {
+          if (msg.type === messageTypeSystem || msg.type === messageTypeActivity) {
             return;
           }
 
-          if (msg.type !== typeChatting) {
+          if (msg.type !== messageTypeChatting) {
             throw new Error('Unknown message type in chat messages', msg.type);
             return;
           }
 
-          if (msg.authoruuid === typeOwn) {
+          if (msg.authoruuid === messageTypeOwn) {
             return (
                 <div className={`my-message-container`}>
                   <Timestamp direction={'left'} timestamp={msg.timestamp}/>
@@ -556,7 +560,7 @@ class ChatMessages extends React.Component {
             );
           }
 
-          if (msg.authoruuid === typeBuddy) {
+          if (msg.authoruuid === messageTypeBuddy) {
             return (
                 <div className={`buddy-message-container`}>
                   {/*<div className={`buddy-message-corner`}>*/}
@@ -647,7 +651,7 @@ class ChatControls extends React.Component {
 
       var that = this;
 
-      this.props.sendWebsocketMessage(typeActivity, activityOwnTyping);
+      this.props.sendWebsocketMessage(messageTypeActivity, activityOwnTyping);
 
       // Reset the typing in the state after 1 second
       setTimeout(function(){
