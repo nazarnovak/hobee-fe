@@ -372,6 +372,7 @@ a:hover {
     z-index: 10;
     width: 100vw;
     position: absolute;
+    text-align: center;
 }
 
 .nav-height {
@@ -380,10 +381,13 @@ a:hover {
 }
 
 .logo {
+    outline: none;
+}
+
+.logo-link {
     margin-top: 1vh; /* Fallback for browsers that do not support Custom Properties */
     margin-top: calc(var(--vh, 1vh) * 1);
-    outline: none;
-    width: 100vw;
+    display: inline-block;
 }
 
 .logo-height {
@@ -434,30 +438,30 @@ a:hover {
 /*TODO: Disabled for now, since hard to figure out how to put the triangle only on the last message, because it's wrapped*/
 /*in many divs*/
 /*.my-message-corner {*/
-    /*bottom: 0;*/
-    /*position: absolute;*/
-    /*right: 0;*/
+/*bottom: 0;*/
+/*position: absolute;*/
+/*right: 0;*/
 /*}*/
 
 /*.my-message-corner-blue {*/
-    /*z-index: 1;*/
-    /*bottom: 0px;*/
-    /*height: 18px;*/
-    /*right: -8px;*/
-    /*width: 21px;*/
-    /*background: #0074d9;*/
-    /*border-bottom-left-radius: 15px;*/
+/*z-index: 1;*/
+/*bottom: 0px;*/
+/*height: 18px;*/
+/*right: -8px;*/
+/*width: 21px;*/
+/*background: #0074d9;*/
+/*border-bottom-left-radius: 15px;*/
 /*}*/
 
 /*.my-message-corner-white {*/
-    /*z-index: 2;*/
-    /*right: -3px;*/
-    /*width: 10px;*/
-    /*height: 20px;*/
-    /*background: white;*/
-    /*border-bottom-left-radius: 19px;*/
-    /*bottom: 0px;*/
-    /*position: absolute;*/
+/*z-index: 2;*/
+/*right: -3px;*/
+/*width: 10px;*/
+/*height: 20px;*/
+/*background: white;*/
+/*border-bottom-left-radius: 19px;*/
+/*bottom: 0px;*/
+/*position: absolute;*/
 /*}*/
 
 .buddy-message-container {
@@ -482,29 +486,29 @@ a:hover {
 
 /*TODO: Disabled for now too. Moves it to have space for the corner*/
 /*.buddy-message-corner {*/
-    /*bottom: 0;*/
-    /*position: absolute;*/
+/*bottom: 0;*/
+/*position: absolute;*/
 /*}*/
 
 /*.buddy-message-corner-grey {*/
-    /*z-index: 1;*/
-    /*bottom: 0px;*/
-    /*height: 18px;*/
-    /*left: -8px;*/
-    /*width: 21px;*/
-    /*background: #e9e9e9;*/
-    /*border-bottom-right-radius: 15px;*/
+/*z-index: 1;*/
+/*bottom: 0px;*/
+/*height: 18px;*/
+/*left: -8px;*/
+/*width: 21px;*/
+/*background: #e9e9e9;*/
+/*border-bottom-right-radius: 15px;*/
 /*}*/
 
 /*.buddy-message-corner-white {*/
-    /*z-index: 2;*/
-    /*left: -3px;*/
-    /*width: 10px;*/
-    /*height: 20px;*/
-    /*background: white;*/
-    /*border-bottom-right-radius: 19px;*/
-    /*bottom: 0px;*/
-    /*position: absolute;*/
+/*z-index: 2;*/
+/*left: -3px;*/
+/*width: 10px;*/
+/*height: 20px;*/
+/*background: white;*/
+/*border-bottom-right-radius: 19px;*/
+/*bottom: 0px;*/
+/*position: absolute;*/
 /*}*/
 
 .system-message-container {
@@ -711,6 +715,99 @@ a:hover {
 
 .save-button.active {
     background-color: #7F00FF;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 11
+}
+
+.report-modal {
+    background-color: #fff;
+    border-radius: 20px;
+    width: 548px;
+    height: 331px;
+    z-index: 12;
+}
+
+.report-header {
+    height: 43px;
+    border-bottom: #999;
+    display: flex;
+    grid-template-rows: 48px auto 48px;
+    z-index: 13;
+    border-bottom: 1px solid #ccc;
+}
+
+.report-header-side {
+    height: 100%;
+    width: 48px;
+}
+
+.report-header-title {
+    text-align: center;
+    width: 100%;
+    line-height: 42px;
+    color: #666;
+    font-size: 18px;
+}
+
+.report-x {
+    height: 40%;
+    width: 40%;
+    padding: 30%;
+    cursor: pointer;
+}
+
+.report-options {
+    height: 100%;
+    width: 100%;
+}
+
+.report-option {
+    height: 47px;
+    border-bottom: 1px solid #ccc;
+    line-height: 47px;
+    padding-left: 30px;
+    font-weight: 300;
+    overflow: hidden;
+}
+
+.report-option:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.report-option:hover {
+    background-color: #eaeaea;
+    border-bottom: 1px solid #ccc;
+    color: #c00;
+}
+
+.report-option:last-child:hover {
+    border-bottom: blue;
+}
+
+@media only screen and (max-width: 736px) {
+    .report-modal {
+        height: 100%;
+        width: 100%;
+        border-radius: unset;
+    }
+
+    .report-option:last-child {
+        border-bottom: none;
+        border-radius: unset;
+    }
 }
 
 .report-button {

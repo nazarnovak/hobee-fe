@@ -35,7 +35,7 @@ export default class Nav extends React.Component {
     return (
       <div class="nav-height">
         <div class="nav nav-height">
-          <Link class="logo-height" to="/" >
+          <Link class="logo-link logo-height" to="/" >
             <img class="logo logo-height" src={logo} alt="Logo" />
           </Link>
           {/*<SignupButton margin={sideMargin} width={buttonWidth} visible={signupVisible} />*/}

@@ -21,13 +21,24 @@ const messageTypeOwn = "o";
 const messageTypeBuddy = "b";
 
 const resultLike = "rl";
-const	resultDislike = "rd";
+const resultDislike = "rd";
+
+// Has to be 6 items to fit the height perfectly
+const reportOptions = {
+  'rdl': `I didn't like the conversation`,
+  'rsp': 'Spam',
+  'rse': 'Sexism',
+  'rha': 'Harassment',
+  'rra': 'Racism',
+  'rot': 'Other',
+};
 
 const systemSearch = "s";
 const systemConnect = "c";
 const systemDisconnect = "d";
 
-const svgX = require('../images/xWhite.svg');
+const svgXWhite = require('../images/xWhite.svg');
+const svgXGrey = require('../images/xGrey.svg');
 const svgNext = require('../images/nextWhite2.svg');
 const svgSendWhite = require('../images/sendWhite.svg');
 
@@ -54,12 +65,13 @@ export default class Chat extends React.Component {
       status: statusIdentifying,
       websocket: null,
       liked: false,
+      reportModalOpen: false,
       reported: false,
       tabActive: true,
       unread: 0,
       statusShow: false,
       statusText: '',
-      typingTimeout: setTimeout(function() {
+      typingTimeout: setTimeout(function () {
         if (that.state.statusText !== 'Buddy is typing...') {
           return false;
         }
@@ -290,9 +302,9 @@ export default class Chat extends React.Component {
         break;
       case activityUserInactive:
         // If buddy goes inactive - add the status
-          if (msg.authoruuid === messageTypeBuddy) {
-            this.setState({statusShow: true, statusText: 'Buddy is inactive'});
-          }
+        if (msg.authoruuid === messageTypeBuddy) {
+          this.setState({statusShow: true, statusText: 'Buddy is inactive'});
+        }
         break;
       case activityOwnTyping:
         this.setState({statusShow: true, statusText: 'Buddy is typing...'});
@@ -302,14 +314,14 @@ export default class Chat extends React.Component {
         let that = this;
 
         this.setState({
-          typingTimeout: setTimeout(function(){
-            // User might go inactive right after typing, this will cause a bug where the status will be removed
-            if (that.state.statusText !== 'Buddy is typing...') {
-              return false;
-            }
+          typingTimeout: setTimeout(function () {
+                // User might go inactive right after typing, this will cause a bug where the status will be removed
+                if (that.state.statusText !== 'Buddy is typing...') {
+                  return false;
+                }
 
-            that.setState({statusShow: false});
-            }, 2000
+                that.setState({statusShow: false});
+              }, 2000
           ),
         });
 
@@ -454,6 +466,35 @@ export default class Chat extends React.Component {
     return true;
   }
 
+  handleReportModalClose = (e) => {
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+
+    this.setState({reportModalOpen: false});
+  }
+
+  handlReportOptionClick = (e) => {
+    const text = e.target.getAttribute('data-key');
+
+    let found = false;
+
+    Object.keys(reportOptions).map(function (key) {
+      if (key === text) {
+        found = true
+      }
+    });
+
+    // Someone messing with the data-keys ;)
+    if(!found) {
+      return false;
+    }
+
+    this.sendWebsocketMessage(messageTypeResult, text)
+
+    this.setState({reportModalOpen: false, reported: true});
+  }
+
   handleSearch = () => {
     this.clearChat();
 
@@ -484,7 +525,7 @@ export default class Chat extends React.Component {
   }
 
   handleReport = () => {
-    this.setState({reported: !this.state.reported});
+    this.setState({reportModalOpen: true});
   }
 
   // Temporarily disabled, to allow mobile to see timestamp too, so now it's on click instead
@@ -511,7 +552,9 @@ export default class Chat extends React.Component {
                         handleSave={this.handleSave} handleReport={this.handleReport}
                         searching={this.state.status === statusConnecting || this.state.status === statusSearching}
                         statusShow={this.state.statusShow} statusText={this.state.statusText}
-                        sendWebsocketMessage={this.sendWebsocketMessage}
+                        sendWebsocketMessage={this.sendWebsocketMessage} reportModalOpen={this.state.reportModalOpen}
+                        handleReportModalClose={this.handleReportModalClose}
+                        handlReportOptionClick={this.handlReportOptionClick}
           />
         </div>
     );
@@ -553,8 +596,8 @@ class ChatMessages extends React.Component {
                     {msg.text}
                   </div>
                   {/*<div className={`my-message-corner`}>*/}
-                    {/*<div className={`my-message-corner-blue`}></div>*/}
-                    {/*<div className={`my-message-corner-white`}></div>*/}
+                  {/*<div className={`my-message-corner-blue`}></div>*/}
+                  {/*<div className={`my-message-corner-white`}></div>*/}
                   {/*</div>*/}
                 </div>
             );
@@ -564,8 +607,8 @@ class ChatMessages extends React.Component {
             return (
                 <div className={`buddy-message-container`}>
                   {/*<div className={`buddy-message-corner`}>*/}
-                    {/*<div className={`buddy-message-corner-grey`}></div>*/}
-                    {/*<div className={`buddy-message-corner-white`}></div>*/}
+                  {/*<div className={`buddy-message-corner-grey`}></div>*/}
+                  {/*<div className={`buddy-message-corner-white`}></div>*/}
                   {/*</div>*/}
                   <div className={`chat-message buddy-message`} onClick={this.props.handleMessageClick}>
                     {msg.text}
@@ -646,7 +689,7 @@ class ChatControls extends React.Component {
 
     this.setState({inputText: input.value});
 
-    if(!this.state.typing) {
+    if (!this.state.typing) {
       this.setState({typing: true});
 
       var that = this;
@@ -654,7 +697,7 @@ class ChatControls extends React.Component {
       this.props.sendWebsocketMessage(messageTypeActivity, activityOwnTyping);
 
       // Reset the typing in the state after 1 second
-      setTimeout(function(){
+      setTimeout(function () {
         that.setState({typing: false});
       }, 1000);
     }
@@ -673,7 +716,9 @@ class ChatControls extends React.Component {
           <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}
                          handleLike={this.props.handleLike} liked={this.props.liked} reported={this.props.reported}
                          handleSave={this.props.handleSave} handleReport={this.props.handleReport}
-                         searching={this.props.searching}/>
+                         searching={this.props.searching} reportModalOpen={this.props.reportModalOpen}
+                         handleReportModalClose={this.props.handleReportModalClose}
+                         handlReportOptionClick={this.props.handlReportOptionClick}/>
           <div className="circle-wrapper send">
             <button
                 className={`chat-send-button circle` +
@@ -704,7 +749,7 @@ class DisconnectSearchButton extends React.Component {
         <div className="circle-wrapper">
           <button className={`chat-disconnect-button circle` +
           ((this.props.matched) ? '' : ' disabled')} onClick={this.props.handleDisconnect}>
-            <img className="button-icon x" src={svgX} alt="Disconnect"></img>
+            <img className="button-icon x" src={svgXWhite} alt="Disconnect"></img>
           </button>
         </div>
     );
@@ -743,6 +788,8 @@ class MiddleControl extends React.Component {
           {/*</button>*/}
           {/*</div>*/}
           <div className="circle-wrapper">
+            <ReportModal open={this.props.reportModalOpen} onClose={this.props.handleReportModalClose}
+                         handlReportOptionClick={this.props.handlReportOptionClick}/>
             <button className={`middle-button circle report-button` + (this.props.reported ? ' active' : '')}
                     onClick={this.props.handleReport}>
               <img className="button-icon" src={(this.props.reported ? svgReportFilled : svgReportEmpty)}
@@ -774,6 +821,39 @@ class Timestamp extends React.Component {
     return (
         <span
             className={`message-timestamp` + (this.props.direction === 'bottom' ? ' timestamp-system' : '')}>{strTime}</span>
+    );
+  }
+}
+
+class ReportModal extends React.Component {
+  render() {
+    if (!this.props.open) {
+      return null;
+    }
+
+    const reportOptionsHTML = Object.keys(reportOptions).map((key) => {
+      return (
+          <div className="report-option" data-key={key} key={key} onClick={this.props.handlReportOptionClick}>
+            {reportOptions[key]}
+          </div>
+      );
+    });
+
+    return (
+        <div className="backdrop" onClick={this.props.onClose}>
+          <div className="report-modal">
+            <div className="report-header">
+              <div className="report-header-side"></div>
+              <div className="report-header-title">Report</div>
+              <div className="report-header-side">
+                <img className="report-x" src={svgXGrey} alt="Close" onClick={this.props.onClose}></img>
+              </div>
+            </div>
+            <div className="report-options">
+              {reportOptionsHTML}
+            </div>
+          </div>
+        </div>
     );
   }
 }
