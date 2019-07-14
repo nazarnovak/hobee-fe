@@ -787,14 +787,26 @@ a:hover {
     border-bottom-right-radius: 20px;
 }
 
-.report-option:hover {
+.report-option.enabled:hover {
     background-color: #900;
     border-bottom: 1px solid #600;
     color: #fff;
 }
 
-.report-option:last-child:hover {
-    border-bottom: blue;
+.report-option.enabled:last-child:hover {
+    border-bottom: none;
+}
+
+.report-option.selected {
+    background-color: #900;
+    border-bottom: 1px solid #600;
+    color: #fff;
+}
+
+.report-option.disabled {
+    background-color: #e0e0e0;
+    border-bottom: 1px solid #aaa;
+    color: #999;
 }
 
 @media only screen and (max-width: 736px) {

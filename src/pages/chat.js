@@ -66,7 +66,7 @@ export default class Chat extends React.Component {
       websocket: null,
       liked: false,
       reportModalOpen: false,
-      reported: false,
+      reported: '',
       tabActive: true,
       unread: 0,
       statusShow: false,
@@ -474,7 +474,7 @@ export default class Chat extends React.Component {
     this.setState({reportModalOpen: false});
   }
 
-  handlReportOptionClick = (e) => {
+  handleReportOptionClick = (e) => {
     const text = e.target.getAttribute('data-key');
 
     let found = false;
@@ -486,13 +486,13 @@ export default class Chat extends React.Component {
     });
 
     // Someone messing with the data-keys ;)
-    if(!found) {
+    if (!found) {
       return false;
     }
 
-    this.sendWebsocketMessage(messageTypeResult, text)
+    this.sendWebsocketMessage(messageTypeResult, text);
 
-    this.setState({reportModalOpen: false, reported: true});
+    this.setState({reportModalOpen: false, reported: text});
   }
 
   handleSearch = () => {
@@ -554,7 +554,7 @@ export default class Chat extends React.Component {
                         statusShow={this.state.statusShow} statusText={this.state.statusText}
                         sendWebsocketMessage={this.sendWebsocketMessage} reportModalOpen={this.state.reportModalOpen}
                         handleReportModalClose={this.handleReportModalClose}
-                        handlReportOptionClick={this.handlReportOptionClick}
+                        handleReportOptionClick={this.handleReportOptionClick}
           />
         </div>
     );
@@ -718,7 +718,7 @@ class ChatControls extends React.Component {
                          handleSave={this.props.handleSave} handleReport={this.props.handleReport}
                          searching={this.props.searching} reportModalOpen={this.props.reportModalOpen}
                          handleReportModalClose={this.props.handleReportModalClose}
-                         handlReportOptionClick={this.props.handlReportOptionClick}/>
+                         handleReportOptionClick={this.props.handleReportOptionClick}/>
           <div className="circle-wrapper send">
             <button
                 className={`chat-send-button circle` +
@@ -789,7 +789,7 @@ class MiddleControl extends React.Component {
           {/*</div>*/}
           <div className="circle-wrapper">
             <ReportModal open={this.props.reportModalOpen} onClose={this.props.handleReportModalClose}
-                         handlReportOptionClick={this.props.handlReportOptionClick}/>
+                         handleReportOptionClick={this.props.handleReportOptionClick} reported={this.props.reported}/>
             <button className={`middle-button circle report-button` + (this.props.reported ? ' active' : '')}
                     onClick={this.props.handleReport}>
               <img className="button-icon" src={(this.props.reported ? svgReportFilled : svgReportEmpty)}
@@ -831,9 +831,19 @@ class ReportModal extends React.Component {
       return null;
     }
 
+    const alreadyReported = (this.props.reported !== '');
+
     const reportOptionsHTML = Object.keys(reportOptions).map((key) => {
+      if (alreadyReported) {
+        return (
+            <div className={`report-option` + (this.props.reported === key ? ` selected` : ` disabled`)} data-key={key} key={key}>
+              {reportOptions[key]}
+            </div>
+        );
+      }
+
       return (
-          <div className="report-option" data-key={key} key={key} onClick={this.props.handlReportOptionClick}>
+          <div className="report-option enabled" data-key={key} key={key} onClick={this.props.handleReportOptionClick}>
             {reportOptions[key]}
           </div>
       );
