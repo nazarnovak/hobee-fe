@@ -204,6 +204,26 @@ export default class Chat extends React.Component {
     return json.messages;
   }
 
+  async pullResult() {
+    let url = "/api/result";
+    let json;
+
+    try {
+      let response = await fetch(url, {credentials: "include"});
+      json = await response.json();
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+
+    if (json.liked === undefined) {
+      throw new Error("Unknown pull result response", json);
+      return false;
+    }
+
+    return json;
+  }
+
   chatStatusFromMessages(messages) {
     let statusShow = this.state.statusShow;
     let statusText = this.state.statusText;
@@ -293,6 +313,9 @@ export default class Chat extends React.Component {
         status = statusDisconnected;
         messages = await this.pullRoomMessages();
         this.chatStatusFromMessages(messages);
+
+        let result = await this.pullResult();
+        this.setState({liked: result.liked, reported: result.reported});
         break;
       case activityUserActive:
         // If buddy goes active - remove the status
@@ -505,7 +528,7 @@ export default class Chat extends React.Component {
 
     this.state.websocket.send(JSON.stringify(o));
 
-    this.setState({status: statusSearching, statusShow: false});
+    this.setState({status: statusSearching, statusShow: false, reported: '', liked: false});
   }
 
   handleLike = () => {
