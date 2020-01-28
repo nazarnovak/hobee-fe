@@ -7,10 +7,8 @@ import Login from "./pages/login";
 import Chat from "./pages/chat";
 import About from "./pages/about";
 import Contact from "./pages/contact";
+import History from "./pages/history";
 import NotFound from "./pages/notfound";
-
-import GOT from "./pages/got";
-import Height from "./pages/height";
 
 export default class Routing extends React.Component {
   render() {
@@ -22,8 +20,7 @@ export default class Routing extends React.Component {
         <Route path="/chat" exact render={() => <Chat height={ this.props.height } width={ this.props.width } />} />
         <Route path="/about" exact component={ About } location={ this.props.location } />
         <Route path="/contact" exact component={ Contact } />
-        <Route path="/got" exact render={() => <GOT height={ this.props.height } width={ this.props.width } />} />
-        <Route path="/height" exact render={() => <Height />} />
+        <Route path="/history" exact render={() => <History />} />
         <Route component={ NotFound } />
       </Switch>
     );

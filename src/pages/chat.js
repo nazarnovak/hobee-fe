@@ -153,7 +153,7 @@ export default class Chat extends React.Component {
         wsUrl = "ws:";
       }
       wsUrl += "//" + loc.host;
-      wsUrl += "/api/got";
+      wsUrl += "/api/chat";
 
       ws = await new WebSocket(wsUrl);
       if (ws === undefined) {

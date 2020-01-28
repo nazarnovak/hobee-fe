@@ -127,10 +127,6 @@ a:hover {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px;
 }
 
-.footer-item {
-    margin: 15px;
-}
-
 /* Transitions */
 .fade-appear {
     opacity: 0.01;
@@ -138,7 +134,7 @@ a:hover {
 
 .fade-appear.fade-appear-active {
     opacity: 1;
-    transition: opacity 1000ms cubic-bezier(.6, 0, .4, 1);
+    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1);
 }
 
 .fade-enter {
@@ -147,7 +143,7 @@ a:hover {
 
 .fade-enter.fade-enter-active {
     opacity: 1;
-    transition: opacity 1000ms cubic-bezier(.6, 0, .4, 1);
+    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1);
 }
 
 .fade-exit {
@@ -156,7 +152,7 @@ a:hover {
 
 .fade-exit.fade-exit-active {
     opacity: 0.01;
-    transition: opacity 1000ms cubic-bezier(.6, 0, .4, 1);
+    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1);
 }
 
 .fade-in-motto-bg {
@@ -165,7 +161,7 @@ a:hover {
 
 .fade-in-motto-bg.visible {
     opacity: 1;
-    transition: opacity 300ms cubic-bezier(.6, 0, .4, 1);
+    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1);
 }
 
 .fade-in-motto {
@@ -177,7 +173,7 @@ a:hover {
 
 .fade-in-motto.visible {
     opacity: 1;
-    transition: opacity 1000ms cubic-bezier(.6, 0, .4, 1) 200ms, bottom 1100ms cubic-bezier(.6, 0, .4, 1) 200ms, text-shadow 1200ms cubic-bezier(.6, 0, .4, 1) 200ms;
+    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1) 200ms, bottom 1100ms cubic-bezier(.6, 0, .4, 1) 200ms, text-shadow 1200ms cubic-bezier(.6, 0, .4, 1) 200ms;
     bottom: 0px;
     text-shadow: 0 0 0px white;
 }
@@ -192,7 +188,7 @@ a:hover {
     opacity: 1;
     bottom: 0px;
     /*transition: opacity 900ms cubic-bezier(.6,0,.4,1) 550ms, bottom 800ms cubic-bezier(.6,0,.4,1) 550ms;*/
-    transition: opacity 1000ms cubic-bezier(.6, 0, .4, 1) 1200ms, bottom 1100ms cubic-bezier(.6, 0, .4, 1) 1200ms;
+    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1) 1200ms, bottom 1100ms cubic-bezier(.6, 0, .4, 1) 1200ms;
 }
 
 .fade-in-circle-2 {
@@ -206,7 +202,7 @@ a:hover {
     opacity: 1;
     bottom: 0px;
     /*transition: opacity 900ms cubic-bezier(.6,0,.4,1) 550ms, bottom 800ms cubic-bezier(.6,0,.4,1) 550ms;*/
-    transition: opacity 1100ms cubic-bezier(.6, 0, .4, 1) 1100ms, bottom 1000ms cubic-bezier(.6, 0, .4, 1) 1200ms;
+    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1) 1100ms, bottom 1000ms cubic-bezier(.6, 0, .4, 1) 1200ms;
 }
 
 .fade-in-circle-3 {
@@ -217,7 +213,7 @@ a:hover {
 
 .fade-in-circle-3.visible {
     opacity: 1;
-    transition: opacity 900ms cubic-bezier(.6, 0, .4, 1) 1250ms, bottom 800ms cubic-bezier(.6, 0, .4, 1) 1250ms;
+    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1) 1250ms, bottom 800ms cubic-bezier(.6, 0, .4, 1) 1250ms;
     bottom: 0px;
 }
 
@@ -245,6 +241,10 @@ a:hover {
 
 .background-shade-lighter {
     background-color: #eaf5ff;
+}
+
+.background-blue {
+    background-color: #0074d9;
 }
 
 .auth-page {
@@ -574,7 +574,7 @@ a:hover {
 .chat-status-container {
     position: absolute;
     text-align: center;
-    top: -38px; /* Top+bottom paddings + height of the text at the font-size of 18px*/
+    top: -42px; /* Top+bottom paddings + height of the text at the font-size of 18px*/
     left: 0;
     right: 0;
     opacity: 0;
@@ -947,4 +947,34 @@ a:hover {
     height: 50px;
     font-size: 24px;
     color: #666;
+}
+
+/* Landing pages */
+.home-half-height {
+    height: 42vh; /* Fallback for browsers that do not support Custom Properties */
+    height: calc(var(--vh, 1vh) * 42);
+}
+
+.motto {
+    color: #999;
+    display: inline-block;
+    font-size: 54px;
+    text-align: center;
+    width: 100%;
+}
+
+.footer {
+    border-top: 1px solid #aaaaaa;
+    height: 8vh; /* Fallback for browsers that do not support Custom Properties */
+    height: calc(var(--vh, 1vh) * 8);
+    font-size: 16px;
+    line-height: 8vh;
+    line-height: calc(var(--vh, 1vh) * 8);
+    text-align: center;
+    padding: 0 50px;
+    box-sizing: border-box;
+}
+
+.footer-item {
+    margin: 15px;
 }
