@@ -111,7 +111,7 @@ export default class Chat extends React.Component {
     this.scrollToBottom();
     this.setState({tabActive: true, unread: 0});
 
-    document.title = 'hobee: Dialogue definite';
+    document.title = 'hobee: Quality conversations';
   }
 
   onBlur = () => {
@@ -376,7 +376,7 @@ export default class Chat extends React.Component {
 
     this.setState({unread: this.state.unread + 1});
 
-    document.title = '(' + this.state.unread + ')' + ' hobee: Dialogue definite';
+    document.title = '(' + this.state.unread + ')' + ' hobee: Quality conversations';
   }
 
   scrollToBottom() {

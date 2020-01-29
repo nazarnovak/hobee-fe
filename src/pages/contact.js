@@ -1,40 +1,91 @@
 import React from "react";
 
+const svgCircleCheckmark = require('../images/circle_checkmark.svg');
+
 export default class Contact extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       err: '',
+      sent: false,
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-  handleFormSubmit(e) {
+  async handleFormSubmit(e) {
     e.preventDefault();
-    if (this.state.err === '') {
-      this.setState({ err: 'Error occured!' });
-      return
+
+    let name = document.getElementById('name').value;
+    let email = document.getElementById('email').value;
+    let message = document.getElementById('message').value;
+
+    if (name == "") {
+      this.setState({ err: 'Please provide your name' });
+      return false;
     }
 
-    this.setState({ err: '' });
+    if (email == "") {
+      this.setState({ err: 'Please provide your email' });
+      return false;
+    }
+
+    if (message == "") {
+      this.setState({ err: 'Please provide your message' });
+      return false;
+    }
+
+    let url = "/api/contact";
+    let json;
+
+    let params = {
+      name,
+      email,
+      message
+    };
+
+    try {
+      let response = await fetch(url, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      });
+
+      json = await response.json();
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+
+    if (json.error) {
+      this.setState({ err: json.msg });
+      return false;
+    }
+
+    this.setState({ err: '', sent: true });
   }
 
   render() {
     const { err } = this.state;
 
     return (
-      <div className="main-content background-shade-darker">
+      <div className="main-content">
         <div className="auth-page">
           <h1 className={`heading`}>Contact</h1>
-          <form style={{ textAlign: 'center' }}>
-            {/*Reason dropdown with nice rounded corners: https://www.w3schools.com/code/tryit.asp?filename=FYMRDTDV2KDM*/}
-            <p><input type="text" placeholder="name" className={`auth-input`} /></p>
-            <p><input type="text" placeholder="email" className={`auth-input`} /></p>
-            <p><textarea className={`auth-textarea`} placeholder="message" rows="7"></textarea></p>
-            <p><input type="text" className={`error-auth ${err && 'visible'}`} value={ err } readOnly /></p>
-            <button className={`submit-button`} onClick={this.handleFormSubmit}>Contact</button>
-          </form>
+            <form className={`contact-form` + (this.state.sent ? '' : ' visible')}>
+              {/*Reason dropdown with nice rounded corners: https://www.w3schools.com/code/tryit.asp?filename=FYMRDTDV2KDM*/}
+              <input id="name" type="text" placeholder="name*" className={`auth-input`} />
+              <input id="email" type="text" placeholder="email*" className={`auth-input`} />
+              <textarea id="message" placeholder="message*" className={`auth-textarea`} rows="7"></textarea>
+              <input type="text" className={`error-auth ${err && 'visible'}`} value={ err } readOnly />
+              <button className={`submit-button`} onClick={this.handleFormSubmit}>Contact</button>
+            </form>
+          <div className={`contact-success`  + (this.state.sent ? ' visible' : '')}>
+            <img className="contact-success-checkmark" src={svgCircleCheckmark} alt="Success"></img>
+            <h1 className="contact-success-heading">Thank you for your feedback</h1>
+          </div>
         </div>
       </div>
     );
