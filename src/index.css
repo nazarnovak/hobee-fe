@@ -168,7 +168,7 @@ a:hover {
 
 .fade-appear.fade-appear-active {
     opacity: 1;
-    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1);
+    transition: opacity 300ms cubic-bezier(.6, 0, .4, 1);
 }
 
 .fade-enter {
@@ -177,7 +177,7 @@ a:hover {
 
 .fade-enter.fade-enter-active {
     opacity: 1;
-    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1);
+    transition: opacity 300ms cubic-bezier(.6, 0, .4, 1);
 }
 
 .fade-exit {
@@ -186,7 +186,7 @@ a:hover {
 
 .fade-exit.fade-exit-active {
     opacity: 0.01;
-    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1);
+    transition: opacity 300ms cubic-bezier(.6, 0, .4, 1);
 }
 
 .fade-in-motto-bg {
@@ -195,7 +195,7 @@ a:hover {
 
 .fade-in-motto-bg.visible {
     opacity: 1;
-    transition: opacity 500ms cubic-bezier(.6, 0, .4, 1);
+    transition: opacity 300ms cubic-bezier(.6, 0, .4, 1);
 }
 
 .fade-in-motto {

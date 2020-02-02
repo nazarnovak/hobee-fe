@@ -28,7 +28,7 @@ export default class Nav extends React.Component {
 
     // Don't show signup button in signup page
     // Hack: temporarily don't show it on /chat as well
-    if (pathname === "/signup" || pathname === "/chat") {
+    if (pathname === "/chat") {
       signupVisible = false;
     }
 
@@ -38,7 +38,7 @@ export default class Nav extends React.Component {
           <Link class="logo-link logo-height" to="/" >
             <img class="logo logo-height" src={logo} alt="Logo" />
           </Link>
-          {/*<SignupButton margin={sideMargin} width={buttonWidth} visible={signupVisible} />*/}
+          <ChatButton visible={signupVisible} />
         </div>
       </div>
     );
@@ -70,6 +70,38 @@ class SignupButton extends React.Component {
           <Link to="/signup">
             <button className={`sign-up-button ${this.props.visible ? '' : 'fade'}`} style={{ width: this.props.width }}>
               Sign up
+            </button>
+          </Link>
+        </div>
+    );
+  }
+}
+
+class ChatButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hover: false,
+    };
+
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+  }
+
+  onMouseEnter() {
+    this.setState({ hover: true });
+  }
+
+  onMouseLeave() {
+    this.setState({ hover: false });
+  }
+
+  render() {
+    return (
+        <div style={{ position: 'absolute', top: '18px', right: '20px' }}>
+          <Link to="/chat">
+            <button className={`sign-up-button ${this.props.visible ? '' : 'fade'}`} style={{ width: '150px' }}>
+              Chat
             </button>
           </Link>
         </div>
