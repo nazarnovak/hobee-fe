@@ -48,14 +48,13 @@ export default class App extends React.Component {
     return (
       <BrowserRouter>
         <WithRouterContainer onRouteChange={newLocation => this.handleRouteChange(newLocation)}>
-          <Nav style={{ height: '10%' }} height={this.state.height} width={this.state.width} location={this.state.location} />
           <TransitionGroup>
             <CSSTransition
                   key={this.state.location.pathname}
                   classNames="fade"
-                  in={true}
-                  appear={true}
-                  timeout={{ appear: 1000, enter: 1000, exit: 1000}}
+                  in={false}
+                  appear={false}
+                  timeout={{ appear: 100, enter: 100, exit: 100}}
             >
               <Routing height={this.state.height} width={this.state.width} location={this.state.location} />
             </CSSTransition>

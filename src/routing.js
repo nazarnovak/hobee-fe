@@ -14,13 +14,15 @@ export default class Routing extends React.Component {
   render() {
     return (
       <Switch location={ this.props.location } >
-        <Route path="/" exact render={() => <Home height={ this.props.height } width={ this.props.width } />} />
-        <Route path="/signup" exact component={ Signup } />
-        <Route path="/login" exact component={ Login} />
-        <Route path="/chat" exact render={() => <Chat height={ this.props.height } width={ this.props.width } />} />
-        <Route path="/about" exact component={ About } location={ this.props.location } />
-        <Route path="/contact" exact component={ Contact } />
-        <Route path="/history" exact render={() => <History />} />
+        <Route path="/" exact render={() => <Home height={ this.props.height } width={ this.props.width } />}
+               location={ this.props.location } />
+        <Route path="/chat" exact render={() => <Chat height={ this.props.height } width={ this.props.width }
+          location={ this.props.location } />} />
+        <Route path="/contact" exact render={() => <Contact location={ this.props.location } />} />
+        {/*<Route path="/history" exact render={() => <History />} />*/}
+        {/*<Route path="/about" exact component={ About } location={ this.props.location } />*/}
+        {/*<Route path="/signup" exact component={ Signup } />*/}
+        {/*<Route path="/login" exact component={ Login} />*/}
         <Route component={ NotFound } />
       </Switch>
     );

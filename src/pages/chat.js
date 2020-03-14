@@ -1,5 +1,7 @@
 import React from "react";
 
+import Nav from "../nav";
+
 const statusIdentifying = "identifying";
 const statusConnecting = "connecting";
 const statusSearching = "searching";
@@ -564,21 +566,24 @@ export default class Chat extends React.Component {
 
   render() {
     return (
-        <div className={`main-content`}>
-          <ChatMessages messages={this.state.messages}
-                        searching={this.state.status === statusConnecting || this.state.status === statusSearching}
-                        status={this.state.status} handleMessageClick={this.handleMessageClick}/>
-          <ChatControls websocket={this.state.websocket} handleDisconnect={this.handleDisconnect}
-                        handleSearch={this.handleSearch} disconnected={this.state.status === statusDisconnected}
-                        matched={this.state.status === statusMatched} handleLike={this.handleLike}
-                        liked={this.state.liked} reported={this.state.reported}
-                        handleSave={this.handleSave} handleReport={this.handleReport}
-                        searching={this.state.status === statusConnecting || this.state.status === statusSearching}
-                        statusShow={this.state.statusShow} statusText={this.state.statusText}
-                        sendWebsocketMessage={this.sendWebsocketMessage} reportModalOpen={this.state.reportModalOpen}
-                        handleReportModalClose={this.handleReportModalClose}
-                        handleReportOptionClick={this.handleReportOptionClick}
-          />
+        <div>
+          <Nav location={this.props.location} />
+          <div className={`main-content`}>
+            <ChatMessages messages={this.state.messages}
+                          searching={this.state.status === statusConnecting || this.state.status === statusSearching}
+                          status={this.state.status} handleMessageClick={this.handleMessageClick}/>
+            <ChatControls websocket={this.state.websocket} handleDisconnect={this.handleDisconnect}
+                          handleSearch={this.handleSearch} disconnected={this.state.status === statusDisconnected}
+                          matched={this.state.status === statusMatched} handleLike={this.handleLike}
+                          liked={this.state.liked} reported={this.state.reported}
+                          handleSave={this.handleSave} handleReport={this.handleReport}
+                          searching={this.state.status === statusConnecting || this.state.status === statusSearching}
+                          statusShow={this.state.statusShow} statusText={this.state.statusText}
+                          sendWebsocketMessage={this.sendWebsocketMessage} reportModalOpen={this.state.reportModalOpen}
+                          handleReportModalClose={this.handleReportModalClose}
+                          handleReportOptionClick={this.handleReportOptionClick}
+            />
+          </div>
         </div>
     );
   }
@@ -798,7 +803,7 @@ class MiddleControl extends React.Component {
     return (
         <div className={`middle-buttons`}>
           <div className="circle-wrapper">
-            <button className={`middle-button circle like-button` + (this.props.liked ? ' active' : '')}
+            <button className={`middle-button circle like-button` + (this.props.liked ? '' : ' active')}
                     onClick={this.props.handleLike}>
               <img className="button-icon like" src={(this.props.liked ? svgHeartBlueFilled : svgHeartBlueEmpty)}
                    alt="Like"></img>

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 // const colorBlueSoft = '#0074d9';
 // const colorBlueDarker = '#005299';
 
-const logo = require('./images/h.svg');
+const logo = require('./images/s.svg');
 
 export default class Nav extends React.Component {
   constructor(props) {
@@ -18,9 +18,9 @@ export default class Nav extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ location: nextProps.location });
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({ location: nextProps.location });
+  // }
 
   render() {
     let signupVisible = true;
@@ -98,9 +98,9 @@ class ChatButton extends React.Component {
 
   render() {
     return (
-        <div style={{ position: 'absolute', top: '18px', right: '20px' }}>
+        <div className="chat-button-link-wrapper">
           <Link to="/chat">
-            <button className={`sign-up-button ${this.props.visible ? '' : 'fade'}`} style={{ width: '150px' }}>
+            <button className={`chat-button-link scale${this.props.visible ? '' : ' fade'}`}>
               Chat
             </button>
           </Link>
