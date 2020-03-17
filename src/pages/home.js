@@ -92,33 +92,26 @@ export default class Home extends React.Component {
             <div className="motto-extra scale">Anonymous dialogue chat, with the focus on the quality of the conversation</div>
           </div>
           <div className="jobs scale">
-            <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%',
-              boxSizing: 'border-box', flexGrow: 1, flexBasis: 0 }}>
-              <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
-                backgroundColor: '#ffffff', borderRadius: '150px', border: '1px solid #e6e6e6',
-                boxShadow: 'rgba(150, 150, 150, 0.4) 0px 2px 6px 0px' }}>
+            <div className="jobs-items scale">
+              <div className="jobs-circles">
                 {/*<img src={crown2} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto' }} alt={'Crown'} />*/}
               </div>
-              <p style={{margin: '15px auto 0 auto', fontSize: '28px', color: '#fff', fontWeight: '600'}}>Discover</p>
-              <p style={{margin: '10px 40px', textAlign: 'center', fontSize: '22px', color: '#eee', fontWeight: '400'}}>New people and share your stories</p>
+              <p className="jobs-titles">Discover</p>
+              <p className="jobs-texts">New people and share your stories</p>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%',
-              boxSizing: 'border-box', flexGrow: 1, flexBasis: 0 }}>
-              <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
-                backgroundColor: "#ffffff", borderRadius: '150px', border: '1px solid #e6e6e6', boxShadow: 'rgba(150, 150, 150, 0.4) 0px 2px 6px 0px' }}>
+            <div className="jobs-items scale">
+              <div className="jobs-circles">
                 {/*<img src={shield2} height="80px" widht="80px" style={{ display: 'block', margin: '35px auto 25px auto' }} alt={'Shield'} />*/}
               </div>
-              <p style={{margin: '15px auto 0 auto', fontSize: '28px', color: '#fff', fontWeight: '600'}}>Engage</p>
-              <p style={{margin: '10px 40px', textAlign: 'center', fontSize: '22px', color: '#eee', fontWeight: '400'}}>In an interesting discussion or a simple conversation</p>
+              <p className="jobs-titles">Engage</p>
+              <p className="jobs-texts">In an interesting discussion or a simple conversation</p>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', height: '100%',
-              boxSizing: 'border-box', flexGrow: 1, flexBasis: 0 }}>
-              <div style={{ height: '150px', width: '150px', display: 'block', margin: '0 auto',
-                backgroundColor: "#ffffff", borderRadius: '150px', border: '1px solid #e6e6e6', boxShadow: 'rgba(150, 150, 150, 0.4) 0px 2px 6px 0px' }}>
+            <div className="jobs-items scale">
+              <div className="jobs-circles">
                 {/*<img src={people4} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto 5px auto' }} alt={'People'} />*/}
               </div>
-              <p style={{margin: '15px auto 0 auto', fontSize: '28px', color: '#fff', fontWeight: '600'}}>Find</p>
-              <p style={{margin: '10px 40px', textAlign: 'center', fontSize: '22px', color: '#eee', fontWeight: '400'}}>Wonderful experiences and relationships</p>
+              <p className="jobs-titles">Find</p>
+              <p className="jobs-texts">Wonderful experiences and relationships</p>
             </div>
           </div>
         </div>

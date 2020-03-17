@@ -1111,14 +1111,15 @@ a:hover {
 .motto-main {
     color: #fff;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     padding: 0 30px;
     font-size: 54px;
+    font-weight: 700;
 }
 
 .motto-extra {
     color: #eee;
-    font-size: 36px;
+    font-size: 32px;
     text-align: center;
     padding: 0 30px;
 }
@@ -1133,7 +1134,7 @@ a:hover {
   }
 
   .motto-extra.scale {
-      font-size: 32px;
+      font-size: 28px;
   }
 }
 
@@ -1147,7 +1148,7 @@ a:hover {
   }
 
   .motto-extra.scale {
-      font-size: 28px;
+      font-size: 24px;
   }
 }
 
@@ -1158,13 +1159,53 @@ a:hover {
     justify-content: space-between;
     box-sizing: border-box;
     padding: 25px;
-    height: 100%;
 }
 
 @media (max-width: 767px) {
-  .jobs.scale, .jobs.scale {
+  .jobs.scale {
       flex-direction: column;
   }
+}
+
+.jobs-items {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+@media (max-width: 767px) {
+  .jobs-item.scale {
+      flex-grow: 0;
+      flex-basis: auto;
+  }
+}
+
+.jobs-circles {
+    height: 150px;
+    width: 150px;
+    display: block;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 150px;
+}
+
+.jobs-titles {
+    margin: 15px auto 0 auto;
+    font-size: 28px;
+    color: #fff;
+    font-weight: 700;
+}
+
+.jobs-texts {
+    margin: 10px 40px;
+    text-align: center;
+    font-size: 22px;
+    color: #eee;
+    font-weight: 400;
 }
 
 .footer {
