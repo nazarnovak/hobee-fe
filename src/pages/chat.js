@@ -45,13 +45,10 @@ const svgNext = require('../images/nextWhite2.svg');
 const svgSendWhite = require('../images/sendWhite.svg');
 
 const svgHeartWhite = require('../images/heartWhite.svg');
-const svgDisketteWhite = require('../images/disketteWhite.svg');
 const svgExclamationWhite = require('../images/exclamationWhite.svg');
 
 const svgHeartBlueEmpty = require('../images/heartBlueEmpty.svg');
 const svgHeartBlueFilled = require('../images/heartBlueFilled.svg');
-
-// const svgDisketteYellow = require('../images/disketteYellow.svg');
 
 const svgReportEmpty = require('../images/reportEmpty.svg');
 const svgReportFilled = require('../images/reportFilled.svg');

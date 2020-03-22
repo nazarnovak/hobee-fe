@@ -89,7 +89,7 @@ export default class Home extends React.Component {
         <div className="home-main">
           <div className="motto scale">
             <div className="motto-main scale">Quality conversations</div>
-            <div className="motto-extra scale">Anonymous dialogue chat, with the focus on the quality of the conversation</div>
+            <div className="motto-extra scale">Anonymous one-on-one chat, with the focus on the quality of the conversation</div>
           </div>
           <div className="jobs scale">
             <div className="jobs-items scale">

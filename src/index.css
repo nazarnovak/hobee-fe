@@ -370,7 +370,7 @@ a:hover {
 /*}*/
 
 .nav {
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px 0px;
     z-index: 10;
     width: 100vw;
     position: absolute;
@@ -620,7 +620,7 @@ a:hover {
 }
 
 .chat-controls.connected {
-    border: 1px solid #aaaaaa;
+    border: 1px solid #666;
 }
 
 .chat-controls.disconnected {
@@ -635,22 +635,22 @@ a:hover {
     right: 0;
     opacity: 0;
     visibility: hidden;
-    transition: opacity ease-in-out 300ms, visibility 0ms linear 300ms;
+    transition: opacity ease-in-out 100ms, visibility 0ms linear 100ms;
     z-index: 4;
 }
 
 .chat-status-container.visible {
     visibility: visible;
     opacity: 1;
-    transition: opacity ease-in-out 300ms, visibility 0ms linear 300ms;
+    transition: opacity ease-in-out 100ms, visibility 0ms linear 100ms;
 }
 
 .chat-status {
     padding: 6px 18px;
     border-radius: 20px;
     background-color: white;
-    border: 1px solid #aaa;
-    color: #666;
+    border: 1px solid #666;
+    color: #333;
     max-width: 75vw;
     display: inline-block;
     text-align: center;
@@ -997,7 +997,7 @@ a:hover {
   display: block;
   height: 2rem;
   width: 2rem;
-  animation: rotations 1s linear infinite, resizing 3s linear infinite
+  animation: resizing 3s linear infinite
 }
 
 .loader:before {
@@ -1043,11 +1043,11 @@ a:hover {
 /*}*/
 
 .status {
-    margin: 100px auto 0 auto;
+    margin: 80px auto 0 auto;
     width: 100px;
     height: 50px;
     font-size: 24px;
-    color: #666;
+    color: #333;
 }
 
 /* Landing pages */
