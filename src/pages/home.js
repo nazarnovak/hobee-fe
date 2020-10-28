@@ -58,9 +58,9 @@ const styles = {
 // const people2 = require('../images/people2.svg');
 // const crown = require('../images/crown.svg');
 
-const crown2 = require('../images/crown2.svg');
-const shield2 = require('../images/shield2.svg');
-const people4 = require('../images/people4.svg');
+const telescope = require('../images/telescope.svg');
+const rocket = require('../images/rocket.svg');
+const astronaut = require('../images/astronaut.svg');
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -88,30 +88,30 @@ export default class Home extends React.Component {
         <Nav location={this.props.location} />
         <div className="home-main">
           <div className="motto scale">
-            <div className="motto-main scale">Quality conversations</div>
-            <div className="motto-extra scale">Anonymous one-on-one chat, with the focus on the quality of the conversation</div>
+            <div className="motto-main scale">Quality chat</div>
+            <div className="motto-extra scale">One-on-one chat, with focus on the quality and fun</div>
           </div>
           <div className="jobs scale">
             <div className="jobs-items scale">
               <div className="jobs-circles">
-                {/*<img src={crown2} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto' }} alt={'Crown'} />*/}
+                <img src={telescope} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto' }} alt={'Crown'} />
               </div>
               <p className="jobs-titles">Discover</p>
               <p className="jobs-texts">New people and share your stories</p>
             </div>
             <div className="jobs-items scale">
               <div className="jobs-circles">
-                {/*<img src={shield2} height="80px" widht="80px" style={{ display: 'block', margin: '35px auto 25px auto' }} alt={'Shield'} />*/}
+                <img src={rocket} height="80px" widht="80px" style={{ display: 'block', margin: '35px auto 25px auto' }} alt={'Shield'} />
               </div>
               <p className="jobs-titles">Engage</p>
               <p className="jobs-texts">In an interesting discussion or a simple conversation</p>
             </div>
             <div className="jobs-items scale">
               <div className="jobs-circles">
-                {/*<img src={people4} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto 5px auto' }} alt={'People'} />*/}
+                <img src={astronaut} height="100px" widht="100px" style={{ display: 'block', margin: '25px auto 5px auto' }} alt={'People'} />
               </div>
               <p className="jobs-titles">Find</p>
-              <p className="jobs-texts">Wonderful experiences and relationships</p>
+              <p className="jobs-texts">Interesting people and fun experiences</p>
             </div>
           </div>
         </div>
