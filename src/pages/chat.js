@@ -44,8 +44,8 @@ const svgXGrey = require('../images/xGrey.svg');
 const svgNext = require('../images/nextWhite2.svg');
 const svgSendWhite = require('../images/sendWhite.svg');
 
-const svgHeartWhite = require('../images/heartWhite.svg');
-const svgExclamationWhite = require('../images/exclamationWhite.svg');
+// const svgHeartWhite = require('../images/heartWhite.svg');
+// const svgExclamationWhite = require('../images/exclamationWhite.svg');
 
 const svgHeartBlueEmpty = require('../images/heartBlueEmpty.svg');
 const svgHeartBlueFilled = require('../images/heartBlueFilled.svg');
@@ -139,19 +139,21 @@ export default class Chat extends React.Component {
     // Connect to WS
     let ws = null;
 
-    let port = 8080;
-    if (!!process && !!process.env && !!process.env.PORT) {
-      port = process.env.PORT;
-    }
+    // let port = 8080;
+    // if (!!process && !!process.env && !!process.env.PORT) {
+    //   port = process.env.PORT;
+    // }
 
     try {
       var loc = window.location, wsUrl;
+      wsUrl = "ws:";
+
       if (loc.protocol === "https:") {
         wsUrl = "wss:";
-      } else {
-        wsUrl = "ws:";
       }
-      wsUrl += "//" + loc.host;
+
+      // TODO: Resolve ports locally vs prod
+      wsUrl += "//" + loc.hostname + ":3001";
       wsUrl += "/api/chat";
 
       ws = await new WebSocket(wsUrl);
@@ -184,7 +186,7 @@ export default class Chat extends React.Component {
   }
 
   async pullRoomMessages() {
-    let url = "/api/messages";
+    let url = `${window.location.protocol}//${window.location.hostname}:3001/api/messages`;
     let json;
 
     try {
@@ -204,7 +206,7 @@ export default class Chat extends React.Component {
   }
 
   async pullResult() {
-    let url = "/api/result";
+    let url = `${window.location.protocol}//${window.location.hostname}:3001/api/result`;
     let json;
 
     try {
@@ -217,7 +219,8 @@ export default class Chat extends React.Component {
 
     if (json.liked === undefined) {
       throw new Error("Unknown pull result response", json);
-      return false;
+
+      // return false;
     }
 
     return json;
@@ -277,7 +280,7 @@ export default class Chat extends React.Component {
         throw new Error("Unknown system message", msg.text);
     }
 
-    if (status != statusSearching) {
+    if (status !== statusSearching) {
       messages.push(msg);
     }
 
@@ -375,7 +378,7 @@ export default class Chat extends React.Component {
 
     this.setState({unread: this.state.unread + 1});
 
-    document.title = '(' + this.state.unread + ')' + ' hobee: Quality conversations';
+    document.title = `(${this.state.unread}) hobee: Quality conversations`;
   }
 
   scrollToBottom() {
@@ -383,7 +386,7 @@ export default class Chat extends React.Component {
   }
 
   async identify() {
-    let url = "/api/identify" + window.location.search;
+    let url = `${window.location.protocol}//window.location.hostname:3001/api/identify${window.location.search}`;
     let json;
 
     try {
@@ -610,7 +613,8 @@ class ChatMessages extends React.Component {
 
           if (msg.type !== messageTypeChatting) {
             throw new Error('Unknown message type in chat messages', msg.type);
-            return;
+
+            // return;
           }
 
           if (msg.authoruuid === messageTypeOwn) {

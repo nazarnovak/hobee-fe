@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
+// import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 // This helps know when the page is changed, since the whole thing is a single page application sort of with react
 // router
@@ -8,7 +8,7 @@ import WithRouterContainer from './WithRouterContainer';
 
 // Routing table
 import Routing from './routing';
-import Nav from './nav';
+// import Nav from './nav';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -48,17 +48,7 @@ export default class App extends React.Component {
     return (
       <BrowserRouter>
         <WithRouterContainer onRouteChange={newLocation => this.handleRouteChange(newLocation)}>
-          <TransitionGroup>
-            <CSSTransition
-                  key={this.state.location.pathname}
-                  classNames="fade"
-                  in={false}
-                  appear={false}
-                  timeout={{ appear: 100, enter: 100, exit: 100}}
-            >
-              <Routing height={this.state.height} width={this.state.width} location={this.state.location} />
-            </CSSTransition>
-          </TransitionGroup>
+          <Routing height={this.state.height} width={this.state.width} location={this.state.location} />
         </WithRouterContainer>
       </BrowserRouter>
     );

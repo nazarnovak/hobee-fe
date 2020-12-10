@@ -2,13 +2,13 @@ import React from "react";
 import {Route, Switch} from "react-router-dom";
 
 import Home from "./pages/home";
-import Signup from "./pages/signup";
-import Login from "./pages/login";
 import Chat from "./pages/chat";
-import About from "./pages/about";
 import Contact from "./pages/contact";
-import History from "./pages/history";
 import NotFound from "./pages/notfound";
+// import Signup from "./pages/signup";
+// import Login from "./pages/login";
+// import About from "./pages/about";
+// import History from "./pages/history";
 
 export default class Routing extends React.Component {
   render() {

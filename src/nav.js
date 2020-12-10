@@ -23,88 +23,88 @@ export default class Nav extends React.Component {
   // }
 
   render() {
-    let signupVisible = true;
-    let pathname = this.state.location.pathname;
+    // let signupVisible = true;
+    // let pathname = this.state.location.pathname;
 
     // Don't show signup button in signup page
     // Hack: temporarily don't show it on /chat as well
-    if (pathname === "/chat") {
-      signupVisible = false;
-    }
+    // if (pathname === "/chat") {
+    //   signupVisible = false;
+    // }
 
     return (
-      <div class="nav-height">
-        <div class="nav nav-height">
-          <Link class="logo-link logo-height" to="/" >
-            <img class="logo logo-height" src={logo} alt="Logo" />
+      <div className="nav-height">
+        <div className="nav nav-height">
+          <Link className="logo-link logo-height" to="/" >
+            <img className="logo logo-height" src={logo} alt="Logo" />
           </Link>
-          <ChatButton visible={signupVisible} />
+          {/*<ChatButton visible={signupVisible} />*/}
         </div>
       </div>
     );
   }
 }
 
-class SignupButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hover: false,
-    };
-
-    this.onMouseEnter = this.onMouseEnter.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
-  }
-
-  onMouseEnter() {
-    this.setState({ hover: true });
-  }
-
-  onMouseLeave() {
-    this.setState({ hover: false });
-  }
-
-  render() {
-    return (
-        <div style={{ position: 'absolute', top: '18px', right: this.props.margin }}>
-          <Link to="/signup">
-            <button className={`sign-up-button ${this.props.visible ? '' : 'fade'}`} style={{ width: this.props.width }}>
-              Sign up
-            </button>
-          </Link>
-        </div>
-    );
-  }
-}
-
-class ChatButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hover: false,
-    };
-
-    this.onMouseEnter = this.onMouseEnter.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
-  }
-
-  onMouseEnter() {
-    this.setState({ hover: true });
-  }
-
-  onMouseLeave() {
-    this.setState({ hover: false });
-  }
-
-  render() {
-    return (
-        <div className="chat-button-link-wrapper">
-          <Link to="/chat">
-            <button className={`chat-button-link scale${this.props.visible ? '' : ' fade'}`}>
-              Chat
-            </button>
-          </Link>
-        </div>
-    );
-  }
-}
+// class SignupButton extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       hover: false,
+//     };
+//
+//     this.onMouseEnter = this.onMouseEnter.bind(this);
+//     this.onMouseLeave = this.onMouseLeave.bind(this);
+//   }
+//
+//   onMouseEnter() {
+//     this.setState({ hover: true });
+//   }
+//
+//   onMouseLeave() {
+//     this.setState({ hover: false });
+//   }
+//
+//   render() {
+//     return (
+//         <div style={{ position: 'absolute', top: '18px', right: this.props.margin }}>
+//           <Link to="/signup">
+//             <button className={`sign-up-button ${this.props.visible ? '' : 'fade'}`} style={{ width: this.props.width }}>
+//               Sign up
+//             </button>
+//           </Link>
+//         </div>
+//     );
+//   }
+// }
+//
+// class ChatButton extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       hover: false,
+//     };
+//
+//     this.onMouseEnter = this.onMouseEnter.bind(this);
+//     this.onMouseLeave = this.onMouseLeave.bind(this);
+//   }
+//
+//   onMouseEnter() {
+//     this.setState({ hover: true });
+//   }
+//
+//   onMouseLeave() {
+//     this.setState({ hover: false });
+//   }
+//
+//   render() {
+//     return (
+//         <div className="chat-button-link-wrapper">
+//           <Link to="/chat">
+//             <button className={`chat-button-link scale${this.props.visible ? '' : ' fade'}`}>
+//               Chat
+//             </button>
+//           </Link>
+//         </div>
+//     );
+//   }
+// }

@@ -22,22 +22,22 @@ export default class Contact extends React.Component {
     let email = document.getElementById('email').value;
     let message = document.getElementById('message').value;
 
-    if (name == "") {
+    if (name === "") {
       this.setState({ err: 'Please provide your name' });
       return false;
     }
 
-    if (email == "") {
+    if (email === "") {
       this.setState({ err: 'Please provide your email' });
       return false;
     }
 
-    if (message == "") {
+    if (message === "") {
       this.setState({ err: 'Please provide your message' });
       return false;
     }
 
-    let url = "/api/contact";
+    let url = `${window.location.protocol}//${window.location.hostname}:3001/api/contact`;
     let json;
 
     let params = {

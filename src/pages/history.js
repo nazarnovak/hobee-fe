@@ -1,6 +1,6 @@
 import React from "react";
 
-const messageTypeChatting = "c";
+// const messageTypeChatting = "c";
 
 export default class History extends React.Component {
   constructor(props) {
@@ -15,20 +15,22 @@ export default class History extends React.Component {
     let response = await this.identify();
     if (!response) {
       throw new Error("Couldn't identify user");
-      return false;
+
+      // return false;
     }
 
     response = await this.pullHistory();
     if (!response) {
       throw new Error("Couldn't pull user history");
-      return false;
+
+      // return false;
     }
 
     this.setState({chats: response.chats});
   }
 
   async pullHistory() {
-    let url = "/api/history";
+    let url = `${window.location.protocol}//${window.location.hostname}:3001/api/history`;
     let json;
 
     try {
@@ -41,14 +43,15 @@ export default class History extends React.Component {
 
     if (json.chats === undefined) {
       throw new Error("Unknown pull result response", json);
-      return false;
+
+      // return false;
     }
 
     return json;
   }
 
   async identify() {
-    let url = "/api/identify" + window.location.search;
+    let url = `${window.location.protocol}//${window.location.hostname}:3001/api/identify${window.location.search}`;
     let json;
 
     try {
