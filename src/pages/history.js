@@ -30,7 +30,11 @@ export default class History extends React.Component {
   }
 
   async pullHistory() {
-    let url = `${window.location.protocol}//${window.location.hostname}:3001/api/history`;
+    let port = '';
+    if (process.env.NODE_ENV === "development") {
+        port = ':8080';
+    }
+    let url = `${window.location.protocol}//${window.location.hostname}${port}/api/history`;
     let json;
 
     try {
@@ -51,7 +55,11 @@ export default class History extends React.Component {
   }
 
   async identify() {
-    let url = `${window.location.protocol}//${window.location.hostname}:3001/api/identify${window.location.search}`;
+    let port = '';
+    if (process.env.NODE_ENV === "development") {
+        port = ':8080';
+    }
+    let url = `${window.location.protocol}//${window.location.hostname}${port}/api/identify${window.location.search}`;
     let json;
 
     try {

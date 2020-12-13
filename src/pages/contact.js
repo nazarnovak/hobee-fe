@@ -37,7 +37,11 @@ export default class Contact extends React.Component {
       return false;
     }
 
-    let url = `${window.location.protocol}//${window.location.hostname}:3001/api/contact`;
+    let port = '';
+    if (process.env.NODE_ENV === "development") {
+        port = ':8080';
+    }
+    let url = `${window.location.protocol}//${window.location.hostname}${port}/api/contact`;
     let json;
 
     let params = {

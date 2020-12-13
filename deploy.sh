@@ -1,1 +1,1 @@
-npm i && npm run build && gcloud app deploy
+npm i && npm run build && gcloud app deploy --stop-previous-version

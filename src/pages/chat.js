@@ -76,7 +76,7 @@ export default class Chat extends React.Component {
         }
 
         that.setState({statusShow: false});
-      }, 2000),
+      }, 3000),
     };
 
     this.connectToChat = this.connectToChat.bind(this);
@@ -152,8 +152,12 @@ export default class Chat extends React.Component {
         wsUrl = "wss:";
       }
 
-      // TODO: Resolve ports locally vs prod
-      wsUrl += "//" + loc.hostname + ":3001";
+      wsUrl += "//" + loc.hostname;
+
+      if (process.env.NODE_ENV === "development") {
+        wsUrl += ":8080"
+      }
+
       wsUrl += "/api/chat";
 
       ws = await new WebSocket(wsUrl);
@@ -186,7 +190,13 @@ export default class Chat extends React.Component {
   }
 
   async pullRoomMessages() {
-    let url = `${window.location.protocol}//${window.location.hostname}:3001/api/messages`;
+    let port = '';
+    if (process.env.NODE_ENV === "development") {
+        port = ':8080';
+    }
+
+    let url = `${window.location.protocol}//${window.location.hostname}${port}/api/messages`;
+
     let json;
 
     try {
@@ -206,7 +216,12 @@ export default class Chat extends React.Component {
   }
 
   async pullResult() {
-    let url = `${window.location.protocol}//${window.location.hostname}:3001/api/result`;
+    let port = '';
+    if (process.env.NODE_ENV === "development") {
+        port = ':8080';
+    }
+
+    let url = `${window.location.protocol}//${window.location.hostname}${port}/api/result`;
     let json;
 
     try {
@@ -346,7 +361,7 @@ export default class Chat extends React.Component {
                 }
 
                 that.setState({statusShow: false});
-              }, 2000
+              }, 3000
           ),
         });
 
@@ -386,7 +401,11 @@ export default class Chat extends React.Component {
   }
 
   async identify() {
-    let url = `${window.location.protocol}//window.location.hostname:3001/api/identify${window.location.search}`;
+    let port = '';
+    if (process.env.NODE_ENV === "development") {
+        port = ':8080';
+    }
+    let url = `${window.location.protocol}//${window.location.hostname}${port}/api/identify${window.location.search}`;
     let json;
 
     try {
@@ -595,7 +614,20 @@ class ChatMessages extends React.Component {
       return (
           <div className="chat-messages">
             <div className="status-wrapper">
-              <div className="loader"></div>
+              <div className="spinner">
+                <div className="bar1"></div>
+                <div className="bar2"></div>
+                <div className="bar3"></div>
+                <div className="bar4"></div>
+                <div className="bar5"></div>
+                <div className="bar6"></div>
+                <div className="bar7"></div>
+                <div className="bar8"></div>
+                <div className="bar9"></div>
+                <div className="bar10"></div>
+                <div className="bar11"></div>
+                <div className="bar12"></div>
+              </div>
               <div className="status">{this.props.status}</div>
             </div>
           </div>
