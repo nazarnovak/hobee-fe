@@ -7,7 +7,8 @@ export default class NotFound extends React.Component {
         <div>
           <Nav location={this.props.location} />
           <div className="not-found">
-            <h1>Page not found</h1>
+            <h1 className="heading">42</h1>
+            <p className="subheading">Just kidding, nothing meaningful here. You can find meaning in the <a href="/chat">chat</a></p>
           </div>
         </div>
     );

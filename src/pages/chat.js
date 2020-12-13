@@ -2,7 +2,7 @@ import React from "react";
 
 import Nav from "../nav";
 
-const statusIdentifying = "identifying";
+const statusOffline = "offline";
 const statusConnecting = "connecting";
 const statusSearching = "searching";
 const statusMatched = "matched";
@@ -61,7 +61,7 @@ export default class Chat extends React.Component {
 
     this.state = {
       messages: [],
-      status: statusIdentifying,
+      status: statusOffline,
       websocket: null,
       liked: false,
       reportModalOpen: false,
@@ -69,7 +69,7 @@ export default class Chat extends React.Component {
       tabActive: true,
       unread: 0,
       statusShow: false,
-      statusText: '',
+      statusText: statusOffline,
       typingTimeout: setTimeout(function () {
         if (that.state.statusText !== 'Buddy is typing...') {
           return false;
@@ -111,11 +111,11 @@ export default class Chat extends React.Component {
     this.setState({tabActive: true, unread: 0});
 
     document.title = 'hobee: Quality conversations';
-  }
+  };
 
   onBlur = () => {
     this.setState({tabActive: false});
-  }
+  };
 
   async connectToChat() {
     // Obtain cookie if not set
@@ -128,7 +128,7 @@ export default class Chat extends React.Component {
     let success = this.connectToWs();
     if (!success) {
       // Try to reconnect again soon
-      return;
+      return false;
     }
 
     // If all goes successfully - do not prompt to reconnect
@@ -590,7 +590,9 @@ export default class Chat extends React.Component {
           <div className={`main-content`}>
             <ChatMessages messages={this.state.messages}
                           searching={this.state.status === statusConnecting || this.state.status === statusSearching}
-                          status={this.state.status} handleMessageClick={this.handleMessageClick}/>
+                          status={this.state.status} handleMessageClick={this.handleMessageClick}
+                          offline={this.state.status === statusOffline}
+            />
             <ChatControls websocket={this.state.websocket} handleDisconnect={this.handleDisconnect}
                           handleSearch={this.handleSearch} disconnected={this.state.status === statusDisconnected}
                           matched={this.state.status === statusMatched} handleLike={this.handleLike}
@@ -615,6 +617,28 @@ class ChatMessages extends React.Component {
           <div className="chat-messages">
             <div className="status-wrapper">
               <div className="spinner">
+                <div className="bar1"></div>
+                <div className="bar2"></div>
+                <div className="bar3"></div>
+                <div className="bar4"></div>
+                <div className="bar5"></div>
+                <div className="bar6"></div>
+                <div className="bar7"></div>
+                <div className="bar8"></div>
+                <div className="bar9"></div>
+                <div className="bar10"></div>
+                <div className="bar11"></div>
+                <div className="bar12"></div>
+              </div>
+              <div className="status">{this.props.status}</div>
+            </div>
+          </div>
+      )
+    } else if (this.props.offline) {
+      return (
+          <div className="chat-messages">
+            <div className="status-wrapper">
+              <div className="spinner stopped">
                 <div className="bar1"></div>
                 <div className="bar2"></div>
                 <div className="bar3"></div>
