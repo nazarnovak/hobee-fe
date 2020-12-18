@@ -385,7 +385,7 @@ a:hover {
     width: 100vw;
     position: absolute;
     text-align: center;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #333;
 }
 
 .nav-height {
@@ -595,7 +595,7 @@ a:hover {
 }
 
 .message-timestamp {
-    color: #666;
+    color: #333;
     text-align: center;
     padding: 6px;
     z-index: 1;
@@ -630,7 +630,7 @@ a:hover {
 }
 
 .chat-controls.connected {
-    border: 1px solid #666;
+    border: 1px solid #333;
 }
 
 .chat-controls.disconnected {
@@ -640,7 +640,7 @@ a:hover {
 .chat-status-container {
     position: absolute;
     text-align: center;
-    top: -42px; /* Top+bottom paddings + height of the text at the font-size of 18px*/
+    top: -38px; /* Top+bottom paddings + height of the text at the font-size of 18px*/
     left: 0;
     right: 0;
     opacity: 0;
@@ -659,9 +659,9 @@ a:hover {
 .chat-status {
     padding: 6px 18px;
     border-radius: 20px;
-    background-color: white;
-    border: 1px solid #666;
-    color: #333;
+    background-color: #000;
+    /*border: 1px solid #999;*/
+    color: #fff;
     max-width: 75vw;
     display: inline-block;
     text-align: center;
@@ -705,6 +705,10 @@ a:hover {
     margin-top: 5%;
 }
 
+.button-icon.report {
+    margin-left: 13%;
+}
+
 .chat-disconnect-button {
     background-color: #AA0000;
     outline: none;
@@ -732,7 +736,7 @@ a:hover {
 }
 
 .like-button {
-    border: 2px solid #4A5AE5;
+    border: 1px solid #333;
     background-color: #fff;
     position: relative;
 }
@@ -803,17 +807,17 @@ a:hover {
     background-color: #fff;
     border-radius: 20px;
     width: 548px;
-    height: 331px;
+    height: 379px;
     z-index: 12;
 }
 
 .report-header {
     height: 43px;
-    border-bottom: #999;
+    border-bottom: 1px solid #000;
     display: flex;
     grid-template-rows: 48px auto 48px;
     z-index: 13;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #000;
 }
 
 .report-header-side {
@@ -825,8 +829,9 @@ a:hover {
     text-align: center;
     width: 100%;
     line-height: 42px;
-    color: #666;
+    color: #000;
     font-size: 18px;
+    font-weight: 600;
 }
 
 .report-x {
@@ -837,23 +842,21 @@ a:hover {
 }
 
 .report-options {
-    height: 100%;
+    /*height: 100%;*/
     width: 100%;
 }
 
 .report-option {
     height: 47px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #999;
     line-height: 47px;
     padding-left: 30px;
-    font-weight: 300;
+    font-weight: 500;
     overflow: hidden;
 }
 
 .report-option:last-child {
-    border-bottom: none;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-bottom: 1px solid #000;
 }
 
 .report-option.enabled:hover {
@@ -878,6 +881,14 @@ a:hover {
     color: #999;
 }
 
+.report-footer {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    height: 47px;
+    line-height: 47px;
+    text-align: center;
+}
+
 @media only screen and (max-width: 736px) {
     .report-modal {
         height: 100%;
@@ -892,11 +903,120 @@ a:hover {
 }
 
 .report-button {
-    border: 2px solid #CC0000;
+    border: 1px solid #333;
+    background-color: #fff;
 }
 
 .report-button.active {
-    border: 2px solid #CC0000;
+    border: 1px solid #CC0000;
+}
+
+.like-modal {
+    background-color: #fff;
+    border-radius: 20px;
+    width: 548px;
+    height: 379px;
+    z-index: 12;
+}
+
+.like-header {
+    height: 43px;
+    border-bottom: 1px solid #000;
+    display: flex;
+    grid-template-rows: 48px auto 48px;
+    z-index: 13;
+    border-bottom: 1px solid #000;
+}
+
+.like-header-side {
+    height: 100%;
+    width: 48px;
+}
+
+.like-header-title {
+    text-align: center;
+    width: 100%;
+    line-height: 42px;
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.like-x {
+    height: 40%;
+    width: 40%;
+    padding: 30%;
+    cursor: pointer;
+}
+
+.like-options {
+    /*height: 100%;*/
+    width: 100%;
+}
+
+.like-option {
+    height: 47px;
+    border-bottom: 1px solid #999;
+    line-height: 47px;
+    padding-left: 30px;
+    font-weight: 500;
+    overflow: hidden;
+}
+
+.like-option:last-child {
+    border-bottom: 1px solid #000;
+}
+
+.like-option.enabled:hover {
+    background-color: #090;
+    border-bottom: 1px solid #090;
+    color: #fff;
+}
+
+.like-option.enabled:last-child:hover {
+    border-bottom: none;
+}
+
+.like-option.selected {
+    background-color: #090;
+    border-bottom: 1px solid #090;
+    color: #fff;
+}
+
+.like-option.disabled {
+    background-color: #e0e0e0;
+    border-bottom: 1px solid #aaa;
+    color: #999;
+}
+
+.like-footer {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    height: 47px;
+    line-height: 47px;
+    text-align: center;
+}
+
+@media only screen and (max-width: 736px) {
+    .like-modal {
+        height: 100%;
+        width: 100%;
+        border-radius: unset;
+    }
+
+    .like-option:last-child {
+        border-bottom: none;
+        border-radius: unset;
+    }
+}
+
+.like-button {
+    border: 1px solid #333;
+    background-color: #fff;
+}
+
+.like-button.active {
+    border: 1px solid #CC0000;
 }
 
 .chat-input {
