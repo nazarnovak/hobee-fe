@@ -77,7 +77,7 @@ export default class Chat extends React.Component {
       likeModalOpen: false,
       likes: [],
       reportModalOpen: false,
-      reported: [],
+      reports: [],
       tabActive: true,
       unread: 0,
       statusShow: false,
@@ -350,8 +350,8 @@ export default class Chat extends React.Component {
         this.chatStatusFromMessages(messages);
 
         let result = await this.pullResult();
-console.log(result);
-        this.setState({likes: result.likes, reported: []});
+
+        this.setState({ likes: result.likes, reports: result.reports });
         break;
       case activityUserActive:
         // If buddy goes active - remove the status
@@ -578,8 +578,8 @@ console.log(result);
       return false;
     }
 
-    // Already reported
-    if (this.state.reported.length !== 0) {
+    // Already has reports
+    if (this.state.reports.length !== 0) {
       return false;
     }
 
@@ -590,7 +590,7 @@ console.log(result);
       return false;
     }
 
-    this.setState({ reported: selectedReports, reportModalOpen: false });
+    this.setState({ reports: selectedReports, reportModalOpen: false });
 
     return true;
   }
@@ -605,7 +605,7 @@ console.log(result);
 
     this.state.websocket.send(JSON.stringify(o));
 
-    this.setState({status: statusSearching, statusShow: false, reported: [], likes: []});
+    this.setState({status: statusSearching, statusShow: false, reports: [], likes: []});
   }
 
   handleLikeIconClick = () => {
@@ -652,7 +652,7 @@ console.log(result);
                           likeModalOpen={this.state.likeModalOpen} handleLikeModalClose={this.handleModalsClose}
                           handleLikeButtonClick={this.handleLikeButtonClick}
                           // handleLikeOptionClick={this.handleLikeOptionClick}
-                          reported={this.state.reported} handleReportIconClick={this.handleReportIconClick}
+                          reports={this.state.reports} handleReportIconClick={this.handleReportIconClick}
                           reportModalOpen={this.state.reportModalOpen} handleReportModalClose={this.handleModalsClose}
                           handleReportButtonClick={this.handleReportButtonClick}
             />
@@ -856,7 +856,7 @@ class ChatControls extends React.Component {
               handleLikeIconClick={this.props.handleLikeIconClick} handleLikeModalClose={this.props.handleLikeModalClose}
               handleLikeButtonClick={this.props.handleLikeButtonClick}
               // handleLikeOptionClick={this.props.handleLikeOptionClick}
-              reported={this.props.reported} handleReportIconClick={this.props.handleReportIconClick}
+              reports={this.props.reports} handleReportIconClick={this.props.handleReportIconClick}
               reportModalOpen={this.props.reportModalOpen} handleReportModalClose={this.props.handleReportModalClose}
               handleReportButtonClick={this.props.handleReportButtonClick}
           />
@@ -935,10 +935,10 @@ class MiddleControl extends React.Component {
           {/*</div>*/}
           <div className="circle-wrapper">
             <ReportModal open={this.props.reportModalOpen} onClose={this.props.handleReportModalClose} 
-              reported={this.props.reported} handleReportButtonClick={this.props.handleReportButtonClick} />
-            <button className={`middle-button circle report-icon-button` + (this.props.reported.length === 0 ? '' : ' active')}
+              reports={this.props.reports} handleReportButtonClick={this.props.handleReportButtonClick} />
+            <button className={`middle-button circle report-icon-button` + (this.props.reports.length === 0 ? '' : ' active')}
                     onClick={this.props.handleReportIconClick}>
-              <img className="button-icon report" src={(this.props.reported.length === 0 ? svgReportEmpty : svgReportFilled)}
+              <img className="button-icon report" src={(this.props.reports.length === 0 ? svgReportEmpty : svgReportFilled)}
                    alt="Report"></img>
             </button>
           </div>
@@ -976,7 +976,7 @@ class ReportModal extends React.Component {
     super(props);
 
     this.state = {
-      reported: [],
+      reports: [],
     };
   }
 
@@ -1001,18 +1001,18 @@ class ReportModal extends React.Component {
       return false;
     }
 
-    let updatedReported = this.state.reported;
+    let updatedReports = this.state.reports;
 
     // Remove the key if it already exists in state, or add it if it's new
-    let index = updatedReported.indexOf(reportKey);
+    let index = updatedReports.indexOf(reportKey);
 
     if (index !== -1) {
-      updatedReported.splice(index, 1);
+      updatedReports.splice(index, 1);
     } else {
-      updatedReported = updatedReported.concat(reportKey); 
+      updatedReports = updatedReports.concat(reportKey);
     }
 
-    this.setState({reported: updatedReported});
+    this.setState({reports: updatedReports});
 
     return true;
     //this.sendWebsocketMessage(messageTypeResultReport, text);
@@ -1023,11 +1023,16 @@ class ReportModal extends React.Component {
       return null;
     }
 
-    // const alreadyReported = (this.props.reported !== '');
+    // Feels kind of hacky, probably better to do it with ref somehow, but I don't know how to properly pass it from outside
+    if (this.props.reports.length !== 0 && this.state.reports.length == 0) {
+      this.setState({ reports: this.props.reports });
+    }
+
+    // const alreadyHasReports = (this.props.reports !== '');
 
     const reportOptionsHTML = Object.keys(reportOptions).map((key) => {
       return (
-          <div className={`report-option` + (this.state.reported.includes(key) ? ` selected` : ` normal`) + (this.props.reported.length !== 0 ? ` disabled` : ``)} data-key={key} key={key} onClick={this.handleReportOptionClick}>
+          <div className={`report-option` + (this.state.reports.includes(key) ? ` selected` : ` normal`) + (this.props.reports.length !== 0 ? ` disabled` : ``)} data-key={key} key={key} onClick={this.handleReportOptionClick}>
             {reportOptions[key]}
           </div>
       );
@@ -1047,7 +1052,7 @@ class ReportModal extends React.Component {
               {reportOptionsHTML}
             </div>
             <div className="report-footer">
-              <button className={`report-dialog-button` + (this.state.reported.length === 0 || this.props.reported.length !== 0 ? ` disabled` : ``)} onClick={() => this.props.handleReportButtonClick(this.state.reported)}>Report</button>
+              <button className={`report-dialog-button` + (this.state.reports.length === 0 || this.props.reports.length !== 0 ? ` disabled` : ``)} onClick={() => this.props.handleReportButtonClick(this.state.reports)}>Report</button>
             </div>
           </div>
         </div>
@@ -1104,6 +1109,11 @@ class LikeModal extends React.Component {
   render() {
     if (!this.props.open) {
       return null;
+    }
+
+    // Feels kind of hacky, probably better to do it with ref somehow, but I don't know how to properly pass it from outside
+    if (this.props.likes.length !== 0 && this.state.likes.length == 0) {
+      this.setState({ likes: this.props.likes });
     }
 
     const likeOptionsHTML = Object.keys(likeOptions).map((key) => {
