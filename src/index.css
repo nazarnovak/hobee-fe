@@ -842,7 +842,6 @@ a:hover {
 }
 
 .report-options {
-    /*height: 100%;*/
     width: 100%;
 }
 
@@ -859,26 +858,29 @@ a:hover {
     border-bottom: 1px solid #000;
 }
 
-.report-option.enabled:hover {
-    background-color: #900;
-    border-bottom: 1px solid #600;
+.report-option:hover {
+    background-color: #c33;
+    border-bottom: 1px solid #c33;
     color: #fff;
 }
 
-.report-option.enabled:last-child:hover {
-    border-bottom: none;
+.report-option:last-child:hover {
+    border-bottom: 1px solid #c33;
 }
 
 .report-option.selected {
-    background-color: #900;
-    border-bottom: 1px solid #600;
+    background-color: #a00;
+    border-bottom: 1px solid #a00;
     color: #fff;
 }
 
-.report-option.disabled {
-    background-color: #e0e0e0;
-    border-bottom: 1px solid #aaa;
-    color: #999;
+.report-option.selected.disabled {
+    pointer-events: none;
+} 
+
+.report-option.normal.disabled {
+    background-color: #ccc;
+    pointer-events: none;
 }
 
 .report-footer {
@@ -889,6 +891,28 @@ a:hover {
     text-align: center;
 }
 
+.report-dialog-button {
+    background-color: #c00;
+    border: none;
+    outline: none;
+    border-radius: 999px;
+    color: #f3f3f3;
+    opacity: 1;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    height: 28px;
+    width: 200px;
+    transition: color 0.4s ease-in-out;
+    transition: opacity 800ms cubic-bezier(.6, 0, .4, 1);
+    margin-right: 30px;
+}
+
+.report-dialog-button.disabled {
+    background-color: #aaaaaa;
+    cursor: default;
+}
+
 @media only screen and (max-width: 736px) {
     .report-modal {
         height: 100%;
@@ -897,17 +921,17 @@ a:hover {
     }
 
     .report-option:last-child {
-        border-bottom: none;
+        border-bottom: 1px solid #000;
         border-radius: unset;
     }
 }
 
-.report-button {
+.report-icon-button {
     border: 1px solid #333;
     background-color: #fff;
 }
 
-.report-button.active {
+.report-icon-button.active {
     border: 1px solid #CC0000;
 }
 
@@ -950,7 +974,6 @@ a:hover {
 }
 
 .like-options {
-    /*height: 100%;*/
     width: 100%;
 }
 
@@ -967,14 +990,14 @@ a:hover {
     border-bottom: 1px solid #000;
 }
 
-.like-option.enabled:hover {
+.like-option:hover {
     background-color: #090;
     border-bottom: 1px solid #090;
     color: #fff;
 }
 
-.like-option.enabled:last-child:hover {
-    border-bottom: none;
+.like-option:last-child:hover {
+    border-bottom: 1px solid #090;
 }
 
 .like-option.selected {
@@ -983,10 +1006,13 @@ a:hover {
     color: #fff;
 }
 
-.like-option.disabled {
-    background-color: #e0e0e0;
-    border-bottom: 1px solid #aaa;
-    color: #999;
+.like-option.selected.disabled {
+    pointer-events: none;
+}
+
+.like-option.normal.disabled {
+    background-color: #ccc;
+    pointer-events: none;
 }
 
 .like-footer {
@@ -995,6 +1021,28 @@ a:hover {
     height: 47px;
     line-height: 47px;
     text-align: center;
+}
+
+.like-dialog-button {
+    background-color: #090;
+    border: none;
+    outline: none;
+    border-radius: 999px;
+    color: #f3f3f3;
+    opacity: 1;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    height: 28px;
+    width: 200px;
+    transition: color 0.4s ease-in-out;
+    transition: opacity 800ms cubic-bezier(.6, 0, .4, 1);
+    margin-right: 30px;
+}
+
+.like-dialog-button.disabled {
+    background-color: #aaaaaa;
+    cursor: default;
 }
 
 @media only screen and (max-width: 736px) {

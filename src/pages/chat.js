@@ -10,7 +10,8 @@ const statusDisconnected = "disconnected";
 
 const messageTypeActivity = "a";
 const messageTypeChatting = "c";
-const messageTypeResult = "r";
+const messageTypeResultLike = "rl";
+const messageTypeResultReport = "rr";
 const messageTypeSystem = "s";
 
 const activityUserActive = "ua";
@@ -37,12 +38,12 @@ const reportOptions = {
 
 // Has to be 6 items to fit the height perfectly
 const likeOptions = {
-  'l1': `Positive`,
-  'l2': 'Understanding',
-  'l3': 'Funny',
-  'l4': 'Smart',
-  'l5': 'Helpful',
-  'l6': 'Great',
+  'lpo': `Positive`,
+  'lun': 'Understanding',
+  'lfu': 'Funny',
+  'lsm': 'Smart',
+  'lhe': 'Helpful',
+  'lgr': 'Great',
 };
 
 const systemSearch = "s";
@@ -74,9 +75,9 @@ export default class Chat extends React.Component {
       status: statusOffline,
       websocket: null,
       likeModalOpen: false,
-      liked: [],
+      likes: [],
       reportModalOpen: false,
-      reported: '',
+      reported: [],
       tabActive: true,
       unread: 0,
       statusShow: false,
@@ -243,10 +244,16 @@ export default class Chat extends React.Component {
       return false;
     }
 
-    if (json.liked === undefined) {
-      throw new Error("Unknown pull result response", json);
+    if (json.likes === undefined) {
+      throw new Error("Missing likes in pull response", json);
 
-      // return false;
+      return false;
+    }
+
+    if (json.reports === undefined) {
+      throw new Error("Missing reports in pull response", json);
+
+      return false;
     }
 
     return json;
@@ -343,7 +350,8 @@ export default class Chat extends React.Component {
         this.chatStatusFromMessages(messages);
 
         let result = await this.pullResult();
-        this.setState({liked: result.liked, reported: result.reported});
+console.log(result);
+        this.setState({likes: result.likes, reported: []});
         break;
       case activityUserActive:
         // If buddy goes active - remove the status
@@ -541,44 +549,50 @@ export default class Chat extends React.Component {
     this.setState({likeModalOpen: false, reportModalOpen: false});
   }
 
-  handleLikeOptionClick = (e) => {
-    const text = e.target.getAttribute('data-key');
-
-    let found = false;
-
-    Object.keys(reportOptions).map(function (key) {
-      if (key === text) {
-        found = true
-      }
-    });
-
-    // Someone messing with the data-keys ;)
-    if (!found) {
+  handleLikeButtonClick = (selectedLikes) => {
+    // Nothing selected from the options
+    if (selectedLikes.length === 0) {
       return false;
     }
 
-    this.setState({reportModalOpen: false, liked: this.state.liked.push(text)});
+    // Already has likes
+    if (this.state.likes.length !== 0) {
+      return false;
+    }
+
+    let sent = this.sendWebsocketMessage(messageTypeResultLike, JSON.stringify(selectedLikes));
+
+    if (!sent) {
+      console.log("Could not send user likes");
+      return false;
+    }
+
+    this.setState({ likes: selectedLikes, likeModalOpen: false });
+
+    return true;
   }
 
-  handleReportOptionClick = (e) => {
-    const text = e.target.getAttribute('data-key');
-
-    let found = false;
-
-    Object.keys(reportOptions).map(function (key) {
-      if (key === text) {
-        found = true
-      }
-    });
-
-    // Someone messing with the data-keys ;)
-    if (!found) {
+  handleReportButtonClick = (selectedReports) => {
+    // Nothing selected from the options
+    if (selectedReports.length === 0) {
       return false;
     }
 
-    this.sendWebsocketMessage(messageTypeResult, text);
+    // Already reported
+    if (this.state.reported.length !== 0) {
+      return false;
+    }
 
-    this.setState({reportModalOpen: false, reported: text});
+    let sent = this.sendWebsocketMessage(messageTypeResultReport, JSON.stringify(selectedReports));
+
+    if (!sent) {
+      console.log("Could not send user likes");
+      return false;
+    }
+
+    this.setState({ reported: selectedReports, reportModalOpen: false });
+
+    return true;
   }
 
   handleSearch = () => {
@@ -591,14 +605,14 @@ export default class Chat extends React.Component {
 
     this.state.websocket.send(JSON.stringify(o));
 
-    this.setState({status: statusSearching, statusShow: false, reported: '', liked: ''});
+    this.setState({status: statusSearching, statusShow: false, reported: [], likes: []});
   }
 
   handleLikeIconClick = () => {
     this.setState({likeModalOpen: true});
   }
 
-  handleReport = () => {
+  handleReportIconClick = () => {
     this.setState({reportModalOpen: true});
   }
 
@@ -634,12 +648,13 @@ export default class Chat extends React.Component {
                           statusShow={this.state.statusShow} statusText={this.state.statusText}
                           sendWebsocketMessage={this.sendWebsocketMessage}
                           handleSave={this.handleSave}
-                          liked={this.state.liked} handleLikeIconClick={this.handleLikeIconClick}
+                          likes={this.state.likes} handleLikeIconClick={this.handleLikeIconClick}
                           likeModalOpen={this.state.likeModalOpen} handleLikeModalClose={this.handleModalsClose}
+                          handleLikeButtonClick={this.handleLikeButtonClick}
                           // handleLikeOptionClick={this.handleLikeOptionClick}
-                          reported={this.state.reported} handleReport={this.handleReport}
+                          reported={this.state.reported} handleReportIconClick={this.handleReportIconClick}
                           reportModalOpen={this.state.reportModalOpen} handleReportModalClose={this.handleModalsClose}
-                          // handleReportOptionClick={this.handleReportOptionClick}
+                          handleReportButtonClick={this.handleReportButtonClick}
             />
           </div>
         </div>
@@ -836,14 +851,15 @@ class ChatControls extends React.Component {
           <DisconnectSearchButton handleDisconnect={this.props.handleDisconnect} handleSearch={this.props.handleSearch}
                                   disconnected={this.props.disconnected} matched={this.props.matched}/>
           <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}
-                         handleSave={this.props.handleSave} searching={this.props.searching}
-                         liked={this.props.liked} likeModalOpen={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}
-                         handleLikeIconClick={this.props.handleLikeIconClick} handleLikeModalClose={this.props.handleLikeModalClose}
-                         // handleLikeOptionClick={this.props.handleLikeOptionClick}
-                         reported={this.props.reported} handleReport={this.props.handleReport}
-                         reportModalOpen={this.props.reportModalOpen} handleReportModalClose={this.props.handleReportModalClose}
-                         // handleReportOptionClick={this.props.handleReportOptionClick}
-            />
+              handleSave={this.props.handleSave} searching={this.props.searching}
+              likes={this.props.likes} likeModalOpen={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}
+              handleLikeIconClick={this.props.handleLikeIconClick} handleLikeModalClose={this.props.handleLikeModalClose}
+              handleLikeButtonClick={this.props.handleLikeButtonClick}
+              // handleLikeOptionClick={this.props.handleLikeOptionClick}
+              reported={this.props.reported} handleReportIconClick={this.props.handleReportIconClick}
+              reportModalOpen={this.props.reportModalOpen} handleReportModalClose={this.props.handleReportModalClose}
+              handleReportButtonClick={this.props.handleReportButtonClick}
+          />
           <div className="circle-wrapper send">
             <button
                 className={`chat-send-button circle` +
@@ -901,15 +917,15 @@ class MiddleControl extends React.Component {
     return (
         <div className={`middle-buttons`}>
           <div className="circle-wrapper">
-{/*// liked={this.props.liked} likeModalOpen={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}*/}
+{/*// likes={this.props.likes} likeModalOpen={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}*/}
 {/*// handleLikeIconClick={this.props.handleLikeIconClick} handleLikeModalClose={this.props.handleLikeModalClose}*/}
-            <LikeModal liked={this.props.liked} open={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}
-                           onClose={this.props.handleLikeModalClose} />
-            <button className={`middle-button circle like-button` + (this.props.liked ? ' active' : '')}
-                    onClick={this.props.handleLike}>
-              <img className="button-icon like" src={(this.props.liked ? svgHeartBlueFilled : svgHeartBlueEmpty)}
+            <LikeModal likes={this.props.likes} open={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}
+                           onClose={this.props.handleLikeModalClose} handleLikeButtonClick={this.props.handleLikeButtonClick} />
+            <button className={`middle-button circle like-button` + (this.props.likes ? ' active' : '')}
+                    onClick={this.props.handleLikeIconClick}>
+              <img className="button-icon like" src={(this.props.likes ? svgHeartBlueFilled : svgHeartBlueEmpty)}
                    alt="Like"></img>
-              {/*<div className={(this.props.liked ? ' like-text animate' : 'like-text')}>Liked</div>*/}
+              {/*<div className={(this.props.likes ? ' like-text animate' : 'like-text')}>Likes</div>*/}
             </button>
           </div>
           {/*<div className="circle-wrapper">*/}
@@ -918,11 +934,11 @@ class MiddleControl extends React.Component {
           {/*</button>*/}
           {/*</div>*/}
           <div className="circle-wrapper">
-            <ReportModal open={this.props.reportModalOpen} onClose={this.props.handleReportModalClose}
-                         handleReportOptionClick={this.props.handleReportOptionClick} reported={this.props.reported}/>
-            <button className={`middle-button circle report-button` + (this.props.reported ? ' active' : '')}
-                    onClick={this.props.handleReport}>
-              <img className="button-icon report" src={(this.props.reported ? svgReportFilled : svgReportEmpty)}
+            <ReportModal open={this.props.reportModalOpen} onClose={this.props.handleReportModalClose} 
+              reported={this.props.reported} handleReportButtonClick={this.props.handleReportButtonClick} />
+            <button className={`middle-button circle report-icon-button` + (this.props.reported.length === 0 ? '' : ' active')}
+                    onClick={this.props.handleReportIconClick}>
+              <img className="button-icon report" src={(this.props.reported.length === 0 ? svgReportEmpty : svgReportFilled)}
                    alt="Report"></img>
             </button>
           </div>
@@ -956,6 +972,52 @@ class Timestamp extends React.Component {
 }
 
 class ReportModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      reported: [],
+    };
+  }
+
+  handleReportOptionClick = (e) => {
+    const reportKey = e.target.getAttribute('data-key');
+
+    let found = false;
+
+    Object.keys(reportOptions).map(function (key) {
+      if (key === reportKey) {
+        found = true
+      }
+    });
+
+    // Someone messing with the data-keys, return early ;)
+    if (!found) {
+      return false;
+    }
+
+    // Extra guard if someone clicks on the disabled option
+    if (e.target.classList.contains('disabled')) {
+      return false;
+    }
+
+    let updatedReported = this.state.reported;
+
+    // Remove the key if it already exists in state, or add it if it's new
+    let index = updatedReported.indexOf(reportKey);
+
+    if (index !== -1) {
+      updatedReported.splice(index, 1);
+    } else {
+      updatedReported = updatedReported.concat(reportKey); 
+    }
+
+    this.setState({reported: updatedReported});
+
+    return true;
+    //this.sendWebsocketMessage(messageTypeResultReport, text);
+  }
+
   render() {
     if (!this.props.open) {
       return null;
@@ -965,7 +1027,7 @@ class ReportModal extends React.Component {
 
     const reportOptionsHTML = Object.keys(reportOptions).map((key) => {
       return (
-          <div className={`report-option enabled` + (this.props.reported === key ? ` selected` : ``)} data-key={key} key={key} onClick={this.props.handleReportOptionClick}>
+          <div className={`report-option` + (this.state.reported.includes(key) ? ` selected` : ` normal`) + (this.props.reported.length !== 0 ? ` disabled` : ``)} data-key={key} key={key} onClick={this.handleReportOptionClick}>
             {reportOptions[key]}
           </div>
       );
@@ -985,9 +1047,7 @@ class ReportModal extends React.Component {
               {reportOptionsHTML}
             </div>
             <div className="report-footer">
-              <button className={`chat-button-link scale`} style={{ border: '1px solid black', width: '200px' }}>
-                Report
-              </button>
+              <button className={`report-dialog-button` + (this.state.reported.length === 0 || this.props.reported.length !== 0 ? ` disabled` : ``)} onClick={() => this.props.handleReportButtonClick(this.state.reported)}>Report</button>
             </div>
           </div>
         </div>
@@ -996,6 +1056,51 @@ class ReportModal extends React.Component {
 }
 
 class LikeModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      likes: [],
+    };
+  }
+
+  handleLikeOptionClick = (e) => {
+    const likeKey = e.target.getAttribute('data-key');
+
+    let found = false;
+
+    Object.keys(likeOptions).map(function (key) {
+      if (key === likeKey) {
+        found = true
+      }
+    });
+
+    // Someone messing with the data-keys, return early ;)
+    if (!found) {
+      return false;
+    }
+
+    // Extra guard if someone clicks on the disabled option
+    if (e.target.classList.contains('disabled')) {
+      return false;
+    }
+
+    let updatedLikes = this.state.likes;
+
+    // Remove the key if it already exists in state, or add it if it's new
+    let index = updatedLikes.indexOf(likeKey);
+
+    if (index !== -1) {
+      updatedLikes.splice(index, 1);
+    } else {
+      updatedLikes = updatedLikes.concat(likeKey); 
+    }
+
+    this.setState({ likes: updatedLikes });
+
+    return true;
+  }
+
   render() {
     if (!this.props.open) {
       return null;
@@ -1003,7 +1108,7 @@ class LikeModal extends React.Component {
 
     const likeOptionsHTML = Object.keys(likeOptions).map((key) => {
       return (
-          <div className={`like-option enabled` + (this.props.liked === key ? ` selected` : ``)} data-key={key} key={key} onClick={this.props.handleLikeOptionClick}>
+          <div className={`like-option` + (this.state.likes.includes(key) ? ` selected` : ` normal`) + (this.props.likes.length !== 0 ? ` disabled` : ``)} data-key={key} key={key} onClick={this.handleLikeOptionClick}>
             {likeOptions[key]}
           </div>
       );
@@ -1023,9 +1128,7 @@ class LikeModal extends React.Component {
               {likeOptionsHTML}
             </div>
             <div className="like-footer">
-              <button className={`chat-button-link scale`} style={{ border: '1px solid black', width: '200px' }}>
-                Like
-              </button>
+              <button className={`like-dialog-button` + (this.state.likes.length === 0 || this.props.likes.length !== 0 ? ` disabled` : ``)} onClick={() => this.props.handleLikeButtonClick(this.state.likes)}>Like</button>
             </div>
           </div>
         </div>
