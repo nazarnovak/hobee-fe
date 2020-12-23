@@ -46,6 +46,25 @@ const likeOptions = {
   'lgr': 'Great',
 };
 
+// Has to be 6 items to fit the height perfectly
+const suggestionOptions1 = {
+  's1': `Hey 1`,
+  's2': 'Understanding',
+  's3': 'Funny',
+  's4': 'Smart',
+  's5': 'Helpful',
+  's6': 'Great',
+};
+
+const suggestionOptions2 = {
+  's1': `Hey 2`,
+  's2': 'Understanding',
+  's3': 'Funny',
+  's4': 'Smart',
+  's5': 'Helpful',
+  's6': 'Great',
+};
+
 const systemSearch = "s";
 const systemConnect = "c";
 const systemDisconnect = "d";
@@ -54,6 +73,8 @@ const svgXWhite = require('../images/xWhite.svg');
 const svgXGrey = require('../images/xGrey.svg');
 const svgNext = require('../images/nextWhite2.svg');
 const svgSendWhite = require('../images/sendWhite.svg');
+const svgLightBulbWhite = require('../images/light-bulb.svg');
+
 
 // const svgHeartWhite = require('../images/heartWhite.svg');
 // const svgExclamationWhite = require('../images/exclamationWhite.svg');
@@ -78,6 +99,7 @@ export default class Chat extends React.Component {
       likes: [],
       reportModalOpen: false,
       reports: [],
+      suggestionsModalOpen: false,
       tabActive: true,
       unread: 0,
       statusShow: false,
@@ -116,6 +138,26 @@ export default class Chat extends React.Component {
 
   clearChat() {
     this.setState({messages: []});
+  }
+
+  isOwnMessageExistInChat() {
+    if (this.state.messages.length === 0) {
+      return false;
+    }
+
+    let exists = false;
+
+    this.state.messages.every(msg => {
+
+      if (msg.type === messageTypeChatting && msg.authoruuid === messageTypeOwn) {
+        exists = true;
+        return false;
+      }
+
+      return true;
+    });
+
+    return exists;
   }
 
   onFocus = () => {
@@ -541,12 +583,12 @@ export default class Chat extends React.Component {
     // return true;
   }
 
-  handleModalsClose = (e) => {
-    if (e.target !== e.currentTarget) {
-      return;
-    }
+  handleModalsClose = () => {
+    // if (e.target !== e.currentTarget) {
+    //   return;
+    // }
 
-    this.setState({likeModalOpen: false, reportModalOpen: false});
+    this.setState({ likeModalOpen: false, reportModalOpen: false, suggestionsModalOpen: false });
   }
 
   handleLikeButtonClick = (selectedLikes) => {
@@ -609,11 +651,15 @@ export default class Chat extends React.Component {
   }
 
   handleLikeIconClick = () => {
-    this.setState({likeModalOpen: true});
+    this.setState({ likeModalOpen: true });
   }
 
   handleReportIconClick = () => {
-    this.setState({reportModalOpen: true});
+    this.setState({ reportModalOpen: true });
+  }
+
+  handleSuggestionsIconClick = () => {
+    this.setState({ suggestionsModalOpen: true });
   }
 
   // handleSave = () => {
@@ -649,12 +695,13 @@ export default class Chat extends React.Component {
                           sendWebsocketMessage={this.sendWebsocketMessage}
                           handleSave={this.handleSave}
                           likes={this.state.likes} handleLikeIconClick={this.handleLikeIconClick}
-                          likeModalOpen={this.state.likeModalOpen} handleLikeModalClose={this.handleModalsClose}
-                          handleLikeButtonClick={this.handleLikeButtonClick}
+                          likeModalOpen={this.state.likeModalOpen} handleLikeButtonClick={this.handleLikeButtonClick}
                           // handleLikeOptionClick={this.handleLikeOptionClick}
                           reports={this.state.reports} handleReportIconClick={this.handleReportIconClick}
-                          reportModalOpen={this.state.reportModalOpen} handleReportModalClose={this.handleModalsClose}
-                          handleReportButtonClick={this.handleReportButtonClick}
+                          reportModalOpen={this.state.reportModalOpen} handleReportButtonClick={this.handleReportButtonClick}
+                          handleSuggestionsIconClick={this.handleSuggestionsIconClick}
+                          suggestionsModalOpen={this.state.suggestionsModalOpen} modalsClose={this.handleModalsClose}
+                          ownMessageExistInChat={this.isOwnMessageExistInChat()}
             />
           </div>
         </div>
@@ -727,7 +774,7 @@ class ChatMessages extends React.Component {
 
           if (msg.authoruuid === messageTypeOwn) {
             return (
-                <div className={`my-message-container`}>
+                <div className={`my-message-container`} key={msg.timestamp}>
                   <Timestamp direction={'left'} timestamp={msg.timestamp}/>
                   <div className={`chat-message my-message`} onMouseOver={this.props.handleMessageHover} onClick={this.props.handleMessageClick}>
                     {msg.text}
@@ -742,7 +789,7 @@ class ChatMessages extends React.Component {
 
           if (msg.authoruuid === messageTypeBuddy) {
             return (
-                <div className={`buddy-message-container`}>
+                <div className={`buddy-message-container`} key={msg.timestamp}>
                   {/*<div className={`buddy-message-corner`}>*/}
                   {/*<div className={`buddy-message-corner-grey`}></div>*/}
                   {/*<div className={`buddy-message-corner-white`}></div>*/}
@@ -809,6 +856,12 @@ class ChatControls extends React.Component {
     return true;
   }
 
+  selectInputText = () => {
+    let input = document.getElementsByTagName('input')[0];
+    input.focus();
+    setTimeout(function () { input.select(); }, 10);
+  }
+
   handleKeyDown = (e) => {
     if (e.key === "Enter") {
       this.sendInputMessage();
@@ -840,11 +893,19 @@ class ChatControls extends React.Component {
     }
   }
 
+  handleSuggestionOptionClick = (text) => {
+    this.props.modalsClose();
+    this.setState({ inputText: text });
+    this.selectInputText();
+  }
+
   handleSendClick = () => {
     this.sendInputMessage();
   }
 
   render() {
+    let isInputTextEmpty = this.state.inputText === '';
+
     return (
         <div className={`chat-controls connected fade-in`}>
           <ChatStatus show={this.props.statusShow} text={this.props.statusText}/>
@@ -853,23 +914,53 @@ class ChatControls extends React.Component {
           <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}
               handleSave={this.props.handleSave} searching={this.props.searching}
               likes={this.props.likes} likeModalOpen={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}
-              handleLikeIconClick={this.props.handleLikeIconClick} handleLikeModalClose={this.props.handleLikeModalClose}
+              handleLikeIconClick={this.props.handleLikeIconClick}
               handleLikeButtonClick={this.props.handleLikeButtonClick}
               // handleLikeOptionClick={this.props.handleLikeOptionClick}
               reports={this.props.reports} handleReportIconClick={this.props.handleReportIconClick}
-              reportModalOpen={this.props.reportModalOpen} handleReportModalClose={this.props.handleReportModalClose}
-              handleReportButtonClick={this.props.handleReportButtonClick}
+              reportModalOpen={this.props.reportModalOpen} handleReportButtonClick={this.props.handleReportButtonClick}
+              modalsClose={this.props.modalsClose}
+              inputText={this.state.inputText}
           />
-          <div className="circle-wrapper send">
-            <button
-                className={`chat-send-button circle` +
-                ((this.props.disconnected || this.state.inputText === '') ? ' disabled' : '')}
-                onClick={this.handleSendClick}
-                disabled={(this.props.disconnected || this.state.inputText === '' ? ' disabled' : '')}>
-              <img className="button-icon" src={svgSendWhite} alt="Send"></img>
-            </button>
-          </div>
+          {(isInputTextEmpty || this.props.disconnected) &&
+            <div>
+              <SuggestionsModal open={this.props.suggestionsModalOpen} onClose={this.props.modalsClose}
+                handleSuggestionOptionClick={this.handleSuggestionOptionClick} ownMessageExistInChat={this.props.ownMessageExistInChat} />
+              <SuggestionsButton disabled={this.props.disconnected} handleSuggestionsIconClick={this.props.handleSuggestionsIconClick} />
+            </div>
+          }
+          {(!isInputTextEmpty && !this.props.disconnected) &&
+            <SendButton disabled={isInputTextEmpty} handleSendClick={this.handleSendClick} />
+          }
         </div>
+    );
+  }
+}
+
+class SuggestionsButton extends React.Component {
+  render() {
+    return (
+      <div className="circle-wrapper suggestions">
+        <button className={`chat-suggestions-button circle` + (this.props.disabled ? ' disabled' : '')}
+            onClick={this.props.handleSuggestionsIconClick}
+            disabled={this.props.disabled ? ' disabled' : ''}>
+          <img className="button-icon" src={svgLightBulbWhite} alt="Suggestions"></img>
+        </button>
+      </div>
+    );
+  }
+}
+
+class SendButton extends React.Component {
+  render() {
+    return(
+      <div className="circle-wrapper send">
+        <button className={`chat-send-button circle` + (this.props.disabled ? ' disabled' : '')}
+            onClick={this.props.handleSendClick}
+            disabled={this.props.disabled ? ' disabled' : ''}>
+          <img className="button-icon" src={svgSendWhite} alt="Send"></img>
+        </button>
+      </div>
     );
   }
 }
@@ -910,7 +1001,7 @@ class MiddleControl extends React.Component {
           <input type="text" placeholder="Message"
                  className={`chat-input` + (this.props.disconnected ? ' chat-controls-disabled' : '')}
                  onKeyDown={this.props.onKeyDown} onChange={this.props.onChange} maxLength={1024 - 40}
-                 disabled={(this.props.disconnected ? ' disabled' : '')}/>
+                 disabled={(this.props.disconnected ? ' disabled' : '')} value={this.props.inputText} />
       );
     }
 
@@ -920,7 +1011,7 @@ class MiddleControl extends React.Component {
 {/*// likes={this.props.likes} likeModalOpen={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}*/}
 {/*// handleLikeIconClick={this.props.handleLikeIconClick} handleLikeModalClose={this.props.handleLikeModalClose}*/}
             <LikeModal likes={this.props.likes} open={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}
-                           onClose={this.props.handleLikeModalClose} handleLikeButtonClick={this.props.handleLikeButtonClick} />
+                           onClose={this.props.modalsClose} handleLikeButtonClick={this.props.handleLikeButtonClick} />
             <button className={`middle-button circle like-button` + (this.props.likes ? ' active' : '')}
                     onClick={this.props.handleLikeIconClick}>
               <img className="button-icon like" src={(this.props.likes ? svgHeartBlueFilled : svgHeartBlueEmpty)}
@@ -934,7 +1025,7 @@ class MiddleControl extends React.Component {
           {/*</button>*/}
           {/*</div>*/}
           <div className="circle-wrapper">
-            <ReportModal open={this.props.reportModalOpen} onClose={this.props.handleReportModalClose} 
+            <ReportModal open={this.props.reportModalOpen} onClose={this.props.modalsClose}
               reports={this.props.reports} handleReportButtonClick={this.props.handleReportButtonClick} />
             <button className={`middle-button circle report-icon-button` + (this.props.reports.length === 0 ? '' : ' active')}
                     onClick={this.props.handleReportIconClick}>
@@ -1139,6 +1230,44 @@ class LikeModal extends React.Component {
             </div>
             <div className="like-footer">
               <button className={`like-dialog-button` + (this.state.likes.length === 0 || this.props.likes.length !== 0 ? ` disabled` : ``)} onClick={() => this.props.handleLikeButtonClick(this.state.likes)}>Like</button>
+            </div>
+          </div>
+        </div>
+    );
+  }
+}
+
+class SuggestionsModal extends React.Component {
+  render() {
+    if (!this.props.open) {
+      return null;
+    }
+
+    let suggestionOptions = suggestionOptions1;
+    if (this.props.ownMessageExistInChat) {
+      suggestionOptions = suggestionOptions2;
+    }
+
+    const suggestionOptionsHTML = Object.keys(suggestionOptions).map((key) => {
+      return (
+          <div className={`suggestions-option`} onClick={() => this.props.handleSuggestionOptionClick(suggestionOptions[key])} key={key}>
+            {suggestionOptions[key]}
+          </div>
+      );
+    });
+
+    return (
+        <div className="backdrop" onClick={this.props.onClose}>
+          <div className="suggestions-modal">
+            <div className="suggestions-header">
+              <div className="suggestions-header-side"></div>
+              <div className="suggestions-header-title">Suggestions</div>
+              <div className="suggestions-header-side">
+                <img className="suggestions-x" src={svgXGrey} alt="Close" onClick={this.props.onClose}></img>
+              </div>
+            </div>
+            <div className="suggestions-options">
+              {suggestionOptionsHTML}
             </div>
           </div>
         </div>

@@ -1067,6 +1067,71 @@ a:hover {
     border: 1px solid #CC0000;
 }
 
+.suggestions-modal {
+    background-color: #fff;
+    border-radius: 20px;
+    width: 548px;
+    height: 379px;
+    z-index: 12;
+}
+
+.suggestions-header {
+    height: 43px;
+    border-bottom: 1px solid #000;
+    display: flex;
+    grid-template-rows: 48px auto 48px;
+    z-index: 13;
+    border-bottom: 1px solid #000;
+}
+
+.suggestions-header-side {
+    height: 100%;
+    width: 48px;
+}
+
+.suggestions-header-title {
+    text-align: center;
+    width: 100%;
+    line-height: 42px;
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.suggestions-x {
+    height: 40%;
+    width: 40%;
+    padding: 30%;
+    cursor: pointer;
+}
+
+.suggestions-options {
+    width: 100%;
+}
+
+.suggestions-option {
+    height: 47px;
+    border-bottom: 1px solid #999;
+    line-height: 47px;
+    padding-left: 30px;
+    font-weight: 500;
+    overflow: hidden;
+}
+
+.suggestions-option:last-child {
+    border-bottom: 1px solid #000;
+}
+
+.suggestions-option:hover {
+    background-color: #aa0;
+    border-bottom: 1px solid #aa0;
+    color: #fff;
+}
+
+.suggestions-option:last-child:hover {
+    border-bottom: 1px solid #aa0;
+}
+
 .chat-input {
     border: none;
     outline: none;
@@ -1084,6 +1149,17 @@ a:hover {
 }
 
 .chat-send-button.disabled {
+    background-color: #aaaaaa;
+    border: 1px solid #aaaaaa;
+}
+
+.chat-suggestions-button {
+    border: 1px solid #000;
+    background-color: #ffff00;
+    outline: none;
+}
+
+.chat-suggestions-button.disabled {
     background-color: #aaaaaa;
     border: 1px solid #aaaaaa;
 }
