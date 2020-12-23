@@ -111,6 +111,7 @@ export default class Chat extends React.Component {
 
         that.setState({statusShow: false});
       }, 2000),
+      feedbackInputFocused: false,
     };
 
     this.connectToChat = this.connectToChat.bind(this);
@@ -662,6 +663,10 @@ export default class Chat extends React.Component {
     this.setState({ suggestionsModalOpen: true });
   }
 
+  setFeedbackInputFocused = (focused) => {
+    this.setState({ feedbackInputFocused: focused });
+  }
+
   // handleSave = () => {
   //   console.log("Save clicked");
   // }
@@ -686,6 +691,8 @@ export default class Chat extends React.Component {
                           searching={this.state.status === statusConnecting || this.state.status === statusSearching}
                           status={this.state.status} handleMessageMouseEnter={this.handleMessageMouseEnter}
                           handleMessageClick={this.handleMessageClick} offline={this.state.status === statusOffline}
+                          handleFeedbackSubmit={this.handleFeedbackSubmit} setFeedbackInputFocused={this.setFeedbackInputFocused}
+                          feedbackInputFocused={this.state.feedbackInputFocused}
             />
             <ChatControls websocket={this.state.websocket} handleDisconnect={this.handleDisconnect}
                           handleSearch={this.handleSearch} disconnected={this.state.status === statusDisconnected}
@@ -710,8 +717,90 @@ export default class Chat extends React.Component {
 }
 
 class ChatMessages extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      feedbackSent: false,
+      feedbackText: '',
+      feedbackBlurTimeout: null,
+    };
+  }
+
+  startFeedbackBlurTimeout = (input) => {
+    clearTimeout(this.state.feedbackBlurTimeout);
+
+    let setFeedbackInputFocused = this.props.setFeedbackInputFocused;
+
+    // If someone is not typing for 5 seconds in the input - we need to start the chat already, feedback is lost ;(
+    this.setState({ feedbackBlurTimeout: setTimeout(function(){
+      input.blur();
+      setFeedbackInputFocused(false);
+    }, 5000) });
+  }
+
+  handleOnChangeFeedbackInput = (e) => {
+    let input = e.target;
+
+    // Ignore on change if we can't find the element
+    if (!input) {
+      console.log("Cannot find feedback input element");
+      return false;
+    }
+
+    this.setState({ feedbackText: input.value });
+    this.props.setFeedbackInputFocused(true);
+
+    this.startFeedbackBlurTimeout(input);
+
+    return true;
+  }
+
+   handleFeedbackSubmit = async () => {
+    // Tried to submit feedback, when it was already submitted ;)
+    if (this.state.feedbackSent) {
+      return false;
+    }
+
+    let port = '';
+
+    // if (process.env.NODE_ENV === "development") {
+    //     port = ':8080';
+    // }
+    // let url = `${window.location.protocol}//${window.location.hostname}${port}/api/feedback`;
+    // let json;
+
+    // let params = {
+    //   message: this.state.feedbackText
+    // };
+
+    // try {
+    //   let response = await fetch(url, {
+    //     method: 'post',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(params)
+    //   });
+
+    //   json = await response.json();
+    // } catch (err) {
+    //   console.log(err);
+    //   return false;
+    // }
+
+    // if (json.error) {
+    //   console.log(json.error);
+    //   return false;
+    // }
+
+    this.setState({ feedbackSent: true });
+
+    return true;
+  }
+
   render() {
-    if (this.props.searching) {
+    if (this.props.feedbackInputFocused || this.props.searching) {
       return (
           <div className="chat-messages">
             <div className="status-wrapper">
@@ -730,6 +819,12 @@ class ChatMessages extends React.Component {
                 <div className="bar12"></div>
               </div>
               <div className="status">{this.props.status}</div>
+              <div className="feedback-wrapper">
+                <input className={`feedback-input` + (this.state.feedbackSent === true ? ' disabled' : '')} type="text"
+                placeholder="What do you wanna talk about now?" disabled={(this.state.feedbackSent === true ? 'disabled' : '')}
+                onChange={this.handleOnChangeFeedbackInput} />
+                <button className={`feedback-submit` + (this.state.feedbackText === '' || this.state.feedbackSent ? ' disabled' : '')} onClick={this.handleFeedbackSubmit}></button>
+              </div>
             </div>
           </div>
       )
@@ -869,11 +964,12 @@ class ChatControls extends React.Component {
     }
   }
 
-  handleOnChange = (e) => {
-    let input = document.getElementsByTagName('input')[0];
+  handleOnChangeMessageInput = (e) => {
+    let input = e.target;
 
     // Ignore on change if we can't find the element
     if (!input) {
+      console.log("Cannot find message input element")
       return false;
     }
 
@@ -886,7 +982,7 @@ class ChatControls extends React.Component {
 
       this.props.sendWebsocketMessage(messageTypeActivity, activityOwnTyping);
 
-      // Reset the typing in the state after 1 second
+      // Reset the typing in the state after 2 seconds
       setTimeout(function () {
         that.setState({typing: false});
       }, 2000);
@@ -911,7 +1007,7 @@ class ChatControls extends React.Component {
           <ChatStatus show={this.props.statusShow} text={this.props.statusText}/>
           <DisconnectSearchButton handleDisconnect={this.props.handleDisconnect} handleSearch={this.props.handleSearch}
                                   disconnected={this.props.disconnected} matched={this.props.matched}/>
-          <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}
+          <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} handleOnChangeMessageInput={this.handleOnChangeMessageInput}
               handleSave={this.props.handleSave} searching={this.props.searching}
               likes={this.props.likes} likeModalOpen={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}
               handleLikeIconClick={this.props.handleLikeIconClick}
@@ -1000,7 +1096,7 @@ class MiddleControl extends React.Component {
       return (
           <input type="text" placeholder="Message"
                  className={`chat-input` + (this.props.disconnected ? ' chat-controls-disabled' : '')}
-                 onKeyDown={this.props.onKeyDown} onChange={this.props.onChange} maxLength={1024 - 40}
+                 onKeyDown={this.props.onKeyDown} onChange={this.props.handleOnChangeMessageInput} maxLength={1024 - 40}
                  disabled={(this.props.disconnected ? ' disabled' : '')} value={this.props.inputText} />
       );
     }

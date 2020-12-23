@@ -98,7 +98,7 @@ export default class Home extends React.Component {
           <Nav location={this.props.location} />
           <div className="home-main">
             <div className="motto scale">
-              <div className="motto-main scale">Happy chat</div>
+              <div className="motto-main scale">Happy, meaningful chat</div>
               <div className="motto-extra scale">One-on-one chat, with focus on the quality and fun</div>
               <div>
                 <Link to="/chat">
