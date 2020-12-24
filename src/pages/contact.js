@@ -56,6 +56,7 @@ export default class Contact extends React.Component {
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(params)
       });
 

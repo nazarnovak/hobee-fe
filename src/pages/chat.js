@@ -764,35 +764,36 @@ class ChatMessages extends React.Component {
 
     let port = '';
 
-    // if (process.env.NODE_ENV === "development") {
-    //     port = ':8080';
-    // }
-    // let url = `${window.location.protocol}//${window.location.hostname}${port}/api/feedback`;
-    // let json;
+    if (process.env.NODE_ENV === "development") {
+        port = ':8080';
+    }
+    let url = `${window.location.protocol}//${window.location.hostname}${port}/api/feedback`;
+    let json;
 
-    // let params = {
-    //   message: this.state.feedbackText
-    // };
+    let params = {
+      message: this.state.feedbackText
+    };
 
-    // try {
-    //   let response = await fetch(url, {
-    //     method: 'post',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(params)
-    //   });
+    try {
+      let response = await fetch(url, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(params)
+      });
 
-    //   json = await response.json();
-    // } catch (err) {
-    //   console.log(err);
-    //   return false;
-    // }
+      json = await response.json();
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
 
-    // if (json.error) {
-    //   console.log(json.error);
-    //   return false;
-    // }
+    if (json.error) {
+      console.log(json.error);
+      return false;
+    }
 
     this.setState({ feedbackSent: true });
 
@@ -821,7 +822,7 @@ class ChatMessages extends React.Component {
               <div className="status">{this.props.status}</div>
               <div className="feedback-wrapper">
                 <input className={`feedback-input` + (this.state.feedbackSent === true ? ' disabled' : '')} type="text"
-                placeholder="What do you wanna talk about now?" disabled={(this.state.feedbackSent === true ? 'disabled' : '')}
+                placeholder="Anything you wanna talk about now?" disabled={(this.state.feedbackSent === true ? 'disabled' : '')}
                 onChange={this.handleOnChangeFeedbackInput} />
                 <button className={`feedback-submit` + (this.state.feedbackText === '' || this.state.feedbackSent ? ' disabled' : '')} onClick={this.handleFeedbackSubmit}></button>
               </div>
