@@ -617,24 +617,19 @@ a:hover {
 .chat-controls {
     height: 8vh; /* Fallback for browsers that do not support Custom Properties */
     height: calc(var(--vh, 1vh) * 8);
-    /*padding: 0 10px;*/
     width: 98vw;
     margin-left: 1vw;
     border-radius: 999px;
     box-sizing: border-box;
-    /*box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 2px -2px;*/
     display: grid;
     grid-template-columns: calc(8vh - 2px) auto calc(8vh - 2px); /* Fallback for browsers that do not support Custom Properties */
     grid-template-columns: calc(calc(var(--vh, 1vh) * 8) - 2px) auto calc(calc(var(--vh, 1vh) * 8) - 2px);
     position: relative;
+    border: 1px solid #999;
 }
 
-.chat-controls.connected {
-    border: 1px solid #333;
-}
-
-.chat-controls.disconnected {
-    border: none;
+.chat-controls.matched {
+    border: 1px solid #000;
 }
 
 .chat-status-container {
@@ -702,7 +697,7 @@ a:hover {
 
 /* Lower the heart a bit so it's more centered */
 .button-icon.like {
-    margin-top: 5%;
+    margin-top: 10%;
 }
 
 .button-icon.report {
@@ -735,15 +730,15 @@ a:hover {
     justify-content: space-evenly;
 }
 
-.like-button {
+.like-icon-button {
     border: 1px solid #333;
     background-color: #fff;
     position: relative;
 }
 
-.like-button.active {
-    border: 2px solid #4A5AE5;
-    background-color: #4A5AE5;
+.like-icon-button.active {
+    border: 5px solid #00AA00;
+    background-color: #000;
 }
 
 .like-text {
@@ -932,7 +927,8 @@ a:hover {
 }
 
 .report-icon-button.active {
-    border: 1px solid #CC0000;
+    border: 5px solid #CC0000;
+    background-color: #000;
 }
 
 .like-modal {
@@ -1058,15 +1054,6 @@ a:hover {
     }
 }
 
-.like-button {
-    border: 1px solid #333;
-    background-color: #fff;
-}
-
-.like-button.active {
-    border: 1px solid #CC0000;
-}
-
 .suggestions-modal {
     background-color: #fff;
     border-radius: 20px;
@@ -1154,8 +1141,7 @@ a:hover {
 }
 
 .chat-suggestions-button {
-    border: 1px solid #000;
-    background-color: #ffff00;
+    background-color: #cccc00;
     outline: none;
 }
 

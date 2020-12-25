@@ -48,21 +48,30 @@ const likeOptions = {
 
 // Has to be 6 items to fit the height perfectly
 const suggestionOptions1 = {
-  's1': `Hey 1`,
-  's2': 'Understanding',
-  's3': 'Funny',
-  's4': 'Smart',
-  's5': 'Helpful',
-  's6': 'Great',
+  's11': `Hey, buddy`,
+  's12': 'Hey there, friend!',
+  's13': 'Ahoy, matey!',
+  's14': 'Howdy, partner!',
+  's15': '!',
+  's16': 'Hello, sunshine!',
 };
 
 const suggestionOptions2 = {
-  's1': `Hey 2`,
-  's2': 'Understanding',
-  's3': 'Funny',
-  's4': 'Smart',
-  's5': 'Helpful',
-  's6': 'Great',
+  's21': `How's your day going?`,
+  's22': `What's your favorite food and why?`,
+  's23': '',
+  's24': 'Smart',
+  's25': 'Helpful',
+  's26': 'What’s been the highlight of your week so far',
+};
+
+const suggestionOptions3 = {
+  's31': `When and where were you happiest in your life?`,
+  's32': `If you had the opportunity to meet one person you haven't met who would it be, why and what would you talk about?`,
+  's33': 'What absolutely excites you right now?',
+  's34': `What's one of your favorite stories from your life?`,
+  's35': 'Helpful',
+  's36': 'Great',
 };
 
 const systemSearch = "s";
@@ -70,20 +79,19 @@ const systemConnect = "c";
 const systemDisconnect = "d";
 
 const svgXWhite = require('../images/xWhite.svg');
-const svgXGrey = require('../images/xGrey.svg');
+const svgXBlack = require('../images/xBlack.svg');
 const svgNext = require('../images/nextWhite2.svg');
 const svgSendWhite = require('../images/sendWhite.svg');
 const svgLightBulbWhite = require('../images/light-bulb.svg');
 
-
 // const svgHeartWhite = require('../images/heartWhite.svg');
 // const svgExclamationWhite = require('../images/exclamationWhite.svg');
 
-const svgHeartBlueEmpty = require('../images/heartBlueEmpty.svg');
-const svgHeartBlueFilled = require('../images/heartBlueFilled.svg');
+const svgHeartBlack = require('../images/heartBlack.svg');
+const svgHeartWhite = require('../images/heartWhite.svg');
 
-const svgReportEmpty = require('../images/flag.svg');
-const svgReportFilled = require('../images/reportFilled.svg');
+const svgFlagBlack = require('../images/flagBlack.svg');
+const svgFlagWhite = require('../images/flagWhite.svg');
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -141,24 +149,20 @@ export default class Chat extends React.Component {
     this.setState({messages: []});
   }
 
-  isOwnMessageExistInChat() {
+  ownMessagesCount() {
     if (this.state.messages.length === 0) {
-      return false;
+      return 0;
     }
 
-    let exists = false;
+    let count = 0;
 
-    this.state.messages.every(msg => {
-
+    this.state.messages.forEach(msg => {
       if (msg.type === messageTypeChatting && msg.authoruuid === messageTypeOwn) {
-        exists = true;
-        return false;
+        count++;
       }
-
-      return true;
     });
 
-    return exists;
+    return count;
   }
 
   onFocus = () => {
@@ -441,10 +445,17 @@ export default class Chat extends React.Component {
   }
 
   handleEscKey = (e) => {
-    if (e.key === "Escape") {
-      this.handleDisconnect();
+    if (e.key !== "Escape") {
+      return false;
+    }
+
+    if (this.state.likeModalOpen || this.state.reportModalOpen || this.state.suggestionsModalOpen) {
+      this.handleModalsClose(e);
       return true;
     }
+
+    this.handleDisconnect();
+    return true;
   }
 
   pushUnreadMessage() {
@@ -584,10 +595,10 @@ export default class Chat extends React.Component {
     // return true;
   }
 
-  handleModalsClose = () => {
-    // if (e.target !== e.currentTarget) {
-    //   return;
-    // }
+  handleModalsClose = (e) => {
+    if (e && e.target !== e.currentTarget) {
+      return;
+    }
 
     this.setState({ likeModalOpen: false, reportModalOpen: false, suggestionsModalOpen: false });
   }
@@ -708,7 +719,7 @@ export default class Chat extends React.Component {
                           reportModalOpen={this.state.reportModalOpen} handleReportButtonClick={this.handleReportButtonClick}
                           handleSuggestionsIconClick={this.handleSuggestionsIconClick}
                           suggestionsModalOpen={this.state.suggestionsModalOpen} modalsClose={this.handleModalsClose}
-                          ownMessageExistInChat={this.isOwnMessageExistInChat()}
+                          ownMessagesCount={this.ownMessagesCount()}
             />
           </div>
         </div>
@@ -991,7 +1002,7 @@ class ChatControls extends React.Component {
   }
 
   handleSuggestionOptionClick = (text) => {
-    this.props.modalsClose();
+    this.props.modalsClose(null);
     this.setState({ inputText: text });
     this.selectInputText();
   }
@@ -1004,7 +1015,7 @@ class ChatControls extends React.Component {
     let isInputTextEmpty = this.state.inputText === '';
 
     return (
-        <div className={`chat-controls connected fade-in`}>
+        <div className={`chat-controls` + (this.props.matched ? ` matched` : ``) + ` fade-in`}>
           <ChatStatus show={this.props.statusShow} text={this.props.statusText}/>
           <DisconnectSearchButton handleDisconnect={this.props.handleDisconnect} handleSearch={this.props.handleSearch}
                                   disconnected={this.props.disconnected} matched={this.props.matched}/>
@@ -1022,8 +1033,8 @@ class ChatControls extends React.Component {
           {(isInputTextEmpty || this.props.disconnected) &&
             <div>
               <SuggestionsModal open={this.props.suggestionsModalOpen} onClose={this.props.modalsClose}
-                handleSuggestionOptionClick={this.handleSuggestionOptionClick} ownMessageExistInChat={this.props.ownMessageExistInChat} />
-              <SuggestionsButton disabled={this.props.disconnected} handleSuggestionsIconClick={this.props.handleSuggestionsIconClick} />
+                handleSuggestionOptionClick={this.handleSuggestionOptionClick} ownMessagesCount={this.props.ownMessagesCount} />
+              <SuggestionsButton disabled={!this.props.matched} handleSuggestionsIconClick={this.props.handleSuggestionsIconClick} />
             </div>
           }
           {(!isInputTextEmpty && !this.props.disconnected) &&
@@ -1109,9 +1120,9 @@ class MiddleControl extends React.Component {
 {/*// handleLikeIconClick={this.props.handleLikeIconClick} handleLikeModalClose={this.props.handleLikeModalClose}*/}
             <LikeModal likes={this.props.likes} open={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}
                            onClose={this.props.modalsClose} handleLikeButtonClick={this.props.handleLikeButtonClick} />
-            <button className={`middle-button circle like-button` + (this.props.likes ? ' active' : '')}
+            <button className={`middle-button circle like-icon-button` + (this.props.likes.length === 0 ? '' : ' active')}
                     onClick={this.props.handleLikeIconClick}>
-              <img className="button-icon like" src={(this.props.likes ? svgHeartBlueFilled : svgHeartBlueEmpty)}
+              <img className="button-icon like" src={(this.props.likes.length === 0 ? svgHeartBlack : svgHeartWhite)}
                    alt="Like"></img>
               {/*<div className={(this.props.likes ? ' like-text animate' : 'like-text')}>Likes</div>*/}
             </button>
@@ -1126,7 +1137,7 @@ class MiddleControl extends React.Component {
               reports={this.props.reports} handleReportButtonClick={this.props.handleReportButtonClick} />
             <button className={`middle-button circle report-icon-button` + (this.props.reports.length === 0 ? '' : ' active')}
                     onClick={this.props.handleReportIconClick}>
-              <img className="button-icon report" src={(this.props.reports.length === 0 ? svgReportEmpty : svgReportFilled)}
+              <img className="button-icon report" src={(this.props.reports.length === 0 ? svgFlagBlack : svgFlagWhite)}
                    alt="Report"></img>
             </button>
           </div>
@@ -1233,7 +1244,7 @@ class ReportModal extends React.Component {
               <div className="report-header-side"></div>
               <div className="report-header-title">Report</div>
               <div className="report-header-side">
-                <img className="report-x" src={svgXGrey} alt="Close" onClick={this.props.onClose}></img>
+                <img className="report-x" src={svgXBlack} alt="Close" onClick={this.props.onClose}></img>
               </div>
             </div>
             <div className="report-options">
@@ -1319,7 +1330,7 @@ class LikeModal extends React.Component {
               <div className="like-header-side"></div>
               <div className="like-header-title">Like</div>
               <div className="like-header-side">
-                <img className="like-x" src={svgXGrey} alt="Close" onClick={this.props.onClose}></img>
+                <img className="like-x" src={svgXBlack} alt="Close" onClick={this.props.onClose}></img>
               </div>
             </div>
             <div className="like-options">
@@ -1341,8 +1352,12 @@ class SuggestionsModal extends React.Component {
     }
 
     let suggestionOptions = suggestionOptions1;
-    if (this.props.ownMessageExistInChat) {
+    if (this.props.ownMessagesCount > 0 && this.props.ownMessagesCount < 10) {
       suggestionOptions = suggestionOptions2;
+    }
+
+    if (this.props.ownMessagesCount >= 10) {
+      suggestionOptions = suggestionOptions3;
     }
 
     const suggestionOptionsHTML = Object.keys(suggestionOptions).map((key) => {
@@ -1360,7 +1375,7 @@ class SuggestionsModal extends React.Component {
               <div className="suggestions-header-side"></div>
               <div className="suggestions-header-title">Suggestions</div>
               <div className="suggestions-header-side">
-                <img className="suggestions-x" src={svgXGrey} alt="Close" onClick={this.props.onClose}></img>
+                <img className="suggestions-x" src={svgXBlack} alt="Close" onClick={this.props.onClose}></img>
               </div>
             </div>
             <div className="suggestions-options">
