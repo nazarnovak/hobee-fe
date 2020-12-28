@@ -98,11 +98,11 @@ export default class Home extends React.Component {
           <Nav location={this.props.location} />
           <div className="home-main">
             <div className="motto scale">
-              <div className="motto-main scale">Happy, meaningful chat</div>
-              <div className="motto-extra scale">One-on-one chat, with focus on the quality and fun</div>
+              <div className="motto-main scale">Dialogue definite</div>
+              <div className="motto-extra scale">Have interesting, funny, meaningful chats!</div>
               <div>
                 <Link to="/chat">
-                  <button className={`chat-button-link scale`} style={{ border: '1px solid black', width: '200px' }}>
+                  <button className={`chat-button-link scale`}>
                     Chat
                   </button>
                 </Link>
@@ -120,7 +120,7 @@ export default class Home extends React.Component {
                        alt={'Telescope'} />
                 </div>
                 <p className="jobs-titles">Discover</p>
-                <p className="jobs-texts">New people and share your stories</p>
+                <p className="jobs-texts">New people, share your expriences, and explore new stories </p>
               </div>
               <div className="jobs-items scale">
                 <div className="jobs-circles">
@@ -128,7 +128,7 @@ export default class Home extends React.Component {
                        style={{ display: 'block', margin: '35px auto 25px auto' }} alt={'Rocket'} />
                 </div>
                 <p className="jobs-titles">Engage</p>
-                <p className="jobs-texts">In an interesting discussion or a simple conversation</p>
+                <p className="jobs-texts">Interesting discussions, fun chats, and share a happy moments together</p>
               </div>
               <div className="jobs-items scale">
                 <div className="jobs-circles">
@@ -136,7 +136,7 @@ export default class Home extends React.Component {
                        style={{ display: 'block', margin: '25px auto 5px auto' }} alt={'Astronauts '} />
                 </div>
                 <p className="jobs-titles">Find</p>
-                <p className="jobs-texts">Interesting people and fun experiences</p>
+                <p className="jobs-texts">Amazing connections, someone you're happy with, and who understands you</p>
               </div>
             </div>
           </div>

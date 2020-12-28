@@ -39,7 +39,7 @@ const reportOptions = {
 // Has to be 6 items to fit the height perfectly
 const likeOptions = {
   'lpo': `Positive`,
-  'lun': 'Understanding',
+  'lin': 'Interesting',
   'lfu': 'Funny',
   'lsm': 'Smart',
   'lhe': 'Helpful',
@@ -48,30 +48,30 @@ const likeOptions = {
 
 // Has to be 6 items to fit the height perfectly
 const suggestionOptions1 = {
-  's11': `Hey, buddy`,
-  's12': 'Hey there, friend!',
-  's13': 'Ahoy, matey!',
-  's14': 'Howdy, partner!',
-  's15': '!',
-  's16': 'Hello, sunshine!',
+  's11': `Hey, buddy! How are you today?`,
+  's12': 'Hi there, friend! What are you up to?',
+  's13': `Ahoy, mate! How's your day today?`,
+  's14': `Howdy, partner! How are you feeling?`,
+  's15': 'Good day! Did you have a fun week?',
+  's16': `Hello! Glad to talk to you today, what's up?`,
 };
 
 const suggestionOptions2 = {
-  's21': `How's your day going?`,
+  's21': `What are some of your favorite music?`,
   's22': `What's your favorite food and why?`,
-  's23': '',
-  's24': 'Smart',
-  's25': 'Helpful',
-  's26': 'What’s been the highlight of your week so far',
+  's23': 'How do you spend your weekends usually?',
+  's24': 'Anything that really excites you lately?',
+  's25': 'Where did you grow up? What was it like?',
+  's26': 'Anything you would like to get better now?',
 };
 
 const suggestionOptions3 = {
-  's31': `When and where were you happiest in your life?`,
-  's32': `If you had the opportunity to meet one person you haven't met who would it be, why and what would you talk about?`,
-  's33': 'What absolutely excites you right now?',
-  's34': `What's one of your favorite stories from your life?`,
-  's35': 'Helpful',
-  's36': 'Great',
+  's31': `I'm really happy I can to talk to you today`,
+  's32': `You're a really interesting person, keep it up!`,
+  's33': `I hope you'll have a reason to smile today! :)`,
+  's34': `I hope you'll have a fantastic day today`,
+  's35': `It's a pleasure talking to you`,
+  's36': 'I had so much fun to get to know you',
 };
 
 const systemSearch = "s";
@@ -835,7 +835,9 @@ class ChatMessages extends React.Component {
                 <input className={`feedback-input` + (this.state.feedbackSent === true ? ' disabled' : '')} type="text"
                 placeholder="Anything you wanna talk about now?" disabled={(this.state.feedbackSent === true ? 'disabled' : '')}
                 onChange={this.handleOnChangeFeedbackInput} />
-                <button className={`feedback-submit` + (this.state.feedbackText === '' || this.state.feedbackSent ? ' disabled' : '')} onClick={this.handleFeedbackSubmit}></button>
+                <button className={`feedback-submit` + (this.state.feedbackText === '' || this.state.feedbackSent ? ' disabled' : '')} onClick={this.handleFeedbackSubmit}>
+                <img className="button-icon" src={svgSendWhite} alt="Send"></img>
+                </button>
               </div>
             </div>
           </div>
@@ -1038,7 +1040,9 @@ class ChatControls extends React.Component {
             </div>
           }
           {(!isInputTextEmpty && !this.props.disconnected) &&
-            <SendButton disabled={isInputTextEmpty} handleSendClick={this.handleSendClick} />
+            <div>
+              <SendButton disabled={isInputTextEmpty} handleSendClick={this.handleSendClick} />
+            </div>
           }
         </div>
     );
