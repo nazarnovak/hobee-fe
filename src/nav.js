@@ -33,14 +33,12 @@ export default class Nav extends React.Component {
     // }
 
     return (
-      <div className="nav-height">
-        <div className="nav nav-height">
-          <Link className="logo-link logo-height" to="/" >
-            <img className="logo logo-height" src={logo} alt="Logo" />
+        <div className="nav scale">
+          <Link className="logo-link scale" to="/" >
+            <img className="logo scale" src={logo} alt="Hobee logo" />
           </Link>
           {/*<ChatButton visible={signupVisible} />*/}
         </div>
-      </div>
     );
   }
 }

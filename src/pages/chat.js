@@ -62,7 +62,7 @@ const suggestionOptions2 = {
   's23': 'How do you spend your weekends usually?',
   's24': 'Anything that really excites you lately?',
   's25': 'Where did you grow up? What was it like?',
-  's26': 'Anything you would like to get better now?',
+  's26': `Any skill you're trying to improve?`,
 };
 
 const suggestionOptions3 = {
@@ -293,14 +293,10 @@ export default class Chat extends React.Component {
 
     if (json.likes === undefined) {
       throw new Error("Missing likes in pull response", json);
-
-      return false;
     }
 
     if (json.reports === undefined) {
       throw new Error("Missing reports in pull response", json);
-
-      return false;
     }
 
     return json;
@@ -310,7 +306,7 @@ export default class Chat extends React.Component {
     let statusShow = this.state.statusShow;
     let statusText = this.state.statusText;
 
-    messages.map((msg) => {
+    messages.forEach((msg) => {
       if (msg.type === messageTypeActivity && msg.authoruuid === messageTypeBuddy && msg.text === activityUserInactive) {
         statusShow = true;
         statusText = 'Buddy is inactive';
@@ -872,7 +868,7 @@ class ChatMessages extends React.Component {
           // We skip the room active/inactive messages, which are only for us to know if we need to pull messages and
           // show disconnected state
           if (msg.type === messageTypeSystem || msg.type === messageTypeActivity) {
-            return;
+            return null;
           }
 
           if (msg.type !== messageTypeChatting) {
@@ -1110,7 +1106,7 @@ class MiddleControl extends React.Component {
 
     if (this.props.matched) {
       return (
-          <input type="text" placeholder="Message"
+          <input type="text" contenteditable="true" placeholder="Message"
                  className={`chat-input` + (this.props.disconnected ? ' chat-controls-disabled' : '')}
                  onKeyDown={this.props.onKeyDown} onChange={this.props.handleOnChangeMessageInput} maxLength={1024 - 40}
                  disabled={(this.props.disconnected ? ' disabled' : '')} value={this.props.inputText} />
@@ -1188,7 +1184,7 @@ class ReportModal extends React.Component {
 
     let found = false;
 
-    Object.keys(reportOptions).map(function (key) {
+    Object.keys(reportOptions).forEach(function (key) {
       if (key === reportKey) {
         found = true
       }
@@ -1227,7 +1223,7 @@ class ReportModal extends React.Component {
     }
 
     // Feels kind of hacky, probably better to do it with ref somehow, but I don't know how to properly pass it from outside
-    if (this.props.reports.length !== 0 && this.state.reports.length == 0) {
+    if (this.props.reports.length !== 0 && this.state.reports.length === 0) {
       this.setState({ reports: this.props.reports });
     }
 
@@ -1255,7 +1251,7 @@ class ReportModal extends React.Component {
               {reportOptionsHTML}
             </div>
             <div className="report-footer">
-              <button className={`report-dialog-button` + (this.state.reports.length === 0 || this.props.reports.length !== 0 ? ` disabled` : ``)} onClick={() => this.props.handleReportButtonClick(this.state.reports)}>Report</button>
+              <button className={`report-dialog-button` + (this.state.reports.length === 0 || this.props.reports.length !== 0 ? ` disabled` : ``)} onClick={() => this.props.handleReportButtonClick(this.state.reports)}>Send</button>
             </div>
           </div>
         </div>
@@ -1277,7 +1273,7 @@ class LikeModal extends React.Component {
 
     let found = false;
 
-    Object.keys(likeOptions).map(function (key) {
+    Object.keys(likeOptions).forEach(function (key) {
       if (key === likeKey) {
         found = true
       }
@@ -1315,7 +1311,7 @@ class LikeModal extends React.Component {
     }
 
     // Feels kind of hacky, probably better to do it with ref somehow, but I don't know how to properly pass it from outside
-    if (this.props.likes.length !== 0 && this.state.likes.length == 0) {
+    if (this.props.likes.length !== 0 && this.state.likes.length === 0) {
       this.setState({ likes: this.props.likes });
     }
 
@@ -1341,7 +1337,7 @@ class LikeModal extends React.Component {
               {likeOptionsHTML}
             </div>
             <div className="like-footer">
-              <button className={`like-dialog-button` + (this.state.likes.length === 0 || this.props.likes.length !== 0 ? ` disabled` : ``)} onClick={() => this.props.handleLikeButtonClick(this.state.likes)}>Like</button>
+              <button className={`like-dialog-button` + (this.state.likes.length === 0 || this.props.likes.length !== 0 ? ` disabled` : ``)} onClick={() => this.props.handleLikeButtonClick(this.state.likes)}>Send</button>
             </div>
           </div>
         </div>

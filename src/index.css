@@ -13,13 +13,14 @@ code {
     monospace;
 }
 
-.grid {
+/* .grid {
     display: grid;
     grid-template-rows: 10% auto 10%;
     height: 100vh; /* Fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 100);
+/*    height: calc(var(--vh, 1vh) * 100);
     width: 100vw;
 }
+*/
 
 h1 {
     font-weight: 600;
@@ -382,36 +383,27 @@ a:hover {
 
 .nav {
     z-index: 10;
-    width: 100vw;
-    position: absolute;
-    text-align: center;
+    width: 100%;
+    /* position: absolute; */
     border-bottom: 1px solid #333;
-}
-
-.nav-height {
-    height: 8vh; /* Fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 8);
-}
-
-.logo {
-    outline: none;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
 }
 
 .logo-link {
-    margin-top: 1.5vh; /* Fallback for browsers that do not support Custom Properties */
-    margin-top: calc(var(--vh, 1vh) * 1.5);
     display: inline-block;
+    min-height: 40px;
+    height: 40px;
 }
 
-.logo-height {
-    height: 5vh; /* Fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 5);
-}
-
-.chat-button-link-wrapper {
-    position: absolute;
-    top: 0;
-    right: 0;
+.logo {
+    display:inline-block;
+    outline: none;
+    min-height: 40px;
+    min-width: 40px;
 }
 
 /* Default style for 1200px+ */
@@ -419,7 +411,7 @@ a:hover {
     background-color: #0074d9;
     border: 1px solid #0074d9;
     border-radius: 999px;
-    color: #f3f3f3;
+    color: #fff;
     cursor: pointer;
     font-size: 20px;
     font-weight: 600;
@@ -429,25 +421,11 @@ a:hover {
     transition: color 0.4s ease-in-out;
     opacity: 1;
     transition: opacity 800ms cubic-bezier(.6, 0, .4, 1);
-    width: 220px;
-    height: 40px;
-    margin-top: 60px;
+    width: 180px;
+    height: 35px;
+    margin-top: 50px;
     border: 1px solid #fff;
     outline: none;
-}
-
-@media (min-width: 768px) and (max-width: 1199px) {
-  .chat-button-link.scale {
-      width: 125px;
-      margin-right: 20px;
-  }
-}
-
-@media (max-width: 767px) {
-  .chat-button-link.scale {
-      width: 100px;
-      margin-right: 10px;
-  }
 }
 
 .chat-button-link:hover {
@@ -915,7 +893,7 @@ a:hover {
     cursor: default;
 }
 
-@media only screen and (max-width: 736px) {
+@media only screen and (max-width: 767px) {
     .report-modal {
         height: 100%;
         width: 100%;
@@ -1048,7 +1026,7 @@ a:hover {
     cursor: default;
 }
 
-@media only screen and (max-width: 736px) {
+@media only screen and (max-width: 767px) {
     .like-modal {
         height: 100%;
         width: 100%;
@@ -1418,14 +1396,23 @@ div.spinner div.bar12 {
     height: 100vh; /* Fallback for browsers that do not support Custom Properties */
     height: calc(var(--vh, 1vh) * 100);
     overflow: hidden;
+    display: grid;
+    grid-template-rows: 60px auto 60px;
 }
 
 @media (max-width: 767px) {
   .home.scale {
-      overflow: visible;
+      /* overflow: visible; */
       height: auto;
   }
 }
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .home.scale {
+        overflow: visible;
+        height: auto;
+    }
+  }
 
 .home-main {
     background: url('https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80') 0 -50px;
@@ -1433,56 +1420,35 @@ div.spinner div.bar12 {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    box-shadow: inset 0 0 0 2000px rgba(0, 0, 60, 0.6);
-    height: 84vh; /* Fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 84);
+    box-shadow: inset 0 0 0 2000px rgba(0, 0, 60, 0.7);
+    display: grid;
+    grid-auto-rows: 1fr 1fr;
 }
 
 @media (max-width: 1199px) {
-  .home-main {
-      height: auto
-  }
-}
-
-.home-half-height {
-    height: 42vh; /* Fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 42);
+    .home-main.scale {
+        display: block;
+        -webkit-background-size: auto;
+        -moz-background-size: auto;
+        -o-background-size: auto;
+        background-size: auto;
+    }
 }
 
 .motto {
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 42vh; /* Fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 42);
     padding: 30px;
     box-sizing: border-box;
-}
-
-@media (min-width: 768px) and (max-width: 1199px) {
-  .motto.scale, .motto.scale {
-      padding-left: 20px;
-      padding-right: 20px;
-  }
-}
-
-@media (max-width: 767px) {
-  .motto.scale, .motto.scale {
-      height: auto;
-      padding-left: 10px;
-      padding-right: 10px;
-  }
 }
 
 .motto-main {
     color: #fff;
     text-align: center;
-    margin-bottom: 10px;
-    padding: 0 30px;
-    font-size: 54px;
-    font-weight: 700;
+    font-size: 50px;
+    margin-bottom: 5px;
 }
 
 .motto-extra {
@@ -1492,101 +1458,160 @@ div.spinner div.bar12 {
     padding: 0 30px;
 }
 
-@media (min-width: 768px) and (max-width: 1199px) {
-  .motto-main.scale, .motto-extra.scale {
-      padding: 0 20px;
-  }
+@media (max-width: 767px) {
+    .motto.scale {
+        margin: 80px 10px 80px 10px;
+        padding: 0;
+    }
 
-  .motto-main.scale {
-      font-size: 48px;
-  }
-
-  .motto-extra.scale {
-      font-size: 28px;
-  }
+    .motto-main.scale, .motto-extra.scale {
+        padding: 0 10px;
+    }
+  
+    .motto-main.scale {
+        font-size: 38px;
+    }
+  
+    .motto-extra.scale {
+        font-size: 20px;
+    }
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) and (max-width: 1199px) {
+  .motto.scale, .motto.scale {
+      padding-left: 20px;
+      padding-right: 20px;
+  }
   .motto-main.scale, .motto-extra.scale {
-      padding: 0 10px;
+    padding: 0 20px;
   }
 
   .motto-main.scale {
-      font-size: 42px;
+    font-size: 42px;
   }
 
   .motto-extra.scale {
-      font-size: 24px;
+    font-size: 26px;
   }
 }
 
 .jobs {
     display: flex;
-    align-items: flex-start;
-    flex-direction: row;
-    justify-content: space-between;
+    align-items: center;
     box-sizing: border-box;
-    padding: 25px;
+    margin: 20px;
+}
+
+.jobs-items-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: row;
+    box-sizing: border-box;
 }
 
 @media (max-width: 767px) {
-  .jobs.scale {
-      flex-direction: column;
-  }
+    .jobs-items-wrapper.scale {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .jobs-items.scale {
+        margin-bottom: 50px;
+    }
+
+    .jobs-circles.scale {
+        height: 150px;
+        width: 150px;
+    }
+
+    .jobs-icons.scale {
+        height: 90px;
+        width: 90px;
+    }
+
+    .jobs-texts.scale {
+        margin: 0 70px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .jobs-circles.scale {
+        height: 170px;
+        width: 170px;
+    }
+
+    .jobs-icons.scale {
+        height: 100px;
+        width: 100px;
+    }
+
+    .jobs-texts.scale {
+        margin: 0 50px;
+    }
 }
 
 .jobs-items {
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 100%;
     box-sizing: border-box;
-    flex-grow: 1;
-    flex-basis: 0;
-}
-
-@media (max-width: 767px) {
-  .jobs-item.scale {
-      flex-grow: 0;
-      flex-basis: auto;
-  }
+    flex: 1 0 0;
 }
 
 .jobs-circles {
-    height: 150px;
-    width: 150px;
-    display: block;
+    height: 175px;
+    width: 175px;
+    display: grid;
     margin: 0 auto;
     background-color: #ffffff;
-    border-radius: 150px;
+    border-radius: 200px;
+    align-items: center;
+    justify-content: center;
     /* border: 1px solid black; */
 }
 
+.jobs-icons {
+    height: 100px;
+    width: 100px;
+}
+
 .jobs-titles {
-    margin: 15px auto 0 auto;
-    font-size: 28px;
+    margin: 15px auto 10px auto;
+    font-size: 24px;
     color: #fff;
     font-weight: 700;
 }
 
 .jobs-texts {
-    margin: 10px 40px;
+    margin: 0px 20px;
     text-align: center;
-    font-size: 22px;
-    color: #eee;
+    font-size: 20px;
+    color: #f9f9f9;
     font-weight: 400;
 }
 
+.logo {
+    outline: none;
+    min-height: 40px;
+    min-width: 40px;
+}
+
 .footer {
-    height: 8vh; /* Fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 8);
+    z-index: 10;
+    width: 100%;
     font-size: 16px;
-    line-height: 8vh;
-    line-height: calc(var(--vh, 1vh) * 8);
-    text-align: center;
-    padding: 0 50px;
     box-sizing: border-box;
     border-top: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+    height: 60px;
+}
+
+.contact-link {
+    display: inline-block;
 }
 
 /* 404 page */
@@ -1597,8 +1622,4 @@ div.spinner div.bar12 {
     position: relative;
     margin-top: 20px;
     text-align: center;
-}
-
-.footer-item {
-    margin: 15px;
 }
