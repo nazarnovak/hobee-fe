@@ -324,16 +324,25 @@ export default class Chat extends React.Component {
   }
 
   async handleSystemMessage(msg) {
-    let status, messages = this.state.messages.slice();
+    let status, statusText, messages = this.state.messages.slice();
 
     switch (msg.text) {
       case systemConnect:
         console.log("Matched");
         status = statusMatched;
+
+        statusText = 'Matched with a buddy';
+
+        this.setState({statusShow: true, statusText: statusText});
+        let that = this;
+
+        setTimeout(function(){that.setState({ statusShow: false }); }, 5000)
+
         break;
       case systemDisconnect:
         console.log("Disconnected");
-        let statusText = 'You disconnected';
+        statusText = 'You disconnected';
+
         if (msg.authoruuid === messageTypeBuddy) {
           statusText = 'Buddy disconnected';
         }
@@ -563,26 +572,39 @@ export default class Chat extends React.Component {
   }
 
   handleMessageMouseEnter = (e) => {
-    // let el = e.target;
-    //
-    // if (el.parentElement.querySelector('.message-timestamp').classList.contains('visible')) {
-    //   el.parentElement.querySelector('.message-timestamp').classList.remove('visible');
-    //   return true;
-    // }
-    //
-    // el.parentElement.querySelector('.message-timestamp').classList.add('visible');
-    // return true;
+    let el = e.target;
+
+    if (el.parentElement.querySelector('.message-timestamp').classList.contains('visible')) {
+       return true;
+    }
+
+    el.parentElement.querySelector('.message-timestamp').classList.add('visible');
+
+    return true;
+  }
+
+  handleMessageMouseLeave = (e) => {
+    let el = e.target;
+
+    if (!el.parentElement.querySelector('.message-timestamp').classList.contains('visible')) {
+       return true;
+    }
+
+    el.parentElement.querySelector('.message-timestamp').classList.remove('visible');
+
+    return true;
   }
 
   handleMessageClick = (e) => {
-    // let el = e.target;
-    // if (el.parentElement.querySelector('.message-timestamp').classList.contains('visible')) {
-    //   el.parentElement.querySelector('.message-timestamp').classList.remove('visible');
-    //   return true;
-    // }
-    //
-    // el.parentElement.querySelector('.message-timestamp').classList.add('visible');
-    // return true;
+    let el = e.target;
+    if (el.parentElement.querySelector('.message-timestamp').classList.contains('visible')) {
+       el.parentElement.querySelector('.message-timestamp').classList.remove('visible');
+       return true;
+    }
+
+    el.parentElement.querySelector('.message-timestamp').classList.add('visible');
+
+    return true;
   }
 
   handleModalsClose = (e) => {
@@ -687,6 +709,7 @@ export default class Chat extends React.Component {
             <ChatMessages messages={this.state.messages}
                           searching={this.state.status === statusConnecting || this.state.status === statusSearching}
                           status={this.state.status} handleMessageMouseEnter={this.handleMessageMouseEnter}
+                          handleMessageMouseLeave={this.handleMessageMouseLeave}
                           handleMessageClick={this.handleMessageClick} offline={this.state.status === statusOffline}
                           handleFeedbackSubmit={this.handleFeedbackSubmit} setFeedbackInputFocused={this.setFeedbackInputFocused}
                           feedbackInputFocused={this.state.feedbackInputFocused}
@@ -870,7 +893,8 @@ class ChatMessages extends React.Component {
             return (
                 <div className={`my-message-container`} key={msg.timestamp}>
                   <Timestamp direction={'left'} timestamp={msg.timestamp}/>
-                  <div className={`chat-message my-message`} onMouseOver={this.props.handleMessageHover} onClick={this.props.handleMessageClick}>
+                  <div className={`chat-message my-message`} onMouseEnter={this.props.handleMessageMouseEnter}
+                  onMouseLeave={this.props.handleMessageMouseLeave} onClick={this.props.handleMessageClick}>
                     {msg.text}
                   </div>
                   {/*<div className={`my-message-corner`}>*/}
@@ -888,7 +912,8 @@ class ChatMessages extends React.Component {
                   {/*<div className={`buddy-message-corner-grey`}></div>*/}
                   {/*<div className={`buddy-message-corner-white`}></div>*/}
                   {/*</div>*/}
-                  <div className={`chat-message buddy-message`} onClick={this.props.handleMessageClick}>
+                  <div className={`chat-message buddy-message`} onMouseEnter={this.props.handleMessageMouseEnter}
+                  onMouseLeave={this.props.handleMessageMouseLeave} onClick={this.props.handleMessageClick}>
                     {msg.text}
                   </div>
                   <Timestamp direction={'right'} timestamp={msg.timestamp}/>
@@ -1012,7 +1037,6 @@ class ChatControls extends React.Component {
               searching={this.props.searching} likes={this.props.likes} likeModalOpen={this.props.likeModalOpen}
               handleLikeOptionClick={this.props.handleLikeOptionClick} handleLikeIconClick={this.props.handleLikeIconClick}
               handleLikeButtonClick={this.props.handleLikeButtonClick}
-              // handleLikeOptionClick={this.props.handleLikeOptionClick}
               reports={this.props.reports} handleReportIconClick={this.props.handleReportIconClick}
               reportModalOpen={this.props.reportModalOpen} handleReportButtonClick={this.props.handleReportButtonClick}
               modalsClose={this.props.modalsClose}
