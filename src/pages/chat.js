@@ -23,9 +23,6 @@ const activityOwnTyping = "t";
 const messageTypeOwn = "o";
 const messageTypeBuddy = "b";
 
-// const resultLike = "rl";
-// const resultDislike = "rd";
-
 // Has to be 6 items to fit the height perfectly
 const reportOptions = {
   'rdl': `I didn't like the conversation`,
@@ -83,9 +80,6 @@ const svgXBlack = require('../images/xBlack.svg');
 const svgNext = require('../images/nextWhite2.svg');
 const svgSendWhite = require('../images/sendWhite.svg');
 const svgLightBulbWhite = require('../images/light-bulb.svg');
-
-// const svgHeartWhite = require('../images/heartWhite.svg');
-// const svgExclamationWhite = require('../images/exclamationWhite.svg');
 
 const svgHeartBlack = require('../images/heartBlack.svg');
 const svgHeartWhite = require('../images/heartWhite.svg');
@@ -674,10 +668,6 @@ export default class Chat extends React.Component {
     this.setState({ feedbackInputFocused: focused });
   }
 
-  // handleSave = () => {
-  //   console.log("Save clicked");
-  // }
-
   // Temporarily disabled, to allow mobile to see timestamp too, so now it's on click instead
   // handleMouseEnter = (e) => {
   //   let el = e.target;
@@ -707,7 +697,6 @@ export default class Chat extends React.Component {
                           searching={this.state.status === statusConnecting || this.state.status === statusSearching}
                           statusShow={this.state.statusShow} statusText={this.state.statusText}
                           sendWebsocketMessage={this.sendWebsocketMessage}
-                          handleSave={this.handleSave}
                           likes={this.state.likes} handleLikeIconClick={this.handleLikeIconClick}
                           likeModalOpen={this.state.likeModalOpen} handleLikeButtonClick={this.handleLikeButtonClick}
                           // handleLikeOptionClick={this.handleLikeOptionClick}
@@ -961,10 +950,12 @@ class ChatControls extends React.Component {
     return true;
   }
 
-  selectInputText = () => {
+  putCursorInInputEnd = () => {
     let input = document.getElementsByTagName('input')[0];
     input.focus();
-    setTimeout(function () { input.select(); }, 10);
+    setTimeout(function () {
+      input.select(); input.setSelectionRange(input.value.length, input.value.length);
+    }, 10);
   }
 
   handleKeyDown = (e) => {
@@ -1002,7 +993,7 @@ class ChatControls extends React.Component {
   handleSuggestionOptionClick = (text) => {
     this.props.modalsClose(null);
     this.setState({ inputText: text });
-    this.selectInputText();
+    this.putCursorInInputEnd();
   }
 
   handleSendClick = () => {
@@ -1018,9 +1009,8 @@ class ChatControls extends React.Component {
           <DisconnectSearchButton handleDisconnect={this.props.handleDisconnect} handleSearch={this.props.handleSearch}
                                   disconnected={this.props.disconnected} matched={this.props.matched}/>
           <MiddleControl matched={this.props.matched} onKeyDown={this.handleKeyDown} handleOnChangeMessageInput={this.handleOnChangeMessageInput}
-              handleSave={this.props.handleSave} searching={this.props.searching}
-              likes={this.props.likes} likeModalOpen={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}
-              handleLikeIconClick={this.props.handleLikeIconClick}
+              searching={this.props.searching} likes={this.props.likes} likeModalOpen={this.props.likeModalOpen}
+              handleLikeOptionClick={this.props.handleLikeOptionClick} handleLikeIconClick={this.props.handleLikeIconClick}
               handleLikeButtonClick={this.props.handleLikeButtonClick}
               // handleLikeOptionClick={this.props.handleLikeOptionClick}
               reports={this.props.reports} handleReportIconClick={this.props.handleReportIconClick}
@@ -1116,8 +1106,6 @@ class MiddleControl extends React.Component {
     return (
         <div className={`middle-buttons`}>
           <div className="circle-wrapper">
-{/*// likes={this.props.likes} likeModalOpen={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}*/}
-{/*// handleLikeIconClick={this.props.handleLikeIconClick} handleLikeModalClose={this.props.handleLikeModalClose}*/}
             <LikeModal likes={this.props.likes} open={this.props.likeModalOpen} handleLikeOptionClick={this.props.handleLikeOptionClick}
                            onClose={this.props.modalsClose} handleLikeButtonClick={this.props.handleLikeButtonClick} />
             <button className={`middle-button circle like-icon-button` + (this.props.likes.length === 0 ? '' : ' active')}
@@ -1127,11 +1115,6 @@ class MiddleControl extends React.Component {
               {/*<div className={(this.props.likes ? ' like-text animate' : 'like-text')}>Likes</div>*/}
             </button>
           </div>
-          {/*<div className="circle-wrapper">*/}
-          {/*<button className={`middle-button circle save-button`} onClick={this.props.handleSave}>*/}
-          {/*<img className="button-icon" src={svgDisketteWhite} alt="Save"></img>*/}
-          {/*</button>*/}
-          {/*</div>*/}
           <div className="circle-wrapper">
             <ReportModal open={this.props.reportModalOpen} onClose={this.props.modalsClose}
               reports={this.props.reports} handleReportButtonClick={this.props.handleReportButtonClick} />
@@ -1373,7 +1356,7 @@ class SuggestionsModal extends React.Component {
           <div className="suggestions-modal">
             <div className="suggestions-header">
               <div className="suggestions-header-side"></div>
-              <div className="suggestions-header-title">Suggestions</div>
+              <div className="suggestions-header-title">Conversation starter suggestions</div>
               <div className="suggestions-header-side">
                 <img className="suggestions-x" src={svgXBlack} alt="Close" onClick={this.props.onClose}></img>
               </div>
