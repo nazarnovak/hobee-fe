@@ -841,7 +841,7 @@ class ChatMessages extends React.Component {
               <div className="status">{this.props.status}</div>
               <div className="feedback-wrapper">
                 <input className={`feedback-input` + (this.state.feedbackSent === true ? ' disabled' : '')} type="text"
-                placeholder="Anything you wanna talk about now?" disabled={(this.state.feedbackSent === true ? 'disabled' : '')}
+                placeholder="Who do you want to talk to now?" disabled={(this.state.feedbackSent === true ? 'disabled' : '')}
                 onChange={this.handleOnChangeFeedbackInput} />
                 <button className={`feedback-submit` + (this.state.feedbackText === '' || this.state.feedbackSent ? ' disabled' : '')} onClick={this.handleFeedbackSubmit}>
                 <img className="button-icon" src={svgSendWhite} alt="Send"></img>

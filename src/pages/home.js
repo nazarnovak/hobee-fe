@@ -41,8 +41,8 @@ export default class Home extends React.Component {
           <Nav location={this.props.location} />
           <div className="home-main scale">
             <div className="motto scale">
-              <div className="motto-main scale">Hobee chat - happy chats</div>
-              <div className="motto-extra scale">Have interesting, funny, meaningful chats!</div>
+              <div className="motto-main scale">Talk to friends you haven't met yet</div>
+              <div className="motto-extra scale">Have interesting, funny, meaningful converstaions!</div>
                 <Link to="/chat"><button className={`chat-button-link scale`}>Chat now</button></Link>
                 {/*<FeedbackModal open={this.state.feedbackModalOpen} onClose={this.handleFeedbackClose} />*/}
                 {/*<button className={`chat-button-link scale`} style={{ border: '1px solid black', width: '200px' }}*/}
@@ -64,20 +64,22 @@ export default class Home extends React.Component {
                     <img className="jobs-icons scale" src={rocket} alt={'Engage'} />
                   </div>
                   <p className="jobs-titles">Engage</p>
-                  <p className="jobs-texts scale">Interesting discussions, fun chats, and share a happy moments together</p>
+                  <p className="jobs-texts scale">Interesting discussions, fun chats, and share happy moments together</p>
                 </div>
                 <div className="jobs-items scale">
                   <div className="jobs-circles scale">
                     <img className="jobs-icons scale" src={astronauts} alt={'Find'} />
                   </div>
                   <p className="jobs-titles">Find</p>
-                  <p className="jobs-texts scale">Amazing connections, someone you're happy with, and who understands you</p>
+                  <p className="jobs-texts scale">Amazing connections, someone who understands you, and makes you happy</p>
                 </div>
               </div>
             </div>
           </div>
           <div className="footer">
             <Link className="contact-link" to="/contact">Contact</Link>
+            <Link className="contact-link" to="/how">How</Link>
+            <Link className="contact-link" to="/why">Why</Link>
           </div>
         </div>
     );
