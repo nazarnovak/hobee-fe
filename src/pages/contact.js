@@ -2,7 +2,7 @@ import React from "react";
 
 import Nav from "../nav";
 
-const svgCircleCheckmark = require('../images/circle_checkmark.svg');
+import { default as svgCircleCheckmark } from '../images/circle_checkmark.svg';
 
 export default class Contact extends React.Component {
   constructor(props) {

@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Nav from "../nav";
 
-const telescope = require('../images/telescope.svg');
-const rocket = require('../images/rocket.svg');
-const astronauts = require('../images/astronauts.svg');
+import styles from './home.module.scss';
+
+import Nav from "../nav";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -31,55 +30,50 @@ export default class Home extends React.Component {
 
 // If height is less than 750 only then do we not fit everything on the screen? Or should we scale it down?
   render() {
-    // const sectionHeightHalf = (this.props.height - 140) / 2;
-    // const sectionWidthThird = (this.props.width - 100) / 3;
-
     // const { didMount } = this.state;
 
     return (
-        <div class="home scale">
+        <div className={styles.home}>
           <Nav location={this.props.location} />
-          <div className="home-main scale">
-            <div className="motto scale">
-              <div className="motto-main scale">Talk to friends you haven't met yet</div>
-              <div className="motto-extra scale">Have interesting, funny, meaningful conversations one-on-one</div>
-                <Link to="/chat"><button className={`chat-button-link scale`}>Chat now</button></Link>
+          <div className={styles.content}>
+            <div className={styles.contentTop}>
+              <div className={styles.motto}>Talk to friends you haven't met yet</div>
+              <div className={styles.mottoExtra}>Have interesting, funny, meaningful conversations one-on-one</div>
+              <Link to="/chat"><button className={`chat-button-link scale`}>Chat now</button></Link>
                 {/*<FeedbackModal open={this.state.feedbackModalOpen} onClose={this.handleFeedbackClose} />*/}
                 {/*<button className={`chat-button-link scale`} style={{ border: '1px solid black', width: '200px' }}*/}
                         {/*onClick={this.handleFeedbackOpen}>*/}
                   {/*Open feedback dialog*/}
                 {/*</button>*/}
             </div>
-            <div className="jobs">
-              <div className="jobs-items-wrapper scale">
-                <div className="jobs-items scale">
-                  <div className="jobs-circles scale">
-                    <img className="jobs-icons scale" src={telescope} alt={'Discover'} />
-                  </div>
-                  <p className="jobs-titles">Discover</p>
-                  <p className="jobs-texts scale">New people, share your experiences, and explore new stories </p>
+            <div className={styles.jobs}>
+              <div className={styles.jobsItems}>
+                <div className={styles.jobsCircles}>
+                  <img className={styles.jobsIcons} alt={'Discover'} />
                 </div>
-                <div className="jobs-items scale">
-                  <div className="jobs-circles scale">
-                    <img className="jobs-icons scale" src={rocket} alt={'Engage'} />
-                  </div>
-                  <p className="jobs-titles">Engage</p>
-                  <p className="jobs-texts scale">Interesting discussions, fun chats, and share happy moments together</p>
+                <p className={styles.jobsTitles}>Search</p>
+                <p className={styles.jobsTexts}>And match an interesting person</p>
+              </div>
+              <div className={styles.jobsItems}>
+                <div className={styles.jobsCircles}>
+                  <img className={styles.jobsIcons} alt={'Engage'} />
                 </div>
-                <div className="jobs-items scale">
-                  <div className="jobs-circles scale">
-                    <img className="jobs-icons scale" src={astronauts} alt={'Find'} />
-                  </div>
-                  <p className="jobs-titles">Find</p>
-                  <p className="jobs-texts scale">Amazing connections, someone who understands you, and makes you happy</p>
+                <p className={styles.jobsTitles}>Chat</p>
+                <p className={styles.jobsTexts}>About what interests you</p>
+              </div>
+              <div className={styles.jobsItems}>
+                <div className={styles.jobsCircles}>
+                  <img className={styles.jobsIcons} alt={'Find'} />
                 </div>
+                <p className={styles.jobsTitles}>Enjoy</p>
+                <p className={styles.jobsTexts}>A good time together</p>
               </div>
             </div>
           </div>
           <div className="footer">
             <Link className="contact-link" to="/contact">Contact</Link>
-            <Link className="contact-link" to="/how">How</Link>
-            <Link className="contact-link" to="/why">Why</Link>
+            {/*<Link className="contact-link" to="/how">How</Link>*/}
+            {/*<Link className="contact-link" to="/why">Why</Link>*/}
           </div>
         </div>
     );

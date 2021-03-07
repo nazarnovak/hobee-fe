@@ -4,102 +4,93 @@
 	 viewBox="334.7 123.5 547.2 546.5" style="enable-background:new 334.7 123.5 547.2 546.5;" xml:space="preserve">
 <style type="text/css">
 	.st0{display:none;}
-	.st1{fill:#ABD4F1;stroke:#ABD4F1;stroke-width:2.5;}
-	.st2{fill:#0D5AA7;stroke:#0D5AA7;stroke-width:2.5;}
-	.st3{fill:#2B72B9;stroke:#2B72B9;stroke-width:2.5;}
-	.st4{fill:#80BAE5;stroke:#80BAE5;stroke-width:2.5;}
-	.st5{fill:#4684C5;stroke:#4684C5;stroke-width:2.5;}
-	.st6{fill:#5D9FD6;stroke:#5D9FD6;stroke-width:2.5;}
-	.st7{fill:#4684C5;}
-	.st8{fill:#2B72B9;}
-	.st9{fill:#0D5AA7;}
-	.st10{stroke:#000000;stroke-width:2.5;}
-	.st11{fill:none;stroke:#999999;stroke-width:2.5;}
-	.st12{fill:none;stroke:#AAAAAA;stroke-width:2.5;}
-	.st13{fill:none;stroke:#CCCCCC;stroke-width:2.5;}
-	.st14{fill:none;stroke:#666666;stroke-width:2.5;}
-	.st15{fill:none;stroke:#333333;stroke-width:2.5;}
-	.st16{fill:#5D9FD6;}
-	.st17{display:inline;fill:none;stroke:#AAAAAA;stroke-width:2.5;}
-	.st18{display:inline;fill:none;stroke:#676789;stroke-width:2.5;}
+	.st1{fill:#0074d9;}
+	.st2{fill:none;stroke:#000000;stroke-width:2;}
+	.st3{display:inline;fill:#ABD4F1;stroke:#ABD4F1;stroke-width:2.5;}
+	.st4{display:inline;fill:#80BAE5;stroke:#80BAE5;stroke-width:2.5;}
+	.st5{display:inline;fill:#5D9FD6;stroke:#5D9FD6;stroke-width:2.5;}
+	.st6{display:inline;stroke:#000000;stroke-width:2.5;}
+	.st7{display:inline;fill:none;stroke:#999999;stroke-width:2.5;}
+	.st8{display:inline;fill:none;stroke:#AAAAAA;stroke-width:2.5;}
+	.st9{display:inline;fill:none;stroke:#CCCCCC;stroke-width:2.5;}
+	.st10{display:inline;fill:none;stroke:#666666;stroke-width:2.5;}
+	.st11{display:inline;fill:none;stroke:#333333;stroke-width:2.5;}
+	.st12{display:inline;fill:#5D9FD6;}
+	.st13{display:inline;fill:none;stroke:#676789;stroke-width:2.5;}
 </style>
 <g id="Layer_6" class="st0">
 	
 		<image style="display:inline;overflow:visible;" width="2226" height="2246" id="XMLID_2_" xlink:href="D:\Misc\hobee\Design\SiteDesign\h.png"  transform="matrix(0.24 0 0 0.2433 341.13 123.6475)">
 	</image>
 </g>
-<g id="Layer_7">
-	<circle class="st1" cx="568.9" cy="234.5" r="104.1"/>
-	<rect x="568.9" y="130.4" class="st1" width="79.7" height="22.3"/>
-	<circle class="st2" cx="568.6" cy="559.2" r="104.1"/>
-	<circle class="st1" cx="648.2" cy="234.5" r="104.1"/>
-	<rect x="568.6" y="641" class="st2" width="79.7" height="22.3"/>
-	<circle class="st2" cx="647.9" cy="559.2" r="104.1"/>
-	<circle class="st3" cx="724.4" cy="480.6" r="104.1"/>
-	<circle class="st4" cx="724.7" cy="313" r="104.1"/>
-	<path class="st5" d="M672.6,396.2c0,57.5,46.6,104.1,104.1,104.1c57.5,0,104.1-46.6,104.1-104.1"/>
-	<path class="st6" d="M880.7,397.6c0-57.5-46.6-104.1-104.1-104.1c-57.5,0-104.1,46.6-104.1,104.1"/>
-	<circle class="st6" cx="608.6" cy="396.7" r="104.1"/>
-	<circle class="st4" cx="492.5" cy="313" r="104.1"/>
-	<circle class="st3" cx="492.1" cy="480.6" r="104.1"/>
-	<rect x="488" y="209" class="st4" width="258.3" height="91.2"/>
-	<circle class="st6" cx="440.1" cy="396.2" r="104.1"/>
-	<path class="st5" d="M336,396.6c0,57.5,46.6,104.1,104.1,104.1s104.1-46.6,104.1-104.1"/>
-	<rect x="481.6" y="398.2" class="st7" width="262.8" height="88.6"/>
-	<rect x="394.4" y="291.9" class="st4" width="428.3" height="10.9"/>
-	<path class="st6" d="M544.1,396.2c0-57.5-46.6-104.1-104.1-104.1S336,338.7,336,396.2"/>
-	<rect x="391.5" y="290" class="st4" width="96.5" height="12.8"/>
-	<rect x="389.2" y="488.5" class="st8" width="102.2" height="13.8"/>
-	<rect x="724.6" y="488.9" class="st8" width="102.2" height="13.8"/>
-	<rect x="520.3" y="488.9" class="st8" width="192.3" height="91.4"/>
-	<rect x="466.9" y="582.9" class="st9" width="51" height="0.7"/>
-	<rect x="471.1" y="584.7" class="st2" width="43" height="2.9"/>
-	<rect x="698.1" y="582.9" class="st9" width="51.4" height="0.5"/>
-	<rect x="700.6" y="583.1" class="st9" width="47.3" height="5.5"/>
+<g id="Layer_18">
+	<path class="st1" d="M880.7,395.8c3,51.6-34.5,77.4-34.5,77.4c4.5,75.7-63.6,103.6-63.6,103.6C760.4,665.5,678.4,663,678.4,663h-70
+		h-0.1h-70c0,0-81.9,2.5-104.1-86.2c0,0-68.2-27.9-63.6-103.6c0,0-37.5-25.8-34.5-77.4v1.8c-3-51.6,34.5-77.4,34.5-77.4
+		c-4.5-75.7,63.6-103.6,63.6-103.6c22.1-88.7,104.1-86.2,104.1-86.2h70h0.1h70c0,0,81.9-2.5,104.1,86.2c0,0,68.2,27.9,63.6,103.6
+		c0,0,37.5,25.8,34.5,77.4"/>
+</g>
+<g id="Layer_19">
+	<line class="st2" x1="434.2" y1="216.6" x2="782.5" y2="216.6"/>
+	<line class="st2" x1="370.5" y1="320.2" x2="846.2" y2="320.2"/>
+	<line class="st2" x1="336" y1="397.6" x2="880.7" y2="397.6"/>
+	<line class="st2" x1="434.2" y1="578.6" x2="782.5" y2="578.6"/>
+	<line class="st2" x1="370.5" y1="475" x2="846.2" y2="475"/>
+</g>
+<g id="Layer_7" class="st0">
+	<circle class="st3" cx="538.2" cy="234.5" r="104.1"/>
+	<circle class="st4" cx="489.2" cy="313" r="104.1"/>
+	<circle class="st3" cx="538.2" cy="557.9" r="104.1"/>
+	<circle class="st4" cx="475.1" cy="479.3" r="104.1"/>
+	<circle class="st5" cx="440.1" cy="396.2" r="104.1"/>
+	<circle class="st3" cx="678.5" cy="234.8" r="104.1"/>
+	<circle class="st4" cx="741.6" cy="313.4" r="104.1"/>
+	<circle class="st3" cx="678.5" cy="558.2" r="104.1"/>
+	<circle class="st4" cx="741.6" cy="479.6" r="104.1"/>
+	<circle class="st5" cx="776.6" cy="396.5" r="104.1"/>
+</g>
+<g id="Layer_17" class="st0">
 </g>
 <g id="Layer_13" class="st0">
 </g>
-<g id="Layer_11">
-	<circle class="st10" cx="608.3" cy="534.4" r="40"/>
+<g id="Layer_11" class="st0">
+	<circle class="st6" cx="609.1" cy="533.6" r="24.7"/>
 </g>
 <g id="Layer_14" class="st0">
 </g>
-<g id="Layer_12">
-	<line class="st11" x1="334.8" y1="397" x2="882" y2="397"/>
-	<line class="st12" x1="389.4" y1="303.5" x2="829.5" y2="303.5"/>
-	<line class="st12" x1="387.7" y1="303.5" x2="389.4" y2="303.5"/>
-	<line class="st13" x1="467" y1="209" x2="750.2" y2="209"/>
-	<line class="st14" x1="387.1" y1="487.7" x2="829.4" y2="487.7"/>
-	<line class="st15" x1="465.9" y1="581.6" x2="750.6" y2="581.6"/>
+<g id="Layer_12" class="st0">
+	<line class="st7" x1="334.8" y1="397" x2="882" y2="397"/>
+	<line class="st8" x1="389.4" y1="303.5" x2="829.5" y2="303.5"/>
+	<line class="st8" x1="387.7" y1="303.5" x2="389.4" y2="303.5"/>
+	<line class="st9" x1="467" y1="209" x2="750.2" y2="209"/>
+	<line class="st10" x1="387.1" y1="487.7" x2="829.4" y2="487.7"/>
+	<line class="st11" x1="465.9" y1="581.6" x2="750.6" y2="581.6"/>
 </g>
 <g id="Layer_15" class="st0">
 </g>
-<g id="Layer_16">
-	<rect x="424.2" y="304.7" class="st16" width="364.6" height="91"/>
+<g id="Layer_16" class="st0">
+	<rect x="424.2" y="304.7" class="st12" width="364.6" height="91"/>
 </g>
 <g id="Layer_3" class="st0">
-	<circle class="st17" cx="608.3" cy="396.8" r="272"/>
-	<circle class="st17" cx="608.3" cy="396.8" r="168.1"/>
-	<circle class="st17" cx="608.3" cy="396.8" r="104.1"/>
-	<circle class="st17" cx="608.3" cy="395.5" r="64.2"/>
-	<circle class="st17" cx="608.3" cy="395.5" r="40"/>
+	<circle class="st8" cx="608.3" cy="396.8" r="272"/>
+	<circle class="st8" cx="608.3" cy="396.8" r="168.1"/>
+	<circle class="st8" cx="608.3" cy="396.8" r="104.1"/>
+	<circle class="st8" cx="608.3" cy="395.5" r="64.2"/>
+	<circle class="st8" cx="608.3" cy="395.5" r="40"/>
+	<ellipse class="st8" cx="608.4" cy="397" rx="24.7" ry="24.7"/>
 </g>
 <g id="Layer_9" class="st0">
-	
-		<image style="display:inline;overflow:visible;opacity:0.36;" width="505" height="514" xlink:href="hive.jpg"  transform="matrix(1.0772 0 0 1.0579 337.25 126.1194)">
-	</image>
 </g>
 <g id="Layer_5" class="st0">
-	<line class="st18" x1="608.3" y1="396.8" x2="608.3" y2="124.8"/>
-	<line class="st18" x1="608.3" y1="396.8" x2="608.3" y2="668.8"/>
-	<line class="st18" x1="608.3" y1="396.8" x2="880.3" y2="396.8"/>
-	<line class="st18" x1="608.3" y1="396.8" x2="336.3" y2="396.8"/>
-	<line class="st18" x1="608.3" y1="396.8" x2="355.3" y2="292"/>
-	<line class="st18" x1="608.3" y1="396.8" x2="416.4" y2="204.9"/>
-	<line class="st18" x1="608.3" y1="396.8" x2="504.2" y2="145.5"/>
-	<line class="st18" x1="608.3" y1="395.5" x2="355.3" y2="500.3"/>
-	<line class="st18" x1="608.3" y1="395.5" x2="416.4" y2="587.3"/>
-	<line class="st18" x1="608.3" y1="395.5" x2="504.2" y2="646.8"/>
+	<line class="st13" x1="608.3" y1="396.8" x2="608.3" y2="124.8"/>
+	<line class="st13" x1="608.3" y1="396.8" x2="608.3" y2="668.8"/>
+	<line class="st13" x1="608.3" y1="396.8" x2="880.3" y2="396.8"/>
+	<line class="st13" x1="336.3" y1="396.8" x2="608.3" y2="396.8"/>
+	<line class="st13" x1="608.3" y1="396.8" x2="355.3" y2="292"/>
+	<line class="st13" x1="608.3" y1="396.8" x2="416.4" y2="204.9"/>
+	<line class="st13" x1="608.3" y1="396.8" x2="504.2" y2="145.5"/>
+	<line class="st13" x1="608.3" y1="395.5" x2="355.3" y2="500.3"/>
+	<line class="st13" x1="608.3" y1="395.5" x2="416.4" y2="587.3"/>
+	<line class="st13" x1="608.3" y1="395.5" x2="504.2" y2="646.8"/>
 </g>
 <g id="Layer_8" class="st0">
 </g>

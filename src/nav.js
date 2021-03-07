@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 // const colorBlueSoft = '#0074d9';
 // const colorBlueDarker = '#005299';
 
-const logo = require('./images/hobee.svg');
+import { default as logo } from './images/hobee.svg';
 
 export default class Nav extends React.Component {
   constructor(props) {

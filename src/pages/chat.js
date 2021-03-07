@@ -2,6 +2,18 @@ import React from "react";
 
 import Nav from "../nav";
 
+import { default as svgXWhite } from '../images/xWhite.svg';
+import { default as svgXBlack } from '../images/xBlack.svg';
+import { default as svgNext } from '../images/nextWhite2.svg';
+import { default as svgSendWhite } from '../images/sendWhite.svg';
+import { default as svgLightBulbWhite } from '../images/light-bulb.svg';
+
+import { default as svgHeartBlack } from '../images/heartBlack.svg';
+import { default as svgHeartWhite } from '../images/heartWhite.svg';
+
+import { default as svgFlagBlack } from '../images/flagBlack.svg';
+import { default as svgFlagWhite } from '../images/flagWhite.svg';
+
 const statusOffline = "offline";
 const statusConnecting = "connecting";
 const statusSearching = "searching";
@@ -74,18 +86,6 @@ const suggestionOptions3 = {
 const systemSearch = "s";
 const systemConnect = "c";
 const systemDisconnect = "d";
-
-const svgXWhite = require('../images/xWhite.svg');
-const svgXBlack = require('../images/xBlack.svg');
-const svgNext = require('../images/nextWhite2.svg');
-const svgSendWhite = require('../images/sendWhite.svg');
-const svgLightBulbWhite = require('../images/light-bulb.svg');
-
-const svgHeartBlack = require('../images/heartBlack.svg');
-const svgHeartWhite = require('../images/heartWhite.svg');
-
-const svgFlagBlack = require('../images/flagBlack.svg');
-const svgFlagWhite = require('../images/flagWhite.svg');
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -233,12 +233,39 @@ export default class Chat extends React.Component {
     return true;
   }
 
+  getInviteId() {
+    if (!this.props.location) {
+      return "";
+    }
+
+    const path = this.props.location.pathname;
+
+    if (!path) {
+      return "";
+    }
+
+    let pathParts = path.split("/");
+
+    // No invite id, skip
+
+    if (pathParts.length < 3) {
+      return "";
+    }
+
+    if(!/^[a-z]{3}$/i.test(pathParts[2])) {
+      return ""
+    }
+
+    return pathParts[2];
+  }
+
   async componentDidMount() {
     window.addEventListener("keydown", this.handleEscKey, false);
     window.addEventListener("focus", this.onFocus);
     window.addEventListener("blur", this.onBlur);
     window.addEventListener('resize', this.onResize);
 
+    this.getInviteId();
     this.connectToChat();
   }
 

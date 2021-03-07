@@ -1,0 +1,191 @@
+.home {
+    height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+    height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 767px) {
+        height: auto;
+    }
+
+    @media (min-width: 768px) and (max-width: 1199px) {
+        height: auto;
+    }
+}
+
+.content {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    background: url('https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80') 0 -50px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    display: grid;
+    grid-auto-rows: 1fr 1fr;
+
+    @media (max-width: 1199px) {
+        display: block;
+        -webkit-background-size: auto;
+        -moz-background-size: auto;
+        -o-background-size: auto;
+        background-size: auto;
+    }
+}
+
+.contentTop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+
+    @media (max-width: 767px) {
+        margin: 80px 10px 80px 10px;
+        padding: 0;
+    }
+
+    @media (min-width: 768px) and (max-width: 1199px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+.motto {
+    color: #333;
+    text-align: center;
+    font-size: 50px;
+    margin-bottom: 5px;
+
+    @media (max-width: 767px) {
+        padding: 0 10px;
+        font-size: 38px;
+    }
+
+    @media (min-width: 768px) and (max-width: 1199px) {
+        padding: 0 20px;
+        font-size: 42px;
+    }
+}
+
+.mottoExtra {
+    color: #444;
+    font-size: 32px;
+    text-align: center;
+    padding: 0 30px;
+
+    @media (max-width: 767px) {
+        padding: 0 10px;
+        font-size: 20px;
+    }
+
+    @media (min-width: 768px) and (max-width: 1199px) {
+        padding: 0 20px;
+        font-size: 26px;
+    }
+}
+
+.jobs {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 20px;
+}
+
+.jobsItemsWrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: row;
+    box-sizing: border-box;
+
+    @media (max-width: 767px) {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.jobsItems {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    flex: 1 0 0;
+
+    @media (max-width: 767px) {
+        margin-bottom: 50px;
+    }
+}
+
+.jobsCircles {
+    height: 175px;
+    width: 175px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+
+    @media (max-width: 767px) {
+        height: 150px;
+        width: 150px;
+    }
+
+    @media (min-width: 768px) and (max-width: 1199px) {
+        height: 170px;
+        width: 170px;
+    }
+}
+
+.jobsIcons {
+    height: 100px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 767px) {
+        height: 90px;
+        width: 90px;
+    }
+
+    @media (min-width: 768px) and (max-width: 1199px) {
+        height: 100px;
+        width: 100px;
+    }
+}
+
+.jobsTitles {
+    margin: 15px auto 10px auto;
+    font-size: 24px;
+    color: #000;
+    font-weight: 700;
+    background: rgba(255,255,255, 0.9);
+    border-radius: 20px;
+    padding: 3px 15px;
+    border: 1px solid #000;
+}
+
+.jobsTexts {
+    margin: 0px 20px;
+    text-align: center;
+    font-size: 20px;
+    color: #333;
+    font-weight: 400;
+    background: rgba(255,255,255, 0.9);
+    border-radius: 20px;
+    padding: 3px 15px;
+    border: 1px solid #000;
+
+    @media (max-width: 767px) {
+        margin: 0 70px;
+    }
+
+    @media (min-width: 768px) and (max-width: 1199px) {
+        margin: 0 50px;
+    }
+}
